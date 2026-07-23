@@ -1,0 +1,10 @@
+Flask
+Werkzeug
+gunicorn
+requests
+urllib3
+psutil
+pandas
+numpy
+matplotlib
+tqdm
