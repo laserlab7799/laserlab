@@ -40,7 +40,7 @@
   "dr_flip_secondary": "D",
   "full_date": "2016-11-08",
   "main_date": "2026-06-02",
-  "mode": "general",
+  "mode": "quick_primary",
   "secondary_dates": [
     "2026-03-03",
     "2026-03-10",
