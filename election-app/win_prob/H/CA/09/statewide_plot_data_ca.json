@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "state": "CA",
+    "year": 2026,
+    "sources": [
+      "plotdata_CA_2026_2026-01-22T18-02-20.jsonl",
+      "plotdata_CA_2026_2026-01-22T18-30-37.jsonl",
+      "plotdata_CA_2026_2026-01-22T18-37-45.jsonl",
+      "plotdata_CA_2026_2026-01-22T18-48-38.jsonl",
+      "plotdata_CA_2026_2026-01-22T18-56-27.jsonl",
+      "plotdata_CA_2026_2026-01-22T19-07-41.jsonl",
+      "plotdata_CA_2026_2026-01-24T16-30-57.jsonl",
+      "plotdata_CA_2026_2026-01-24T16-59-13.jsonl",
+      "plotdata_CA_2026_2026-01-24T17-06-19.jsonl",
+      "plotdata_CA_2026_2026-01-24T17-16-44.jsonl",
+      "plotdata_CA_2026_2026-01-24T17-24-23.jsonl",
+      "plotdata_CA_2026_2026-01-24T17-31-47.jsonl",
+      "plotdata_CA_2026_2026-02-04T17-12-00.jsonl"
+    ],
+    "generated_at": "2026-02-04T22:12:18Z",
+    "notes": "Persistent accumulator: merges new plotdata JSONLs into existing output JSON. leader/trailer computed per x by max adjusted win_probability; leader_raw from raw series for same leader candidate when present. History is stored in points_by_x so deleting JSONLs does not lose past points.",
+    "leader_color_source": "mc_median_sign",
+    "leader_color_fix_applied": true,
+    "leader_color_fix_generated_at": "2026-02-04T22:12:48Z"
+  },
+  "series": {
+    "leader": {
+      "x": [
+        41.43,
+        42.74,
+        56.01,
+        63.59,
+        98.89,
+        100.0
+      ],
+      "y": [
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        100.0,
+        100.0
+      ],
+      "color": [
+        "blue",
+        "blue",
+        "red",
+        "blue",
+        "blue",
+        "blue"
+      ],
+      "marker": [
+        "o",
+        "o",
+        "o",
+        "o",
+        "o",
+        "o"
+      ]
+    },
+    "trailer": {
+      "x": [
+        41.43,
+        42.74,
+        56.01,
+        63.59,
+        98.89,
+        100.0
+      ],
+      "y": [
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        0.0,
+        0.0
+      ],
+      "color": [
+        "red",
+        "red",
+        "blue",
+        "red",
+        "red",
+        "red"
+      ],
+      "marker": [
+        "s",
+        "s",
+        "s",
+        "s",
+        "s",
+        "s"
+      ]
+    },
+    "leader_raw": {
+      "x": [
+        41.43,
+        42.74,
+        56.01,
+        63.59,
+        98.89,
+        100.0
+      ],
+      "y": [
+        47.083,
+        46.7055,
+        52.519,
+        27.4145,
+        100.0,
+        100.0
+      ],
+      "color": [
+        "blue",
+        "blue",
+        "red",
+        "blue",
+        "blue",
+        "blue"
+      ],
+      "marker": [
+        "^",
+        "^",
+        "^",
+        "^",
+        "^",
+        "^"
+      ]
+    },
+    "trailer_raw": {
+      "x": [
+        41.43,
+        42.74,
+        56.01,
+        63.59,
+        98.89,
+        100.0
+      ],
+      "y": [
+        52.917,
+        53.2945,
+        47.481,
+        72.5855,
+        0.0,
+        0.0
+      ],
+      "color": [
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red"
+      ],
+      "marker": [
+        "^",
+        "^",
+        "^",
+        "^",
+        "^",
+        "^"
+      ]
+    },
+    "statewide_margin_pp": {
+      "x": [],
+      "y": []
+    }
+  },
+  "points_by_x": {
+    "41.430000000000": {
+      "adjusted": {
+        "T": 50.0,
+        "H": 50.0
+      },
+      "raw": {
+        "T": 47.083,
+        "H": 52.917
+      }
+    },
+    "42.740000000000": {
+      "adjusted": {
+        "T": 50.0,
+        "H": 50.0
+      },
+      "raw": {
+        "T": 46.7055,
+        "H": 53.2945
+      }
+    },
+    "56.010000000000": {
+      "adjusted": {
+        "T": 50.0,
+        "H": 50.0
+      },
+      "raw": {
+        "T": 52.519,
+        "H": 47.481
+      }
+    },
+    "63.590000000000": {
+      "adjusted": {
+        "T": 50.0,
+        "H": 50.0
+      },
+      "raw": {
+        "T": 27.4145,
+        "H": 72.5855
+      }
+    },
+    "98.890000000000": {
+      "adjusted": {
+        "T": 0.0,
+        "H": 100.0
+      },
+      "raw": {
+        "T": 0.0,
+        "H": 100.0
+      }
+    },
+    "100.000000000000": {
+      "adjusted": {
+        "T": 0.0,
+        "H": 100.0
+      },
+      "raw": {
+        "T": 0.0,
+        "H": 100.0
+      }
+    }
+  }
+}

@@ -1,0 +1,1162 @@
+<!-- backend.html — single-file admin file manager (inline CSS + JS) -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Server File Manager</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.90);
+      --muted: rgba(255,255,255,0.62);
+      --muted2: rgba(255,255,255,0.45);
+      --accent: #7dd3fc;
+      --danger: #fb7185;
+      --ok: #86efac;
+      --warn: #fbbf24;
+      --line: rgba(255,255,255,0.12);
+      --shadow: 0 14px 40px rgba(0,0,0,0.45);
+      --radius: 18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    html, body { height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(125,211,252,0.16), transparent 55%),
+        radial-gradient(900px 650px at 85% 20%, rgba(134,239,172,0.10), transparent 55%),
+        radial-gradient(900px 650px at 60% 90%, rgba(251,113,133,0.08), transparent 55%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    .app{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      height:100%;
+      gap:18px;
+      padding:18px;
+      box-sizing:border-box;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.05));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      min-height:0;
+    }
+
+    .sidebar{
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .title{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      font-weight:700;
+      letter-spacing:0.2px;
+    }
+
+    .pill{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding:4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .sb-body{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height:0;
+      overflow:auto;
+    }
+
+    .section h3{
+      margin: 10px 0 8px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight:700;
+      letter-spacing:0.12em;
+      text-transform: uppercase;
+    }
+
+    .row{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    .input, .btn, select{
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .input{
+      width:100%;
+      box-sizing:border-box;
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    .btn{
+      cursor:pointer;
+      user-select:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition: transform .06s ease, background .12s ease, border-color .12s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ background: rgba(255,255,255,0.07); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{ border-color: rgba(125,211,252,0.45); background: rgba(125,211,252,0.10); }
+    .btn.danger{ border-color: rgba(251,113,133,0.45); background: rgba(251,113,133,0.10); }
+    .btn.ok{ border-color: rgba(134,239,172,0.45); background: rgba(134,239,172,0.10); }
+    .btn.ghost{ background: transparent; }
+    .btn.small{ padding: 7px 10px; font-size: 13px; border-radius: 10px; }
+    .btn.tiny{ padding: 5px 8px; font-size: 12px; border-radius: 10px; }
+
+    .muted{ color: var(--muted); font-size: 13px; }
+    .muted2{ color: var(--muted2); font-size: 12px; }
+    .mono{ font-family: var(--mono); }
+
+    .quick{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .kbd{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+    }
+
+    .main{
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+
+    .main-head{
+      padding:14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .crumbs{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      flex-wrap:wrap;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+      flex: 1 1 auto;
+      min-width: 240px;
+    }
+    .crumbs a{
+      color: var(--accent);
+      text-decoration:none;
+      border: 1px solid rgba(125,211,252,0.22);
+      background: rgba(125,211,252,0.08);
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+    .crumbs span{ color: var(--muted2); }
+    
+    .crumbs a{
+      /* existing styles... */
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+    }
+    .crumbs span{ cursor: pointer; } /* for the › separators */
+
+
+    .tools{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex: 0 0 auto;
+    }
+      
+      .main-head { position: relative; }
+      .crumbs { position: relative; z-index: 5; pointer-events: auto; }
+      .crumbs a, .crumbs span { pointer-events: auto; }
+      .tools { position: relative; z-index: 1; }
+
+
+    .main-body{
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      min-height:0;
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td{
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      vertical-align: middle;
+    }
+
+    th{
+      text-align:left;
+      font-size: 12px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color: var(--muted);
+      position: sticky;
+      top: 0;
+      background: rgba(12,18,36,0.92);
+      backdrop-filter: blur(6px);
+      z-index: 2;
+    }
+
+    tr:hover td{
+      background: rgba(255,255,255,0.03);
+    }
+
+    .namecell{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      min-width: 220px;
+    }
+
+    .icon{
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display:grid;
+      place-items:center;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      font-size: 14px;
+    }
+
+    .file{ color: rgba(255,255,255,0.88); }
+    .folder{ color: rgba(125,211,252,0.95); }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
+    .statusbar{
+      padding: 10px 14px;
+      border-top: 1px solid var(--line);
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .toast{
+      display:none;
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      width: min(520px, calc(100% - 36px));
+      background: rgba(15,23,42,0.95);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 12px 12px;
+      z-index: 99;
+    }
+    .toast.show{ display:block; }
+    .toast .trow{ display:flex; gap:10px; align-items:flex-start; }
+    .toast .dot{
+      width:10px; height:10px; border-radius:999px; margin-top:4px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(125,211,252,0.18);
+    }
+    .toast .dot.ok{ background: var(--ok); box-shadow: 0 0 0 4px rgba(134,239,172,0.16); }
+    .toast .dot.bad{ background: var(--danger); box-shadow: 0 0 0 4px rgba(251,113,133,0.16); }
+    .toast .msg{ font-size: 13px; color: var(--text); }
+    .toast .sub{ font-size: 12px; color: var(--muted); margin-top:2px; font-family: var(--mono); }
+
+    dialog{
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(15,23,42,0.98);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      padding: 0;
+      width: min(560px, calc(100% - 32px));
+    }
+    dialog::backdrop{
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+    }
+    .modal{
+      padding: 14px;
+    }
+    .modal h2{
+      margin: 2px 0 8px;
+      font-size: 16px;
+    }
+    .modal .body{
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+    .modal .path{
+      font-family: var(--mono);
+      font-size: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      color: rgba(255,255,255,0.82);
+      overflow:auto;
+      max-height: 120px;
+      white-space: pre;
+    }
+    .modal .footer{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .spinner{
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.18);
+      border-top-color: rgba(255,255,255,0.75);
+      border-radius: 999px;
+      animation: spin 0.7s linear infinite;
+      display:none;
+    }
+    .spinner.on{ display:inline-block; }
+    @keyframes spin{ to{ transform: rotate(360deg);} }
+
+    .tag{
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-family: var(--mono);
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .hint{
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(251,191,36,0.32);
+      background: rgba(251,191,36,0.08);
+      color: rgba(255,255,255,0.78);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .warnline{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(255,255,255,0.70);
+      margin-top: 6px;
+    }
+
+    @media (max-width: 980px){
+      .app{ grid-template-columns: 1fr; }
+    }
+      .table-wrap{ position:relative; }
+      .table-wrap.dragging{
+        outline: 2px dashed rgba(120,200,255,.6);
+        outline-offset: 6px;
+      }
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <div class="card sidebar">
+      <div class="topbar">
+        <div class="title">
+          <span style="font-size:18px">🗂️</span>
+          <span>File Manager</span>
+        </div>
+        <span class="pill" id="apiPill">API: /api/fs</span>
+      </div>
+
+      <div class="sb-body">
+
+        <div class="section">
+          <h3>Go to Path</h3>
+          <div class="row">
+            <input class="input" id="pathInput" placeholder="/home/ubuntu/..." />
+          </div>
+          <div class="row">
+            <button class="btn primary" id="btnGo">Open</button>
+            <button class="btn" id="btnUp">Up</button>
+            <button class="btn" id="btnRefresh">Refresh</button>
+          </div>
+          <div class="muted2">Tip: press <span class="kbd">Enter</span> in the path box.</div>
+        </div>
+
+        <div class="section">
+          <h3>Quick Roots</h3>
+          <div class="quick" id="quickRoots"></div>
+        </div>
+
+        <div class="section">
+          <h3>Upload</h3>
+          <div class="row" style="gap:10px; flex-wrap:wrap;">
+            <button class="btn ok" id="btnUploadFiles">Upload Files</button>
+            <button class="btn ok" id="btnUploadFolder">Upload Folder</button>
+            <span class="tag"><span class="spinner" id="uploadSpin"></span><span id="uploadLabel">Idle</span></span>
+          </div>
+          <div class="muted2">Folder upload uses <span class="mono">webkitdirectory</span> (works in Chrome/Edge; Safari support varies).</div>
+        </div>
+
+        <div class="section">
+          <h3>Create</h3>
+          <div class="row">
+            <input class="input" id="mkdirName" placeholder="new-folder-name" />
+          </div>
+          <div class="row">
+            <button class="btn primary" id="btnMkdir">Create Folder</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Safety</h3>
+          <div class="hint">
+            This UI can delete files/folders and upload into server paths.
+            Keep it behind auth and preferably restrict server-side to a safe base directory.
+            <div class="warnline">If you truly allow base “/”, treat it like root access.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main -->
+    <div class="card main">
+      <div class="main-head">
+        <div class="crumbs" id="crumbs"></div>
+
+        <div class="tools">
+          <input class="input" style="width: 220px;" id="filterBox" placeholder="Filter…" />
+          <select id="sortSel" class="input" style="width: 180px;">
+            <option value="name_asc">Name (A→Z)</option>
+            <option value="name_desc">Name (Z→A)</option>
+            <option value="mtime_desc">Modified (new→old)</option>
+            <option value="mtime_asc">Modified (old→new)</option>
+            <option value="size_desc">Size (big→small)</option>
+            <option value="size_asc">Size (small→big)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="main-body">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 52%;">Name</th>
+                <th style="width: 12%;">Type</th>
+                <th style="width: 16%;">Size</th>
+                <th style="width: 20%;">Modified</th>
+                <th style="width: 1%; text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <tr><td colspan="5" class="muted">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="statusbar">
+        <div class="muted2" id="statusLeft">—</div>
+        <div class="muted2 mono" id="statusRight">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- hidden file inputs -->
+  <input id="fileInput" type="file" multiple style="display:none" />
+  <input id="folderInput" type="file" multiple webkitdirectory directory style="display:none" />
+
+  <!-- confirm delete modal -->
+  <dialog id="dlgConfirm">
+    <div class="modal">
+      <h2 id="dlgTitle">Confirm delete</h2>
+      <div class="body" id="dlgBody">Are you sure?</div>
+      <div class="path" id="dlgPath"></div>
+      <div class="footer">
+        <button class="btn" id="dlgCancel">Cancel</button>
+        <button class="btn danger" id="dlgOk">Delete</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- toast -->
+  <div class="toast" id="toast">
+    <div class="trow">
+      <div class="dot" id="toastDot"></div>
+      <div>
+        <div class="msg" id="toastMsg">—</div>
+        <div class="sub" id="toastSub">—</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ------------------------- Config -------------------------
+    // Always include the exact origin (scheme + host + port), so we never “fall back” to :80
+    const API_BASE = window.location.origin.replace(/\/$/, "") + "/api/fs";
+    const QUICK = [
+      {label:"/", path:"/"},
+      {label:"/home", path:"/home"},
+      {label:"/home/ubuntu", path:"/home/ubuntu"},
+      {label:"/var/www", path:"/var/www"},
+      {label:"/etc", path:"/etc"},
+      {label:"/opt", path:"/opt"},
+      {label:"/tmp", path:"/tmp"},
+    ];
+
+    // ------------------------- State -------------------------
+    let curPath = "/home/ubuntu/apps";
+    let entries = [];
+    let pendingDelete = null;
+
+    // ------------------------- Helpers -------------------------
+    const el = (id) => document.getElementById(id);
+
+    function normPath(p){
+      if (!p) return "/";
+      p = String(p).trim();
+      if (!p.startsWith("/")) p = "/" + p;
+      // collapse // (but keep leading)
+      p = p.replace(/\/{2,}/g, "/");
+      // remove trailing slash except root
+      if (p.length > 1) p = p.replace(/\/+$/,"");
+      return p;
+    }
+
+    function joinPath(a,b){
+      a = normPath(a);
+      b = String(b || "").replace(/^\/+/,"");
+      return normPath(a + "/" + b);
+    }
+
+    function parentPath(p){
+      p = normPath(p);
+      if (p === "/") return "/";
+      const idx = p.lastIndexOf("/");
+      if (idx <= 0) return "/";
+      return p.slice(0, idx) || "/";
+    }
+
+    function fmtBytes(n){
+      if (n == null) return "—";
+      const x = Number(n);
+      if (!isFinite(x)) return "—";
+      const units = ["B","KB","MB","GB","TB"];
+      let v = x, i = 0;
+      while (v >= 1024 && i < units.length-1){ v/=1024; i++; }
+      const d = (i===0) ? 0 : (v < 10 ? 2 : 1);
+      return v.toFixed(d) + " " + units[i];
+    }
+
+    function fmtTime(ts){
+      if (!ts) return "—";
+      // server should send ISO 8601
+      const d = new Date(ts);
+      if (isNaN(d.getTime())) return String(ts);
+      return d.toLocaleString();
+    }
+
+    function setStatus(left, right){
+      el("statusLeft").textContent = left || "—";
+      el("statusRight").textContent = right || "—";
+    }
+
+    function toast(type, msg, sub){
+      const t = el("toast");
+      const dot = el("toastDot");
+      dot.className = "dot" + (type==="ok" ? " ok" : type==="bad" ? " bad" : "");
+      el("toastMsg").textContent = msg || "";
+      el("toastSub").textContent = sub || "";
+      t.classList.add("show");
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(()=>t.classList.remove("show"), 3600);
+    }
+
+    async function apiFetch(path, opts={}){
+      const headers = new Headers(opts.headers || {});
+      opts.headers = headers;
+
+      const res = await fetch(API_BASE + path, opts);
+      let payload = null;
+      const ct = (res.headers.get("content-type") || "").toLowerCase();
+      if (ct.includes("application/json")){
+        payload = await res.json().catch(()=>null);
+      } else {
+        payload = await res.text().catch(()=>null);
+      }
+
+      if (!res.ok){
+        const msg = (payload && payload.error) ? payload.error : (typeof payload === "string" ? payload : res.statusText);
+        throw new Error(msg || ("HTTP " + res.status));
+      }
+      return payload;
+    }
+
+    // ------------------------- UI render -------------------------
+    function renderCrumbs(){
+      const c = el("crumbs");
+      c.innerHTML = "";
+
+      const p = normPath(curPath);
+      const parts = p === "/" ? [""] : p.split("/").filter(Boolean);
+
+      // left pill: act like "Up"
+      const rootLink = document.createElement("a");
+      rootLink.href = "#";
+      rootLink.textContent = "/";
+      rootLink.title = "Up one folder";
+      rootLink.onclick = (e)=>{
+        e.preventDefault();
+        openPath(parentPath(curPath));
+      };
+      c.appendChild(rootLink);
+
+      let acc = "";
+      for (const part of parts){
+        acc = acc + "/" + part;
+
+        // IMPORTANT: freeze the current accumulated path for this iteration
+        const crumbPath = acc;
+        const crumbUp   = parentPath(crumbPath);
+
+        // separator: acts like "Up to previous"
+        const sep = document.createElement("span");
+        sep.textContent = "›";
+        sep.title = "Up to previous";
+        sep.onclick = (e)=>{
+          e.preventDefault();
+          openPath(crumbUp);
+        };
+        c.appendChild(sep);
+
+        const a = document.createElement("a");
+        a.href = "#";
+        a.textContent = part;
+        a.title = crumbPath;
+        a.onclick = (e)=>{
+          e.preventDefault();
+          openPath(crumbPath);
+        };
+        c.appendChild(a);
+      }
+    }
+
+
+    function currentSort(){
+      return el("sortSel").value || "name_asc";
+    }
+
+    function applySortAndFilter(){
+      const q = (el("filterBox").value || "").trim().toLowerCase();
+      let list = entries.slice();
+
+      if (q){
+        list = list.filter(e => (e.name || "").toLowerCase().includes(q));
+      }
+
+      const s = currentSort();
+      const dir = s.endsWith("_desc") ? -1 : 1;
+      const key = s.replace(/_(asc|desc)$/,"");
+
+      const cmpStr = (a,b)=> (a||"").localeCompare(b||"", undefined, {numeric:true, sensitivity:"base"});
+      const cmpNum = (a,b)=> (Number(a||0) - Number(b||0));
+
+      list.sort((A,B)=>{
+        // folders first
+        if (A.is_dir && !B.is_dir) return -1;
+        if (!A.is_dir && B.is_dir) return 1;
+
+        if (key === "name") return dir * cmpStr(A.name, B.name);
+        if (key === "mtime") return dir * cmpNum(new Date(A.mtime||0).getTime(), new Date(B.mtime||0).getTime());
+        if (key === "size") return dir * cmpNum(A.size||0, B.size||0);
+        return dir * cmpStr(A.name, B.name);
+      });
+
+      return list;
+    }
+
+    function renderTable(){
+      const tb = el("tbody");
+      const list = applySortAndFilter();
+
+      if (!list.length){
+        tb.innerHTML = `<tr><td colspan="5" class="muted">No items.</td></tr>`;
+        return;
+      }
+
+      tb.innerHTML = "";
+      for (const it of list){
+        const tr = document.createElement("tr");
+
+        // name
+        const tdName = document.createElement("td");
+        const wrap = document.createElement("div");
+        wrap.className = "namecell";
+        const ic = document.createElement("div");
+        ic.className = "icon";
+        ic.textContent = it.is_dir ? "📁" : "📄";
+        const nm = document.createElement("div");
+        nm.style.display = "flex";
+        nm.style.flexDirection = "column";
+
+        const line1 = document.createElement("div");
+        line1.style.display = "flex";
+        line1.style.gap = "10px";
+        line1.style.alignItems = "center";
+
+        const a = document.createElement("a");
+        a.href = "#";
+        a.textContent = it.name || "(unnamed)";
+        a.className = it.is_dir ? "folder" : "file";
+        a.style.textDecoration = "none";
+        a.style.fontFamily = "var(--mono)";
+        a.style.fontSize = "13px";
+        a.onclick = (e)=>{
+          e.preventDefault();
+          if (it.is_dir){
+            openPath(joinPath(curPath, it.name));
+          } else {
+            // download
+            downloadFile(joinPath(curPath, it.name));
+          }
+        };
+
+        const meta = document.createElement("div");
+        meta.className = "muted2";
+        meta.textContent = it.is_dir ? "Folder" : (it.mime || "File");
+
+        line1.appendChild(a);
+        nm.appendChild(line1);
+        nm.appendChild(meta);
+
+        wrap.appendChild(ic);
+        wrap.appendChild(nm);
+        tdName.appendChild(wrap);
+
+        // type
+        const tdType = document.createElement("td");
+        tdType.className = "mono muted2";
+        tdType.textContent = it.is_dir ? "dir" : "file";
+
+        // size
+        const tdSize = document.createElement("td");
+        tdSize.className = "mono muted2";
+        tdSize.textContent = it.is_dir ? "—" : fmtBytes(it.size);
+
+        // mtime
+        const tdM = document.createElement("td");
+        tdM.className = "mono muted2";
+        tdM.textContent = fmtTime(it.mtime);
+
+        // actions
+        const tdA = document.createElement("td");
+        tdA.style.textAlign = "right";
+        const acts = document.createElement("div");
+        acts.className = "actions";
+
+        // allow download for both files and folders
+        const bDl = document.createElement("button");
+        bDl.className = "btn tiny";
+        bDl.textContent = it.is_dir ? "Download ZIP" : "Download";
+        bDl.onclick = ()=>{
+          const full = joinPath(curPath, it.name);
+          if (it.is_dir) downloadFolder(full);
+          else downloadFile(full);
+        };
+        acts.appendChild(bDl);
+
+
+        const bDel = document.createElement("button");
+        bDel.className = "btn tiny danger";
+        bDel.textContent = "Delete";
+        bDel.onclick = ()=>confirmDelete(it);
+        acts.appendChild(bDel);
+
+        tdA.appendChild(acts);
+
+        tr.appendChild(tdName);
+        tr.appendChild(tdType);
+        tr.appendChild(tdSize);
+        tr.appendChild(tdM);
+        tr.appendChild(tdA);
+
+        tb.appendChild(tr);
+      }
+    }
+
+    // ------------------------- Operations -------------------------
+    async function openPath(p){
+      curPath = normPath(p);
+      el("pathInput").value = curPath;
+      renderCrumbs();
+      setStatus("Loading…", curPath);
+
+      try{
+        const payload = await apiFetch(`/list?path=${encodeURIComponent(curPath)}`);
+        entries = Array.isArray(payload.items) ? payload.items : [];
+        renderTable();
+
+        const count = entries.length;
+        const dirs = entries.filter(x=>x.is_dir).length;
+        const files = count - dirs;
+
+        setStatus(`${count} items (${dirs} folders, ${files} files)`, curPath);
+        toast("ok", "Loaded", curPath);
+      }catch(err){
+        entries = [];
+        el("tbody").innerHTML = `<tr><td colspan="5" class="muted">Error: ${escapeHtml(err.message)}</td></tr>`;
+        setStatus("Error", curPath);
+        toast("bad", "Failed to load", err.message);
+      }
+    }
+
+      async function downloadFile(path){
+        const url = `${API_BASE}/download?path=${encodeURIComponent(normPath(path))}`;
+        window.location.href = url;
+      }
+      function downloadFolder(path){
+        // expects server to zip a directory and return a .zip
+        const url = `${API_BASE}/download?path=${encodeURIComponent(normPath(path))}&zip=1`;
+        window.location.href = url;
+      }
+
+
+    function confirmDelete(item){
+      const dlg = el("dlgConfirm");
+      const target = joinPath(curPath, item.name);
+      pendingDelete = { path: target, is_dir: !!item.is_dir };
+
+      el("dlgTitle").textContent = item.is_dir ? "Delete folder?" : "Delete file?";
+      el("dlgBody").textContent = item.is_dir
+        ? "This will permanently delete the folder and everything inside it."
+        : "This will permanently delete the file.";
+      el("dlgPath").textContent = target;
+
+      dlg.showModal();
+    }
+
+    async function doDelete(){
+      if (!pendingDelete) return;
+      const p = pendingDelete.path;
+      const isDir = pendingDelete.is_dir;
+
+      try{
+        await apiFetch(`/delete`, {
+          method: "DELETE",
+          headers: { "Content-Type":"application/json" },
+          body: JSON.stringify({ path: p })
+        });
+        toast("ok", isDir ? "Folder deleted" : "File deleted", p);
+        pendingDelete = null;
+        await openPath(curPath);
+      }catch(err){
+        toast("bad", "Delete failed", err.message);
+      }
+    }
+
+    async function doMkdir(){
+      const name = (el("mkdirName").value || "").trim();
+      if (!name){
+        toast("bad", "Folder name is empty", "");
+        return;
+      }
+      if (name.includes("/") || name.includes("\\")){
+        toast("bad", "Folder name cannot contain slashes", name);
+        return;
+      }
+
+      try{
+        await apiFetch(`/mkdir`, {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify({ path: curPath, name })
+        });
+        el("mkdirName").value = "";
+        toast("ok", "Folder created", joinPath(curPath, name));
+        await openPath(curPath);
+      }catch(err){
+        toast("bad", "Create folder failed", err.message);
+      }
+    }
+
+      async function readAllDirEntries(dirEntry){
+        const reader = dirEntry.createReader();
+        const out = [];
+        while (true){
+          const batch = await new Promise((resolve, reject)=>{
+            reader.readEntries(resolve, reject);
+          });
+          if (!batch || !batch.length) break;
+          out.push(...batch);
+        }
+        return out;
+      }
+
+      async function collectDroppedFiles(dataTransfer){
+        const items = Array.from(dataTransfer.items || []);
+        // Best case: Chrome/Safari folder drops
+        const hasEntries = items.some(it => it.webkitGetAsEntry && it.webkitGetAsEntry());
+        if (!hasEntries){
+          return Array.from(dataTransfer.files || []);
+        }
+
+        const files = [];
+
+        async function walk(entry, prefix){
+          if (!entry) return;
+
+          if (entry.isFile){
+            const file = await new Promise((resolve, reject)=>{
+              entry.file(resolve, reject);
+            });
+            file._relpath = (prefix ? (prefix + "/") : "") + file.name;
+            files.push(file);
+            return;
+          }
+
+          if (entry.isDirectory){
+            const children = await readAllDirEntries(entry);
+            for (const child of children){
+              await walk(child, (prefix ? (prefix + "/") : "") + entry.name);
+            }
+          }
+        }
+
+        for (const it of items){
+          const entry = it.webkitGetAsEntry ? it.webkitGetAsEntry() : null;
+          if (entry) await walk(entry, "");
+        }
+
+        return files;
+      }
+
+      function wireDragDrop(){
+        const wrap = document.querySelector(".table-wrap");
+        if (!wrap) return;
+
+        let depth = 0;
+
+        function show(on){
+          wrap.classList.toggle("dragging", !!on);
+        }
+
+        wrap.addEventListener("dragenter", (e)=>{
+          e.preventDefault();
+          depth++;
+          show(true);
+        });
+
+        wrap.addEventListener("dragover", (e)=>{
+          e.preventDefault();
+          show(true);
+        });
+
+        wrap.addEventListener("dragleave", (e)=>{
+          e.preventDefault();
+          depth--;
+          if (depth <= 0){
+            depth = 0;
+            show(false);
+          }
+        });
+
+        wrap.addEventListener("drop", async (e)=>{
+          e.preventDefault();
+          depth = 0;
+          show(false);
+
+          try{
+            const dropped = await collectDroppedFiles(e.dataTransfer);
+            if (!dropped.length) return;
+
+            // treat as folder-mode so relpaths are preserved when present
+            await uploadFiles(dropped, "folder");
+          }catch(err){
+            toast("bad", "Drop upload failed", err.message);
+          }
+        });
+      }
+
+      
+    async function uploadFiles(fileList, mode){
+      // mode: "files" or "folder" (folder uses webkitRelativePath)
+      const files = Array.from(fileList || []);
+      if (!files.length) return;
+
+      const spin = el("uploadSpin");
+      const label = el("uploadLabel");
+      spin.classList.add("on");
+      label.textContent = "Uploading…";
+
+      try{
+        const fd = new FormData();
+        fd.append("path", curPath);
+        fd.append("mode", mode);
+
+        for (const f of files){
+          // For folder uploads: preserve subpaths using webkitRelativePath
+          const rel =
+            (f._relpath && f._relpath.length) ? f._relpath :
+            (f.webkitRelativePath && f.webkitRelativePath.length) ? f.webkitRelativePath :
+            f.name;
+          fd.append("files", f, rel);
+        }
+
+        await apiFetch(`/upload`, { method:"POST", body: fd });
+        toast("ok", "Upload complete", `${files.length} item(s) → ${curPath}`);
+        await openPath(curPath);
+      }catch(err){
+        toast("bad", "Upload failed", err.message);
+      } finally {
+        spin.classList.remove("on");
+        label.textContent = "Idle";
+      }
+    }
+
+    function escapeHtml(s){
+      return String(s||"").replace(/[&<>"']/g, (c)=>({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[c]));
+    }
+
+    // ------------------------- Wire up -------------------------
+    function buildQuick(){
+      const wrap = el("quickRoots");
+      wrap.innerHTML = "";
+      for (const q of QUICK){
+        const b = document.createElement("button");
+        b.className = "btn small";
+        b.textContent = q.label;
+        b.onclick = ()=>openPath(q.path);
+        wrap.appendChild(b);
+      }
+    }
+
+    function init(){
+      buildQuick();
+      wireDragDrop();
+
+
+      // path input
+      el("btnGo").onclick = ()=>openPath(el("pathInput").value);
+      el("btnUp").onclick = ()=>openPath(parentPath(curPath));
+      el("btnRefresh").onclick = ()=>openPath(curPath);
+
+      el("pathInput").addEventListener("keydown", (e)=>{
+        if (e.key === "Enter") openPath(el("pathInput").value);
+      });
+
+      // sort/filter
+      el("sortSel").onchange = ()=>renderTable();
+      el("filterBox").oninput = ()=>renderTable();
+
+      // mkdir
+      el("btnMkdir").onclick = doMkdir;
+      el("mkdirName").addEventListener("keydown", (e)=>{
+        if (e.key === "Enter") doMkdir();
+      });
+
+      // upload
+      const fileInput = el("fileInput");
+      const folderInput = el("folderInput");
+
+      el("btnUploadFiles").onclick = ()=>fileInput.click();
+      el("btnUploadFolder").onclick = ()=>folderInput.click();
+
+      fileInput.onchange = async ()=> {
+        await uploadFiles(fileInput.files, "files");
+        fileInput.value = "";
+      };
+
+      folderInput.onchange = async ()=> {
+        await uploadFiles(folderInput.files, "folder");
+        folderInput.value = "";
+      };
+
+      // confirm dialog
+      el("dlgCancel").onclick = ()=>{ pendingDelete = null; el("dlgConfirm").close(); };
+      el("dlgOk").onclick = async ()=>{ el("dlgConfirm").close(); await doDelete(); };
+
+   
+
+      // initial
+      el("pathInput").value = curPath;
+      openPath(curPath);
+    }
+
+    init();
+  </script>
+</body>
+</html>

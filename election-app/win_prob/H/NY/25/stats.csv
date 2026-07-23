@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,NY,Monroe,36055,135985,213558,0,100.0,100.00
+2024-11-05T15-30-22,NY,Ontario,36069,5210,5617,0,100.0,100.00

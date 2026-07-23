@@ -1,0 +1,812 @@
+<Vote ApiVersion="3.1" ApiBuild="3.1.1" ElectionDate="2021-11-02" Timestamp="2025-10-27T15:44:22.141662Z">
+<Race Test="0" ResultsType="l" ID="47225" EventID="20211102" StateID="47" Type="General" TypeID="G" TabulationStatus="Vote Certified" RaceCallStatus="Called" OfficeID="G" OfficeName="Governor" FlippedSeat="1" EEVP="99.00" National="1" State="1">
+<Incumbents>
+<Candidate First="Ralph" Last="Northam" Abbrv="Northam" Party="Dem" PolID="63126" PolNum="49283" CandidateID="51443"/>
+</Incumbents>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="1" ID="47" Name="Virginia" Level="state" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="2855" Total="2855" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1663596" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1600116"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="23125"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47001" Name="Accomack" Level="subunit" FIPSCode="51001" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="19" Total="19" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="7878" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4948"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="67"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47002" Name="Albemarle" Level="subunit" FIPSCode="51003" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="33" Total="33" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="19141" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="31919"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="347"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47003" Name="Alleghany" Level="subunit" FIPSCode="51005" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4530" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1518"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="26"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47004" Name="Amelia" Level="subunit" FIPSCode="51007" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4720" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1617"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="23"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47005" Name="Amherst" Level="subunit" FIPSCode="51009" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="9731" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3897"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="72"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47006" Name="Appomattox" Level="subunit" FIPSCode="51011" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5971" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1438"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="26"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47007" Name="Arlington" Level="subunit" FIPSCode="51013" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="57" Total="57" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="21548" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="73013"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="554"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47008" Name="Augusta" Level="subunit" FIPSCode="51015" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="28" Total="28" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="26196" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="7231"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="170"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47009" Name="Bath" Level="subunit" FIPSCode="51017" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1539" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="396"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="11"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47010" Name="Bedford" Level="subunit" FIPSCode="51019" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="35" Total="35" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="30912" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="8001"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="145"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47011" Name="Bland" Level="subunit" FIPSCode="51021" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2274" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="364"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="12"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47012" Name="Botetourt" Level="subunit" FIPSCode="51023" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="13066" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3990"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="61"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47013" Name="Brunswick" Level="subunit" FIPSCode="51025" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2880" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3165"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="34"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47014" Name="Buchanan" Level="subunit" FIPSCode="51027" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="20" Total="20" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5083" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="903"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="8"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47015" Name="Buckingham" Level="subunit" FIPSCode="51029" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3894" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2222"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="35"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47016" Name="Campbell" Level="subunit" FIPSCode="51031" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="19" Total="19" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="18213" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4930"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="77"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47017" Name="Caroline" Level="subunit" FIPSCode="51033" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="6917" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="5045"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="91"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47018" Name="Carroll" Level="subunit" FIPSCode="51035" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="20" Total="20" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="9868" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1910"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="43"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47019" Name="Charles City" Level="subunit" FIPSCode="51036" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1550" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1822"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="15"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47020" Name="Charlotte" Level="subunit" FIPSCode="51037" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3354" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1396"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="21"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47023" Name="Clarke" Level="subunit" FIPSCode="51043" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4642" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2739"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="34"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47024" Name="Craig" Level="subunit" FIPSCode="51045" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="11" Total="11" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2079" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="400"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="17"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47025" Name="Culpeper" Level="subunit" FIPSCode="51047" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="18" Total="18" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="13436" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="6661"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="107"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47026" Name="Cumberland" Level="subunit" FIPSCode="51049" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2678" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1515"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="27"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47027" Name="Dickenson" Level="subunit" FIPSCode="51051" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3867" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="934"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="11"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47028" Name="Dinwiddie" Level="subunit" FIPSCode="51053" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="7335" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4181"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="59"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47029" Name="Essex" Level="subunit" FIPSCode="51057" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="7" Total="7" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2684" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1980"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="39"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47032" Name="Fauquier" Level="subunit" FIPSCode="51061" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="23" Total="23" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="22252" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="11570"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="156"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47033" Name="Floyd" Level="subunit" FIPSCode="51063" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5230" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2203"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="59"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47034" Name="Fluvanna" Level="subunit" FIPSCode="51065" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="7068" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="5312"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="65"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47035" Name="Franklin" Level="subunit" FIPSCode="51067" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="26" Total="26" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="17842" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="5894"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="102"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47036" Name="Frederick" Level="subunit" FIPSCode="51069" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="23" Total="24" ReportingPct="95.83"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="25062" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="11164"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="130"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47037" Name="Giles" Level="subunit" FIPSCode="51071" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5788" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1535"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="61"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47038" Name="Gloucester" Level="subunit" FIPSCode="51073" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="12585" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4712"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="88"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47039" Name="Goochland" Level="subunit" FIPSCode="51075" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="9585" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4910"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="52"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47040" Name="Grayson" Level="subunit" FIPSCode="51077" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="18" Total="18" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5144" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1062"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="27"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47041" Name="Greene" Level="subunit" FIPSCode="51079" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5961" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2806"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="68"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47042" Name="Greensville" Level="subunit" FIPSCode="51081" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1709" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1915"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="12"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47043" Name="Halifax" Level="subunit" FIPSCode="51083" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="23" Total="23" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="8641" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4804"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="75"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47044" Name="Hanover" Level="subunit" FIPSCode="51085" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="39" Total="39" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="39954" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="18753"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="322"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47045" Name="Henrico" Level="subunit" FIPSCode="51087" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="94" Total="94" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="55796" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="81409"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="1342"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47046" Name="Henry" Level="subunit" FIPSCode="51089" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="27" Total="27" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="12902" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="5547"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="74"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47047" Name="Highland" Level="subunit" FIPSCode="51091" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="969" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="325"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="8"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47048" Name="Isle of Wight" Level="subunit" FIPSCode="51093" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="17" Total="17" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="12000" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="6565"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="91"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47049" Name="James City" Level="subunit" FIPSCode="51095" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="22" Total="22" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="21048" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="18836"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="186"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47050" Name="King and Queen" Level="subunit" FIPSCode="51097" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2112" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1130"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="18"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47051" Name="King George" Level="subunit" FIPSCode="51099" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="7286" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3317"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="91"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47052" Name="King William" Level="subunit" FIPSCode="51101" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="6286" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2247"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="33"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47053" Name="Lancaster" Level="subunit" FIPSCode="51103" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3448" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2406"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="16"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47054" Name="Lee" Level="subunit" FIPSCode="51105" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="19" Total="19" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="6372" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="882"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="18"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47055" Name="Loudoun" Level="subunit" FIPSCode="51107" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="101" Total="101" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="71467" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="89390"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="803"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47056" Name="Louisa" Level="subunit" FIPSCode="51109" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="18" Total="18" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="11649" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="5896"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="87"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47057" Name="Lunenburg" Level="subunit" FIPSCode="51111" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3019" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1567"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="11"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47058" Name="Madison" Level="subunit" FIPSCode="51113" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4721" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1973"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="29"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47059" Name="Mathews" Level="subunit" FIPSCode="51115" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3493" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1363"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="18"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47060" Name="Mecklenburg" Level="subunit" FIPSCode="51117" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="26" Total="26" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="7922" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4075"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="37"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47061" Name="Middlesex" Level="subunit" FIPSCode="51119" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3703" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1860"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="47"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47062" Name="Montgomery" Level="subunit" FIPSCode="51121" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="27" Total="27" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="17041" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="15355"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="377"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47063" Name="Nelson" Level="subunit" FIPSCode="51125" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4259" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3346"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="64"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47064" Name="New Kent" Level="subunit" FIPSCode="51127" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="8569" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3439"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="52"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47065" Name="Northampton" Level="subunit" FIPSCode="51131" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2650" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2584"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="27"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47066" Name="Northumberland" Level="subunit" FIPSCode="51133" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4167" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2312"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="37"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47067" Name="Nottoway" Level="subunit" FIPSCode="51135" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3497" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1892"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="24"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47068" Name="Orange" Level="subunit" FIPSCode="51137" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="10670" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="5351"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="80"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47069" Name="Page" Level="subunit" FIPSCode="51139" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="7594" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1995"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="28"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47070" Name="Patrick" Level="subunit" FIPSCode="51141" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5946" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1255"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="32"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47071" Name="Pittsylvania" Level="subunit" FIPSCode="51143" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="32" Total="32" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="19543" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="6319"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="76"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47072" Name="Powhatan" Level="subunit" FIPSCode="51145" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="12582" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3721"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="58"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47073" Name="Prince Edward" Level="subunit" FIPSCode="51147" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3876" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3210"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="36"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47074" Name="Prince George" Level="subunit" FIPSCode="51149" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="8548" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4577"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="84"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47077" Name="Pulaski" Level="subunit" FIPSCode="51155" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="9631" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3277"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="88"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47078" Name="Rappahannock" Level="subunit" FIPSCode="51157" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2507" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1686"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="19"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47079" Name="Richmond" Level="subunit" FIPSCode="51159" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2225" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="936"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="20"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47080" Name="Roanoke" Level="subunit" FIPSCode="51161" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="36" Total="36" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="28157" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="14445"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="220"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47081" Name="Rockbridge" Level="subunit" FIPSCode="51163" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="20" Total="20" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="6906" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3071"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="40"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47082" Name="Rockingham" Level="subunit" FIPSCode="51165" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="34" Total="34" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="26765" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="8569"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="182"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47083" Name="Russell" Level="subunit" FIPSCode="51167" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="18" Total="18" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="8229" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1452"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="17"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47084" Name="Scott" Level="subunit" FIPSCode="51169" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="20" Total="20" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="7065" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1034"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="28"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47085" Name="Shenandoah" Level="subunit" FIPSCode="51171" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="13693" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4535"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="107"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47086" Name="Smyth" Level="subunit" FIPSCode="51173" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="17" Total="17" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="8477" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1751"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="35"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47087" Name="Southampton" Level="subunit" FIPSCode="51175" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5084" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2717"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="29"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47088" Name="Spotsylvania" Level="subunit" FIPSCode="51177" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="29" Total="29" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="32478" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="21426"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="346"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47091" Name="Surry" Level="subunit" FIPSCode="51181" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1768" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1756"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="9"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47092" Name="Sussex" Level="subunit" FIPSCode="51183" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1973" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2028"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="24"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47093" Name="Tazewell" Level="subunit" FIPSCode="51185" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="23" Total="23" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="12045" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1821"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="40"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47094" Name="Warren" Level="subunit" FIPSCode="51187" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="11294" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4328"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="89"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47095" Name="Washington" Level="subunit" FIPSCode="51191" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="22" Total="22" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="17395" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4505"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="78"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47096" Name="Westmoreland" Level="subunit" FIPSCode="51193" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="11" Total="11" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4614" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2971"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="30"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47097" Name="Wise" Level="subunit" FIPSCode="51195" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="9691" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1796"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="53"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47098" Name="Wythe" Level="subunit" FIPSCode="51197" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="9458" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2043"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="59"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47099" Name="York" Level="subunit" FIPSCode="51199" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="17485" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="12190"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="150"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47100" Name="Alexandria" Level="subunit" FIPSCode="51510" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="33" Total="33" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="14013" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="43866"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="385"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47102" Name="Bristol" Level="subunit" FIPSCode="51520" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="7" Total="7" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3773" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1342"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="30"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47103" Name="Buena Vista" Level="subunit" FIPSCode="51530" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="5" Total="5" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1459" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="481"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="22"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47104" Name="Charlottesville" Level="subunit" FIPSCode="51540" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2774" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="14378"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="173"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47105" Name="Chesapeake" Level="subunit" FIPSCode="51550" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="66" Total="66" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="48079" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="42907"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="654"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47107" Name="Colonial Heights" Level="subunit" FIPSCode="51570" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4913" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1729"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="53"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47108" Name="Covington" Level="subunit" FIPSCode="51580" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1198" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="579"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="16"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47109" Name="Danville" Level="subunit" FIPSCode="51590" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="19" Total="19" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5907" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="6872"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="80"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47110" Name="Emporia" Level="subunit" FIPSCode="51595" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="723" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1087"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="20"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47111" Name="Fairfax City" Level="subunit" FIPSCode="51600" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3606" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="6465"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="59"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47112" Name="Falls Church" Level="subunit" FIPSCode="51610" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1590" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="5388"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="42"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47113" Name="Franklin City" Level="subunit" FIPSCode="51620" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1270" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1680"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="14"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47114" Name="Fredericksburg" Level="subunit" FIPSCode="51630" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3503" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="5402"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="113"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47115" Name="Galax" Level="subunit" FIPSCode="51640" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="5" Total="5" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1424" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="492"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="9"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47116" Name="Hampton" Level="subunit" FIPSCode="51650" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="33" Total="33" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="14651" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="29971"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="449"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47117" Name="Harrisonburg" Level="subunit" FIPSCode="51660" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="11" Total="11" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4382" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="6812"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="131"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47118" Name="Hopewell" Level="subunit" FIPSCode="51670" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="3095" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3085"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="87"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47119" Name="Lexington" Level="subunit" FIPSCode="51678" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="4" Total="4" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="775" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1289"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="10"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47122" Name="Manassas" Level="subunit" FIPSCode="51683" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="5050" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="6155"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="87"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47123" Name="Manassas Park" Level="subunit" FIPSCode="51685" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1379" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2158"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="46"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47124" Name="Martinsville" Level="subunit" FIPSCode="51690" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1676" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="2224"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="40"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47125" Name="Newport News" Level="subunit" FIPSCode="51700" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="48" Total="48" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="21241" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="32399"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="588"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47126" Name="Norfolk" Level="subunit" FIPSCode="51710" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="51" Total="51" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="18888" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="40324"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="789"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47127" Name="Norton" Level="subunit" FIPSCode="51720" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="4" Total="4" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="866" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="320"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="13"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47128" Name="Petersburg" Level="subunit" FIPSCode="51730" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1207" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="7591"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="141"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47129" Name="Poquoson" Level="subunit" FIPSCode="51735" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4897" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1364"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="32"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47130" Name="Portsmouth" Level="subunit" FIPSCode="51740" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="34" Total="34" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="9946" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="19513"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="355"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47131" Name="Radford" Level="subunit" FIPSCode="51750" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="7" Total="7" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="2266" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="1879"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="44"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47132" Name="Richmond City" Level="subunit" FIPSCode="51760" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="72" Total="72" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="15713" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="61929"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="2409"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47133" Name="Roanoke City" Level="subunit" FIPSCode="51770" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="23" Total="23" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="12024" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="16817"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="272"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47134" Name="Salem" Level="subunit" FIPSCode="51775" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="6144" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3344"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="60"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47136" Name="Staunton" Level="subunit" FIPSCode="51790" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4640" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="5004"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="119"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47137" Name="Suffolk" Level="subunit" FIPSCode="51800" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="30" Total="30" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="17351" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="19079"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="252"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47138" Name="Virginia Beach" Level="subunit" FIPSCode="51810" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="103" Total="103" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="86973" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="73965"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="1160"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47139" Name="Waynesboro" Level="subunit" FIPSCode="51820" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="7" Total="7" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4473" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3275"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="99"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47140" Name="Williamsburg" Level="subunit" FIPSCode="51830" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="5" Total="5" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="1703" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="3185"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="40"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47141" Name="Winchester" Level="subunit" FIPSCode="51840" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="4137" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="4294"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="60"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47143" Name="Chesterfield" Level="subunit" FIPSCode="51041" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="83" Total="83" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="80889" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="74085"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="1194"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47144" Name="Fairfax" Level="subunit" FIPSCode="51059" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="250" Total="250" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="152110" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="286316"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="2348"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47145" Name="Prince William" Level="subunit" FIPSCode="51153" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="96" Total="96" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="64658" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="87352"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="1111"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47146" Name="Stafford" Level="subunit" FIPSCode="51179" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="30" Total="30" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="31680" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="25463"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="425"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47147" Name="Lynchburg" Level="subunit" FIPSCode="51680" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="21" Total="21" ReportingPct="100.00"/>
+<Candidate ID="52111" Party="GOP" First="Glenn" Last="Youngkin" PolID="69739" BallotOrder="2" PolNum="49726" VoteCount="13668" Winner="X" WinnerDateTime="2021-11-03T04:38:21.192Z"/>
+<Candidate ID="52002" Party="Dem" First="Terry" Last="McAuliffe" Abbrv="McAuliff" PolID="60075" BallotOrder="1" PolNum="49261" VoteCount="11000"/>
+<Candidate ID="52112" Party="Lib" First="Princess" Last="Blanding" PolID="69738" BallotOrder="3" PolNum="49727" VoteCount="198"/>
+</ReportingUnit>
+</Race>
+<link xmlns="http://www.w3.org/2005/Atom" rel="next" href="https://api.ap.org/v3/elections/2021-11-02?level=ru&officeid=G&racetypeid=G&resultstype=l&statepostal=VA&national=true&minDateTime=2025-10-01T11%3A46%3A53.354317940Z"/>
+</Vote>

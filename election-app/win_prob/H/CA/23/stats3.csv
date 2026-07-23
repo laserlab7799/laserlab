@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,Kern,06029,3127,2226,0,100.0,100.00
+2024-11-05T15-30-22,CA,Los Angeles,06037,2406,2155,0,100.0,100.00
+2024-11-05T15-30-22,CA,San Bernardino,06071,153753,101182,0,100.0,100.00

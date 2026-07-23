@@ -1,0 +1,16 @@
+checker.py report  (2026-02-04T21:19:23Z)
+input_dir        : /Users/news/Desktop/Projects/ElectionData/w_2026/win_prob/G/IN
+plot_file        : statewide_plot_data_in.json
+box_all_file     : statewide_margin_pct_vs_percent_IN_2026_box_all.json
+points_checked   : 8
+mismatches_found : 0
+
+Per-point results:
+[MATCH] i=0 x=24.03 median=-3.066939987456391 sign=negative leader red->red trailer blue->blue leader_raw red->red
+[MATCH] i=1 x=64.76 median=-11.899111481839864 sign=negative leader red->red trailer blue->blue leader_raw red->red
+[MATCH] i=2 x=77.13 median=-12.512484670973185 sign=negative leader red->red trailer blue->blue leader_raw red->red
+[MATCH] i=3 x=84.62 median=-13.642554166832664 sign=negative leader red->red trailer blue->blue leader_raw red->red
+[MATCH] i=4 x=86.81 median=-13.939954181973562 sign=negative leader red->red trailer blue->blue leader_raw red->red
+[MATCH] i=5 x=88.56 median=-13.738257419259794 sign=negative leader red->red trailer blue->blue leader_raw red->red
+[MATCH] i=6 x=99.0 median=-13.18567890086166 sign=negative leader red->red trailer blue->blue leader_raw red->red
+[MATCH] i=7 x=100.0 median=-13.277524714344304 sign=negative leader red->red trailer blue->blue leader_raw red->red

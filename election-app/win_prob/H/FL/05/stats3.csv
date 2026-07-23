@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,FL,Duval,12031,154586,103698,0,100.0,100.00
+2024-11-05T15-30-22,FL,St. Johns,12109,112885,52872,0,100.0,100.00

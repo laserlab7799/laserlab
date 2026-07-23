@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,NY,Bronx,36005,27890,70244,0,100.0,100.00
+2024-11-05T15-30-22,NY,Queens,36081,31188,62470,0,100.0,100.00

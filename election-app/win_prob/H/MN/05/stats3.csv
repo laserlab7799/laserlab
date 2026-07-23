@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,MN,Anoka,27003,10217,15699,0,100.0,100.00
+2024-11-05T15-30-22,MN,Hennepin,27053,75507,244163,0,100.0,100.00
+2024-11-05T15-30-22,MN,Ramsey,27123,489,1204,0,100.0,100.00

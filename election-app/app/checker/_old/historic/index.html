@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Presidential Results (Historic + 2026 Live)</title>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://d3js.org/topojson.v3.min.js"></script>
+<style>
+  :root{--bg:#0b1220;--fg:#eaf0ff;--muted:#9fb3d1;--card:#14233d;}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--fg);font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{height:52px;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#0e1730;border-bottom:1px solid rgba(255,255,255,.12)}
+  .stage{position:relative;display:grid;grid-template-columns:1fr 360px;height:calc(100svh - 52px);gap:12px;padding:12px}
+  .map-shell{background:#10151f;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+  #map{width:100%;height:100%}
+  aside{background:var(--card);border:1px solid rgba(255,255,255,.14);border-radius:12px;display:flex;flex-direction:column;min-height:0}
+  h2{margin:0;padding:10px 12px;font-size:14px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.08)}
+  .body{padding:12px;overflow:auto}
+  label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+  select,button{width:100%;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:#1f2d50;color:var(--fg);cursor:pointer}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .kv{font:12px ui-monospace,monospace}
+  .cand{font:13px ui-monospace,monospace;margin:2px 0}
+</style>
+</head>
+<body>
+  <header>
+    <strong>Presidential Viewer</strong>
+    <span id="status" class="kv">ready</span>
+  </header>
+
+  <div class="stage">
+    <div class="map-shell">
+      <svg id="map"></svg>
+    </div>
+
+    <aside>
+      <h2>Controls</h2>
+      <div class="body">
+        <div class="row" style="margin-bottom:10px">
+          <div>
+            <label for="yearSel">Year</label>
+            <select id="yearSel">
+              <option value="2026">2026 (Live)</option>
+              <option value="2024" selected>2024</option>
+              <option value="2022">2022</option>
+              <option value="2020">2020</option>
+              <option value="2018">2018</option>
+              <option value="2016">2016</option>
+            </select>
+          </div>
+          <div>
+            <label for="stateSel">State</label>
+            <select id="stateSel" disabled>
+              <option value="">Select a year…</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="countySel">County (includes “Statewide Total”)</label>
+          <select id="countySel" disabled>
+            <option value="">Select a state…</option>
+          </select>
+        </div>
+
+        <hr style="margin:14px 0;border-color:rgba(255,255,255,.08)"/>
+
+        <div id="details"></div>
+      </div>
+    </aside>
+  </div>
+
+<script>
+const statusEl = document.getElementById("status");
+const yearSel   = document.getElementById("yearSel");
+const stateSel  = document.getElementById("stateSel");
+const countySel = document.getElementById("countySel");
+const details   = document.getElementById("details");
+
+let projection, path, svg, rootG, stateGeoms = null, countyGeoms = null;
+
+init();
+
+async function init(){
+  svg = d3.select("#map");
+  rootG = svg.append("g");
+  projection = d3.geoAlbersUsa();
+  path = d3.geoPath().projection(projection);
+
+  const [stTopo, ctTopo] = await Promise.all([
+    d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json"),
+    d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json")
+  ]);
+  stateGeoms  = topojson.feature(stTopo, stTopo.objects.states).features;
+  countyGeoms = topojson.feature(ctTopo, ctTopo.objects.counties).features;
+
+  const mapShell = document.querySelector(".map-shell");
+  function resize(){
+    const w = mapShell.clientWidth, h = mapShell.clientHeight;
+    svg.attr("width", w).attr("height", h);
+    projection.translate([w/2,h/2]).scale(Math.min(w,h)*1.25);
+    redrawBase();
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  // Wire selectors
+  yearSel.onchange = handleYearChange;
+  stateSel.onchange = handleStateChange;
+  countySel.onchange = handleCountyChange;
+
+  // initial load for 2024
+  await handleYearChange();
+}
+
+function redrawBase(){
+  // just light basemap states outlines
+  rootG.selectAll("path").remove();
+  rootG.selectAll("path.state")
+    .data(stateGeoms)
+    .join("path")
+    .attr("class","state")
+    .attr("d", path)
+    .attr("fill","#0f1726")
+    .attr("stroke","#2c3e58")
+    .attr("stroke-width",0.75)
+    .attr("vector-effect","non-scaling-stroke");
+}
+
+async function handleYearChange(){
+  const year = yearSel.value;
+
+  // 2026 live = disable state/county lists (map-only or your existing controls)
+  if (year === "2026"){
+    stateSel.disabled = true;
+    countySel.disabled = true;
+    stateSel.innerHTML = `<option value="">(Historic only — pick 2016–2024)</option>`;
+    countySel.innerHTML = `<option value="">(Historic only — pick 2016–2024)</option>`;
+    details.innerHTML = `<div class="kv">2026 is live via API (/cache/ru). Use your existing map controls.</div>`;
+    statusEl.textContent = "Year 2026 — live";
+    return;
+  }
+
+  // Historic years: load states for P/G
+  stateSel.disabled = false;
+  countySel.disabled = true;
+  countySel.innerHTML = `<option value="">Select a state…</option>`;
+
+  statusEl.textContent = "Loading states…";
+  const r = await fetch(`/historic/list?year=${encodeURIComponent(year)}&office=P`);
+  const j = await r.json();
+
+  stateSel.innerHTML = "";
+  if (j.states && j.states.length){
+    stateSel.appendChild(new Option("— Choose a state —",""));
+    j.states.forEach(s => stateSel.appendChild(new Option(s, s)));
+    statusEl.textContent = `Loaded ${j.states.length} states for ${year}`;
+  } else {
+    stateSel.appendChild(new Option("(No states found)", ""));
+    statusEl.textContent = `No states found for ${year}`;
+  }
+}
+
+async function handleStateChange(){
+  const year  = yearSel.value;
+  const state = stateSel.value;
+  if (!year || !state){ countySel.disabled = true; return; }
+
+  statusEl.textContent = `Loading ${state} counties…`;
+  const r = await fetch(`/historic/state?year=${encodeURIComponent(year)}&office=P&state=${encodeURIComponent(state)}`);
+  const j = await r.json();
+
+  // Build county dropdown (first item is statewide)
+  countySel.disabled = false;
+  countySel.innerHTML = "";
+  if (j.rows && j.rows.length){
+    j.rows.forEach(row => {
+      // label shows "Statewide Total" or county name
+      const label = row.fips === "STATE" ? "Statewide Total" : row.name;
+      countySel.appendChild(new Option(label, row.fips));
+    });
+    statusEl.textContent = `Loaded ${j.rows.length-1} counties + statewide for ${state} ${year}`;
+  } else {
+    countySel.appendChild(new Option("(No counties found)",""));
+    statusEl.textContent = `No county data for ${state} ${year}`;
+  }
+
+  // Save last payload for details display
+  countySel.dataset.payload = JSON.stringify(j.rows || []);
+  // Auto-select statewide
+  countySel.selectedIndex = 0;
+  handleCountyChange();
+}
+
+function handleCountyChange(){
+  const rows = JSON.parse(countySel.dataset.payload || "[]");
+  const fips = countySel.value;
+  const row = rows.find(r => r.fips === fips);
+  if (!row){
+    details.innerHTML = `<div class="kv">No data.</div>`;
+    return;
+  }
+
+  // Render details
+  const title = row.fips === "STATE" ? "Statewide Total" : row.name;
+  const lines = row.candidates
+    .slice().sort((a,b)=>b.votes-a.votes)
+    .map(c => `<div class="cand">${c.name} (${c.party}) — ${c.votes.toLocaleString()}</div>`)
+    .join("");
+
+  details.innerHTML =
+    `<div class="kv" style="opacity:.8;margin-bottom:6px">${row.state} • ${yearSel.value}</div>
+     <h3 style="margin:.2rem 0 0.4rem">${title}</h3>
+     ${lines}
+     <div class="kv" style="margin-top:6px">Total: ${row.total.toLocaleString()}</div>`;
+
+  // Zoom the map (state or county)
+  if (row.fips === "STATE"){
+    const sf = stateGeoms.find(s => String(s.id).padStart(2,"0") === statefpFromUsps(row.state));
+    if (sf) fitFeature(sf, 8);
+  } else {
+    const cf = countyGeoms.find(c => String(c.id).padStart(5,"0") === row.fips);
+    if (cf) fitFeature(cf, 12);
+  }
+}
+
+function statefpFromUsps(usps){
+  const map = {
+    AL:"01",AK:"02",AZ:"04",AR:"05",CA:"06",CO:"08",CT:"09",DC:"11",DE:"10",FL:"12",GA:"13",HI:"15",
+    IA:"19",ID:"16",IL:"17",IN:"18",KS:"20",KY:"21",LA:"22",MA:"25",MD:"24",ME:"23",MI:"26",MN:"27",
+    MO:"29",MS:"28",MT:"30",NC:"37",ND:"38",NE:"31",NH:"33",NJ:"34",NM:"35",NV:"32",NY:"36",OH:"39",
+    OK:"40",OR:"41",PA:"42",RI:"44",SC:"45",SD:"46",TN:"47",TX:"48",UT:"49",VA:"51",VT:"50",WA:"53",
+    WI:"55",WV:"54",WY:"56"
+  };
+  return map[usps] || "";
+}
+
+function fitFeature(feature, cap){
+  const b = path.bounds(feature),
+        w = +svg.attr("width"),
+        h = +svg.attr("height"),
+        dx = b[1][0] - b[0][0],
+        dy = b[1][1] - b[0][1],
+        x  = (b[0][0] + b[1][0]) / 2,
+        y  = (b[0][1] + b[1][1]) / 2,
+        scale = Math.min(cap, 0.9 / Math.max(dx / w, dy / h)),
+        translate = [w/2 - scale * x, h/2 - scale * y];
+
+  svg.transition().duration(450)  /* snappy like your ref */
+     .tween("zoom", () => t => {
+        rootG.attr("transform",
+          `translate(${translate[0]},${translate[1]}) scale(${scale})`);
+     });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,FL,Broward,12011,6461,24182,0,100.0,100.00
+2024-11-05T15-30-22,FL,Miami-Dade,12086,84231,170692,0,100.0,100.00

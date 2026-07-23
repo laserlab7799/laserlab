@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,TX,Dallas,48113,76477,59938,0,100.0,100.00
+2024-11-05T15-30-22,TX,Tarrant,48439,150631,89580,0,100.0,100.00

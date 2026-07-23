@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,OH,Portage,39133,1021,589,0,100.0,100.00
+2024-11-05T15-30-22,OH,Stark,39151,66666,50852,0,100.0,100.00
+2024-11-05T15-30-22,OH,Summit,39153,121237,146025,0,100.0,100.00

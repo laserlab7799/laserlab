@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,FL,Citrus,12017,72535,22867,0,100.0,100.00
+2024-11-05T15-30-22,FL,Hernando,12053,76477,31287,0,100.0,100.00
+2024-11-05T15-30-22,FL,Pasco,12101,157475,70795,0,100.0,100.00

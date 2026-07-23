@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Server Links</title>
+  <style>
+    :root{
+      --bg:#f4f6fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --border:#e2e8f0;
+      --shadow:0 10px 28px rgba(2,8,23,.08);
+      --shadow2:0 6px 16px rgba(2,8,23,.06);
+      --accent:#2563eb;
+      --accent2:#1d4ed8;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 520px at 15% -10%, #e7eeff 0%, transparent 62%),
+        radial-gradient(900px 480px at 110% 10%, #e8fbf0 0%, transparent 56%),
+        var(--bg);
+    }
+    .wrap{ max-width: 980px; margin: 28px auto; padding: 0 16px 28px; }
+    .hero{
+      background: rgba(255,255,255,.82);
+      border:1px solid rgba(226,232,240,.95);
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+      padding: 18px;
+      backdrop-filter: blur(8px);
+    }
+    .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size: 14px;
+      line-height: 1.35;
+      max-width: 72ch;
+      font-weight: 650;
+      letter-spacing: .2px;
+    }
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .search{
+      flex: 1 1 320px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background: #fff;
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow2);
+    }
+    .search input{
+      border:none;
+      outline:none;
+      width:100%;
+      font-size: 14px;
+      color:var(--text);
+      background: transparent;
+    }
+    .btnrow{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .btn{
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      cursor:pointer;
+      box-shadow: var(--shadow2);
+      transition: transform .06s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .btn:hover{ border-color:#cbd5e1; transform: translateY(-1px); }
+    .btn.primary{
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent2) 100%);
+      border-color: rgba(37,99,235,.5);
+      color:#fff;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    @media (max-width: 760px){ .grid{ grid-template-columns: 1fr; } }
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow2);
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      transition: transform .06s ease, border-color .12s ease, box-shadow .12s ease;
+      min-height: 118px;
+    }
+    .card:hover{
+      transform: translateY(-1px);
+      border-color:#cbd5e1;
+      box-shadow: 0 12px 28px rgba(2,8,23,.08);
+    }
+    .title{ font-size: 15px; font-weight: 650; margin:0; }
+    .desc{ margin:0; color:var(--muted); font-size: 13px; line-height: 1.35; }
+    .meta{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top: 2px; }
+    .tag{
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background:#f8fafc;
+      color:#334155;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:auto;
+    }
+    a.open{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      text-decoration:none;
+      font-size: 13px;
+      border:1px solid rgba(37,99,235,.25);
+      background: rgba(37,99,235,.07);
+      color: #1d4ed8;
+      transition: transform .06s ease, background .12s ease, border-color .12s ease;
+    }
+    a.open:hover{
+      transform: translateY(-1px);
+      background: rgba(37,99,235,.10);
+      border-color: rgba(37,99,235,.35);
+    }
+    .footer{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+      padding-right: 2px;
+    }
+    .hidden{ display:none !important; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="top">
+        <p class="sub">Click to open the Election App and admin pages.</p>
+        <div class="btnrow">
+          <button class="btn primary" id="openApp">Open Election App</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="search" title="Filter by name or description">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input id="q" placeholder="Search…" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="grid" id="grid"></div>
+      <div class="footer" id="count"></div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const ROOT_8080 = "http://98.87.214.119:8080";
+  const ROOT_443  = "http://98.87.214.119:443";
+
+  const pages = [
+    { title: "Election App",          desc: "Main election application",                   url: ROOT_8080 + "/", tags:["App"] },
+    { title: "Backend file uploader", desc: "Upload, download, and manage backend files",  url: ROOT_8080 + "/backend.html", tags:["Admin"] },
+    { title: "BOP overrides",         desc: "Adjust balance of power overrides",           url: ROOT_8080 + "/bop-overrides.html", tags:["Admin"] },
+    { title: "Custom images",         desc: "Upload and manage candidate images",          url: ROOT_8080 + "/custom-images.html", tags:["Admin"] },
+    { title: "Election date",         desc: "Run API endpoint calls / date tools",         url: ROOT_8080 + "/election-date.html", tags:["Tools"] },
+
+    // NEW:
+    { title: "Primary date input",    desc: "Edit primary dates + all-party primary mapping", url: ROOT_8080 + "/primary-dates-new.html", tags:["Tools"] },
+    { title: "Full URL editor",       desc: "Edit main general/full-data URL endpoint list",  url: ROOT_8080 + "/full-url.html", tags:["Tools"] },
+
+        { title: "Results type",         desc: "Toggle AP resultstype (b / t)",              url: ROOT_8080 + "/results-type.html", tags:["Tools"] },
+
+{ title: "Server load",           desc: "View server load and basic health",           url: ROOT_8080 + "/load.html", tags:["Tools"] },
+    { title: "Override admin",        desc: "Override control panel",                      url: ROOT_8080 + "/override-admin.html", tags:["Admin"] },
+    { title: "App control panel",     desc: "Server/app control panel",                    url: ROOT_443 + "/", tags:[":443"] },
+    { title: "Pipeline targets",      desc: "Select races for prediction model",           url: ROOT_8080 + "/pipeline-targets.html", tags:["Model"] },
+    { title: "Readout",               desc: "Readout of app tasks",                        url: ROOT_8080 + "/readout.html", tags:["Tools"] },
+    { title: "Senate holdovers",      desc: "Edit senate holdovers by year",               url: ROOT_8080 + "/senate-holdovers.html", tags:["Admin"] },
+    { title: "Year settings",         desc: "Set year for live election and historic data",url: ROOT_8080 + "/year.html", tags:["Admin"] },
+    { title: "Get historic data",    desc: "Fetch and save AP full dataset", url: ROOT_8080 + "/full-data.html", tags:["Tools"] },
+  ];
+
+  const grid = document.getElementById("grid");
+  const q = document.getElementById("q");
+  const count = document.getElementById("count");
+
+  function tagHTML(tags){
+    return (tags || []).map(t => `<span class="tag">${t}</span>`).join("");
+  }
+
+  function icon(){
+    return `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M14 3h7v7" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round"/>
+        <path d="M21 3l-9 9" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round"/>
+        <path d="M10 5H7a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-3" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round"/>
+      </svg>`;
+  }
+
+  function card(p){
+    const el = document.createElement("div");
+    el.className = "card";
+    el.dataset.search = (p.title + " " + p.desc + " " + (p.tags||[]).join(" ")).toLowerCase();
+
+    el.innerHTML = `
+      <div>
+        <div class="title">${p.title}</div>
+        <p class="desc">${p.desc}</p>
+        <div class="meta">${tagHTML(p.tags)}</div>
+      </div>
+
+      <div class="actions">
+        <a class="open" href="${p.url}" target="_blank" rel="noopener noreferrer">${icon()} Open</a>
+      </div>
+    `;
+    return el;
+  }
+
+  function render(){
+    grid.innerHTML = "";
+    pages.forEach(p => grid.appendChild(card(p)));
+    updateCount();
+  }
+
+  function updateCount(){
+    const term = (q.value || "").trim().toLowerCase();
+    const cards = [...grid.children];
+    let shown = 0;
+    for (const c of cards){
+      const ok = !term || c.dataset.search.includes(term);
+      c.classList.toggle("hidden", !ok);
+      if (ok) shown++;
+    }
+    count.textContent = `${shown} / ${pages.length} shown`;
+  }
+
+  q.addEventListener("input", updateCount);
+
+  document.getElementById("openApp").onclick = () => window.open(ROOT_8080 + "/", "_blank", "noopener");
+
+  render();
+})();
+</script>
+</body>
+</html>

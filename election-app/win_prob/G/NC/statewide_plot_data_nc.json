@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "state": "NC",
+    "year": 2026,
+    "sources": [
+      "plotdata_NC_2026_2026-01-13T16-59-05.jsonl",
+      "plotdata_NC_2026_2026-01-13T17-05-08.jsonl",
+      "plotdata_NC_2026_2026-01-13T17-11-11.jsonl",
+      "plotdata_NC_2026_2026-01-13T17-17-15.jsonl",
+      "plotdata_NC_2026_2026-01-13T17-23-18.jsonl",
+      "plotdata_NC_2026_2026-01-13T17-29-21.jsonl",
+      "plotdata_NC_2026_2026-01-13T17-35-23.jsonl",
+      "plotdata_NC_2026_2026-01-13T17-41-26.jsonl",
+      "plotdata_NC_2026_2026-01-13T20-25-51.jsonl",
+      "plotdata_NC_2026_2026-01-13T20-31-55.jsonl",
+      "plotdata_NC_2026_2026-01-13T20-37-58.jsonl",
+      "plotdata_NC_2026_2026-01-13T20-44-01.jsonl",
+      "plotdata_NC_2026_2026-01-13T20-50-05.jsonl",
+      "plotdata_NC_2026_2026-01-13T20-56-08.jsonl",
+      "plotdata_NC_2026_2026-01-13T21-02-10.jsonl",
+      "plotdata_NC_2026_2026-01-13T21-08-12.jsonl",
+      "plotdata_NC_2026_2026-01-23T19-17-09.jsonl",
+      "plotdata_NC_2026_2026-01-23T19-24-13.jsonl",
+      "plotdata_NC_2026_2026-01-23T19-31-16.jsonl",
+      "plotdata_NC_2026_2026-01-23T19-38-19.jsonl",
+      "plotdata_NC_2026_2026-01-23T19-45-23.jsonl",
+      "plotdata_NC_2026_2026-01-23T19-52-26.jsonl",
+      "plotdata_NC_2026_2026-01-23T19-59-10.jsonl",
+      "plotdata_NC_2026_2026-01-23T20-06-12.jsonl",
+      "plotdata_NC_2026_2026-01-23T20-13-14.jsonl",
+      "plotdata_NC_2026_2026-01-25T17-46-36.jsonl",
+      "plotdata_NC_2026_2026-01-25T17-53-40.jsonl",
+      "plotdata_NC_2026_2026-01-25T18-00-43.jsonl",
+      "plotdata_NC_2026_2026-01-25T18-07-47.jsonl",
+      "plotdata_NC_2026_2026-01-25T18-14-50.jsonl",
+      "plotdata_NC_2026_2026-01-25T18-21-54.jsonl",
+      "plotdata_NC_2026_2026-01-25T18-28-57.jsonl",
+      "plotdata_NC_2026_2026-01-25T18-35-59.jsonl",
+      "plotdata_NC_2026_2026-01-25T18-43-02.jsonl",
+      "plotdata_NC_2026_2026-02-04T16-19-39.jsonl",
+      "plotdata_NC_2026_2026-02-04T16-22-15.jsonl",
+      "plotdata_NC_2026_2026-02-04T16-42-20.jsonl"
+    ],
+    "generated_at": "2026-02-04T21:43:18Z",
+    "notes": "Persistent accumulator: merges new plotdata JSONLs into existing output JSON. leader/trailer computed per x by max adjusted win_probability; leader_raw from raw series for same leader candidate when present. History is stored in points_by_x so deleting JSONLs does not lose past points.",
+    "leader_color_source": "mc_median_sign",
+    "leader_color_fix_applied": true,
+    "leader_color_fix_generated_at": "2026-02-04T21:43:49Z"
+  },
+  "series": {
+    "leader": {
+      "x": [
+        4.34,
+        58.06,
+        83.01,
+        88.67,
+        98.45,
+        99.0,
+        100.0
+      ],
+      "y": [
+        50.0,
+        79.9985,
+        94.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "color": [
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "blue"
+      ],
+      "marker": [
+        "o",
+        "o",
+        "o",
+        "o",
+        "o",
+        "o",
+        "o"
+      ]
+    },
+    "trailer": {
+      "x": [
+        4.34,
+        58.06,
+        83.01,
+        88.67,
+        98.45,
+        99.0,
+        100.0
+      ],
+      "y": [
+        50.0,
+        20.001499999999993,
+        6.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "color": [
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red"
+      ],
+      "marker": [
+        "s",
+        "s",
+        "s",
+        "s",
+        "s",
+        "s",
+        "s"
+      ]
+    },
+    "leader_raw": {
+      "x": [
+        4.34,
+        58.06,
+        83.01,
+        88.67,
+        98.45,
+        99.0,
+        100.0
+      ],
+      "y": [
+        6.586,
+        99.9985,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "color": [
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "blue"
+      ],
+      "marker": [
+        "^",
+        "^",
+        "^",
+        "^",
+        "^",
+        "^",
+        "^"
+      ]
+    },
+    "trailer_raw": {
+      "x": [
+        4.34,
+        58.06,
+        83.01,
+        88.67,
+        98.45,
+        99.0,
+        100.0
+      ],
+      "y": [
+        93.414,
+        0.15,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "color": [
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red"
+      ],
+      "marker": [
+        "^",
+        "^",
+        "^",
+        "^",
+        "^",
+        "^",
+        "^"
+      ]
+    },
+    "statewide_margin_pp": {
+      "x": [],
+      "y": []
+    }
+  },
+  "points_by_x": {
+    "4.340000000000": {
+      "adjusted": {
+        "T": 50.0,
+        "H": 50.0
+      },
+      "raw": {
+        "T": 6.586,
+        "H": 93.414
+      }
+    },
+    "58.060000000000": {
+      "adjusted": {
+        "T": 20.001499999999993,
+        "H": 79.9985
+      },
+      "raw": {
+        "T": 0.15,
+        "H": 99.9985
+      }
+    },
+    "83.010000000000": {
+      "adjusted": {
+        "T": 6.0,
+        "H": 94.0
+      },
+      "raw": {
+        "T": 0.0,
+        "H": 100.0
+      }
+    },
+    "88.670000000000": {
+      "adjusted": {
+        "T": 0.0,
+        "H": 100.0
+      },
+      "raw": {
+        "T": 0.0,
+        "H": 100.0
+      }
+    },
+    "98.450000000000": {
+      "adjusted": {
+        "T": 0.0,
+        "H": 100.0
+      },
+      "raw": {
+        "T": 0.0,
+        "H": 100.0
+      }
+    },
+    "99.000000000000": {
+      "adjusted": {
+        "T": 0.0,
+        "H": 100.0
+      },
+      "raw": {
+        "T": 0.0,
+        "H": 100.0
+      }
+    },
+    "100.000000000000": {
+      "adjusted": {
+        "T": 0.0,
+        "H": 100.0
+      },
+      "raw": {
+        "T": 0.0,
+        "H": 100.0
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,Orange,06059,74512,59928,0,100.0,100.00
+2024-11-05T15-30-22,CA,San Diego,06073,106438,137469,0,100.0,100.00

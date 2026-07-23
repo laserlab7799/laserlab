@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,MD,Anne Arundel,24003,91920,114860,5564,100.0,100.00
+2024-11-05T15-30-22,MD,Carroll,24013,7221,4135,255,100.0,100.00
+2024-11-05T15-30-22,MD,Howard,24027,52045,117686,4652,100.0,100.00

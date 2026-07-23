@@ -1,0 +1,5 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,Monterey,06053,21532,58462,0,100.0,100.00
+2024-11-05T15-30-22,CA,San Luis Obispo,06079,28162,24203,0,100.0,100.00
+2024-11-05T15-30-22,CA,Santa Clara,06085,40149,80447,0,100.0,100.00
+2024-11-05T15-30-22,CA,Santa Cruz,06087,22019,89346,0,100.0,100.00

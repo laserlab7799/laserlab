@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,NJ,Essex,34013,46944,99674,2545,100.0,100.00
+2024-11-05T15-30-22,NJ,Morris,34027,96899,105447,2872,100.0,100.00
+2024-11-05T15-30-22,NJ,Passaic,34031,20713,17462,1195,100.0,100.00

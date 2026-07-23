@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,NJ,Middlesex,34023,71173,111690,8416,100.0,100.00
+2024-11-05T15-30-22,NJ,Monmouth,34025,51346,58585,2471,100.0,100.00

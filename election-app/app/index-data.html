@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Election Data — Sheets</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+<style>
+  :root{
+    --bg:#f7f9fc;
+    --sheet:#ffffff;
+    --line:#e2e8f0;
+    --text:#0f172a;
+    --muted:#64748b;
+    --head:#0b1329;
+    --green:#0a7d39;
+    --blue:#0b5fff;
+  }
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:14px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial}
+  header{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 16px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50;
+  }
+  h1{font-size:16px;margin:0;color:var(--head);letter-spacing:.2px}
+  .spacer{flex:1}
+  button{
+    appearance:none;cursor:pointer;border:1px solid var(--line);background:var(--sheet);
+    border-radius:8px;padding:8px 12px;font-weight:600;
+  }
+  button:hover{border-color:#cbd5e1;background:#f8fafc}
+  #stamp{font-size:12px;color:var(--muted)}
+  main{max-width:1200px;margin:20px auto;padding:0 16px 40px}
+  section{background:var(--sheet);border:1px solid var(--line);border-radius:10px;margin:18px 0;overflow:hidden}
+  section > header{
+    display:flex;align-items:baseline;gap:10px;padding:12px 14px;background:#fbfdff;border-bottom:1px solid var(--line);
+  }
+  section h2{font-size:15px;margin:0}
+  .pill{font-size:12px;color:#334155;background:#eef2f7;border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+  .sheet{
+    width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed
+  }
+  .sheet thead th{
+    position:sticky;top:62px; /* below main header */
+    background:#f5f7fb;border-bottom:1px solid var(--line);font-weight:700;color:#0f172a;z-index:5;
+  }
+  .sheet th, .sheet td{
+    padding:8px 10px;border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .sheet th:first-child, .sheet td:first-child{border-left:1px solid var(--line)}
+  .sheet tr:hover td{background:#fafcff}
+  .group-row{background:#f9fafc;font-weight:700}
+  .right{text-align:right}
+  .muted{color:var(--muted)}
+  .ok{color:var(--green);font-weight:700}
+  .subhead{
+    padding:10px 14px;border-top:1px dashed var(--line);background:#fff;display:flex;gap:14px;align-items:center
+  }
+  .call{font-size:12px;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+  .wrap{overflow:auto}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Election Data — Spreadsheet View</h1>
+    <span id="stamp" class="muted"></span>
+    <div class="spacer"></div>
+    <button id="refreshBtn">🔄 Refresh</button>
+  </header>
+
+  <main id="root">
+    <!-- Sections will be injected here -->
+  </main>
+
+<script>
+    
+    // === Allowlist (mirror index.html) ===
+    const CARD_ALLOWLIST = new Set([
+      'Curtis Sliwa','Andrew Cuomo','Zohran Mamdani','Winsome Earle-Sears',
+      'Mikie Sherrill','Jack Ciattarelli','Abigail Spanberger','Jason Miyares',
+      'Jay Jones','Glenn Youngkin','Terry McAuliffe','Philip Murphy',
+      'Eric Adams','Mark Herring','Donald Trump','Kamala Harris','Robert Kennedy',
+      // TX-18 (House Special)
+      'Feldon Bonner II','Amanda Edwards','Stephen Huey','Jolanda Jones','Isaiah Martin',
+      'Christian Menefee','Valencia Williams','Theodis Daniel','Ollie Knox','Carmen Montiel',
+      'Carter Page','Ronald Whitfield','Tammie Rochester','Reyna Anderson','Vince Duncan',
+      'George Foreman IV',
+    ]);
+    
+
+    // --- NYC boroughs (by county FIPS) ---
+    const BORO_FIPS = new Set(['36005','36047','36061','36081','36085']); // Bronx, Kings, New York, Queens, Richmond
+    const BORO_NAME_MAP = {
+      'Bronx': 'Bronx',
+      'Kings': 'Brooklyn',
+      'New York': 'Manhattan',
+      'Queens': 'Queens',
+      'Richmond': 'Staten Island'
+    };
+    const BORO_ORDER = ['Manhattan','Brooklyn','Queens','Bronx','Staten Island'];
+
+
+
+    const WRITEIN_RE = /write[-\s]?ins?$/i;
+    function isAllowlistedName(nm){
+      const s = String(nm||'').trim();
+      if (!s) return false;
+      if (WRITEIN_RE.test(s)) return false;
+      return CARD_ALLOWLIST.has(s);
+    }
+
+/**
+ * Reads your hub cache endpoints:
+ *   /cache/ru?office=G&raceTypeId=G  (Gov — VA,NJ)
+ *   /cache/ru?office=A&raceTypeId=G  (AG — VA)
+ *   /cache/ru?office=M&raceTypeId=G  (NYC Mayor — NY, 5 boroughs filtered server-side)
+ *
+ * Uses fields normalized by the hub parser:
+ *   rows: [{ state, fips, name, candidates:[{party,votes}], total, percent_in, state_percent_in, state_topline }]
+ * Parties are already normalized to DEM/REP/IND. (Other parties are anything not DEM/REP/IND.)
+ * Source: hub app’s /cache/ru + parser.  */
+const stampEl = document.getElementById('stamp');
+const root = document.getElementById('root');
+document.getElementById('refreshBtn').addEventListener('click', loadAll);
+
+function fmtNum(n){ return Number(n||0).toLocaleString('en-US'); }
+function pctRound(x){
+  if (x==null || x==='' || isNaN(+x)) return '—';
+  return String(Math.round(+x)) + '%';
+}
+function nowStamp(){
+  const d = new Date(); // local
+  stampEl.textContent = `Last updated ${d.toLocaleString()}`;
+}
+
+// Bucket votes to DEM/REP/IND/OTHER
+// Bucket by allowlisted names; "Other" = total - shownVotes (matches index.html cards)
+function bucket(cands){
+  let total = 0;
+  for (const c of (cands || [])) total += (+c.votes || 0);
+
+  let dem = 0, rep = 0, ind = 0, shown = 0;
+  for (const c of (cands || [])){
+    if (!isAllowlistedName(c.name)) continue;      // only count allowlisted people here
+    const v = +c.votes || 0;
+    shown += v;
+    const P = String(c.party || '').toUpperCase();
+    if (P === 'DEM') dem += v;
+    else if (P === 'REP') rep += v;
+    else ind += v;                                  // IND/NP/NPA and any non-DEM/REP buckets
+  }
+
+  const other = Math.max(0, total - shown);         // identical to withAllowedPlusOther()
+  return { dem, rep, ind, other, total };
+}
+    
+    
+
+    // NYC Mayor: sum exact named candidates, "Other" = total - (3 named)
+    function bucketNYC(cands){
+      let total = 0, mam = 0, cuo = 0, sli = 0, shown = 0;
+      for (const c of (cands || [])){
+        const v = +c.votes || 0;
+        total += v;
+        const nm = String(c.name || '').trim();
+        if (/^Zohran\s+Mamdani$/i.test(nm)) { mam += v; shown += v; continue; }
+        if (/^Andrew\s+Cuomo$/i.test(nm))  { cuo += v; shown += v; continue; }
+        if (/^Curtis\s+Sliwa$/i.test(nm))  { sli += v; shown += v; continue; }
+      }
+      const other = Math.max(0, total - shown);
+      return { mamdani: mam, cuomo: cuo, sliwa: sli, other, total };
+    }
+
+
+
+
+// Summarize a state's county rows
+function summarizeState(rows){
+  const acc = {dem:0, rep:0, ind:0, other:0, total:0};
+  for (const r of rows){
+    const b = bucket(r.candidates);
+    acc.dem += b.dem; acc.rep += b.rep; acc.ind += b.ind; acc.other += b.other; acc.total += b.total;
+  }
+  return acc;
+}
+
+// Render a single “sheet” block (statewide row + each county)
+
+function renderSheet({title, subtitle, statewide, counties, mode}){
+  // mode options:
+  //  - 'gov'   : Dem / Rep / Other
+  //  - 'ag'    : Dem / Rep / Other
+  //  - 'mayor' : Mamdani / Cuomo / Sliwa / Other
+
+  let headCells;
+  if (mode === 'mayor'){
+    headCells = ['Area','mamdani votes','cuomo votes','sliwa votes','Other votes','% in'];
+  } else {
+    headCells = ['Area','Dem votes','Rep votes','Other votes','% in'];
+  }
+
+  const tbl = document.createElement('section');
+  tbl.innerHTML = `
+    <header>
+      <h2>${title}</h2>
+      ${subtitle ? `<span class="pill">${subtitle}</span>` : ''}
+    </header>
+    <div class="wrap">
+      <table class="sheet">
+        <thead><tr>${headCells.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="subhead">
+      <span class="call">Statewide % in: <strong>${pctRound(statewide.percent_in)}</strong></span>
+      <span class="muted">State total: ${fmtNum(statewide.total || 0)}</span>
+    </div>
+  `;
+  const body = tbl.querySelector('tbody');
+
+  // Statewide row (by mode)
+  if (mode === 'mayor'){
+    const sw = ['Statewide',
+      fmtNum(statewide.mamdani||0),
+      fmtNum(statewide.cuomo||0),
+      fmtNum(statewide.sliwa||0),
+      fmtNum(statewide.other||0),
+      pctRound(statewide.percent_in)
+    ];
+    body.insertAdjacentHTML('beforeend', `<tr class="group-row">${
+      sw.map((v,i)=>`<td class="${i? 'right':''}">${v}</td>`).join('')
+    }</tr>`);
+  } else {
+    const sw = ['Statewide',
+      fmtNum(statewide.dem||0),
+      fmtNum(statewide.rep||0),
+      fmtNum(statewide.other||0),
+      pctRound(statewide.percent_in)
+    ];
+    body.insertAdjacentHTML('beforeend', `<tr class="group-row">${
+      sw.map((v,i)=>`<td class="${i? 'right':''}">${v}</td>`).join('')
+    }</tr>`);
+  }
+
+  // Per-area rows
+  for (const c of counties){
+    if (mode === 'mayor'){
+      const b = bucketNYC(c.candidates);
+      const cells = [c.name,
+        fmtNum(b.mamdani), fmtNum(b.cuomo), fmtNum(b.sliwa), fmtNum(b.other),
+        pctRound(c.percent_in)
+      ];
+      body.insertAdjacentHTML('beforeend', `<tr>${
+        cells.map((v,i)=>`<td class="${i? 'right':''}">${v}</td>`).join('')
+      }</tr>`);
+    } else {
+      const b = bucket(c.candidates);
+      const cells = [c.name,
+        fmtNum(b.dem), fmtNum(b.rep), fmtNum(b.other),
+        pctRound(c.percent_in)
+      ];
+      body.insertAdjacentHTML('beforeend', `<tr>${
+        cells.map((v,i)=>`<td class="${i? 'right':''}">${v}</td>`).join('')
+      }</tr>`);
+    }
+  }
+
+  return tbl;
+}
+
+
+// Pull rows per office/race
+async function fetchRU(office, race='G'){
+  const url = `/cache/ru?office=${encodeURIComponent(office)}&raceTypeId=${encodeURIComponent(race)}`;
+  const r = await fetch(url, {cache:'no-store'});
+  if (!r.ok) throw new Error(`HTTP ${r.status} for ${url}`);
+  const j = await r.json();
+  return j.rows || [];
+}
+
+// Build Governor (VA, NJ)
+async function buildGovernor(){
+  const rows = await fetchRU('G','G'); // server already limited to VA,NJ combos
+  const byState = new Map();
+  for (const r of rows){
+    if (r.state !== 'VA' && r.state !== 'NJ') continue; // guard
+    if (!byState.has(r.state)) byState.set(r.state, []);
+    byState.get(r.state).push(r);
+  }
+  const frags = [];
+  for (const usps of ['NJ','VA']){
+    const rs = (byState.get(usps)||[]).slice().sort((a,b)=>String(a.name).localeCompare(String(b.name)));
+    if (!rs.length) continue;
+    // Prefer state topline if present
+    const statePI = rs[0].state_percent_in ?? null;
+    const topline = rs[0].state_topline || [];
+    let statewide = topline.length ? bucket(topline) : summarizeState(rs);
+    statewide.percent_in = statePI;
+
+    frags.push(
+      renderSheet({
+        title: `Governor — ${usps}`,
+        subtitle: 'General',
+        statewide,
+        counties: rs,
+        mode: 'gov'
+      })
+    );
+  }
+  return frags;
+}
+
+// Build Attorney General (VA)
+async function buildAG(){
+  const rows = await fetchRU('A','G');
+  const rs = rows.filter(r=>r.state==='VA').slice().sort((a,b)=>String(a.name).localeCompare(String(b.name)));
+  if (!rs.length) return [];
+  const statePI = rs[0].state_percent_in ?? null;
+  const topline = rs[0].state_topline || [];
+  let statewide = topline.length ? bucket(topline) : summarizeState(rs);
+  statewide.percent_in = statePI;
+
+  return [renderSheet({
+    title: 'Attorney General — VA',
+    subtitle: 'General',
+    statewide,
+    counties: rs,
+    mode: 'ag'
+  })];
+}
+
+// Build NYC Mayor (5 boroughs)
+
+async function buildMayor(){
+  const rows = await fetchRU('M','G');
+
+  // Borough name matches come from AP county "Name" field
+  const BORO_RAW = new Set(['Bronx','Kings','New York','Queens','Richmond']);
+
+  // Partition NY rows into: (a) 5 boroughs we display, (b) "orphans" we DON'T display
+  const nyRows = rows.filter(r => r.state === 'NY');
+
+  const boroRows = nyRows
+    .filter(r => BORO_RAW.has(String(r.name)))
+    .map(r => ({ ...r, name: BORO_NAME_MAP[String(r.name)] || String(r.name) }));
+
+  // Anything in NY that isn't one of the five names — include in statewide only
+  // This will capture “New York City” / FIPS 00000 style citywide buckets.
+  const orphanRows = nyRows.filter(r => !BORO_RAW.has(String(r.name)));
+
+  if (!boroRows.length && !orphanRows.length) return [];
+
+  // Stable display order for the visible table
+  boroRows.sort((a,b) => BORO_ORDER.indexOf(a.name) - BORO_ORDER.indexOf(b.name));
+
+  // Statewide % in from state blob (carried on each row)
+  const statePI = (boroRows[0]?.state_percent_in) ?? (orphanRows[0]?.state_percent_in) ?? null;
+
+  // Statewide totals = sum(boroughs + orphans), bucket by named candidates
+  const statewide = [...boroRows, ...orphanRows].reduce((acc, r) => {
+    const b = bucketNYC(r.candidates);
+    acc.mamdani += b.mamdani;
+    acc.cuomo   += b.cuomo;
+    acc.sliwa   += b.sliwa;
+    acc.other   += b.other;
+    acc.total   += (b.total || 0);
+    return acc;
+  }, {mamdani:0, cuomo:0, sliwa:0, other:0, total:0});
+  statewide.percent_in = statePI;
+
+  return [renderSheet({
+    title: 'Mayor — NYC',
+    subtitle: 'General (5 boroughs)',
+    statewide,
+    counties: boroRows,   // display only the 5 boroughs
+    mode: 'mayor'
+  })];
+}
+
+
+
+async function loadAll(){
+  nowStamp();
+  root.innerHTML = ''; // clear
+  try{
+    const [gov, ag, mayor] = await Promise.all([
+      buildGovernor(),
+      buildAG(),
+      buildMayor()
+    ]);
+    const add = arr => arr.forEach(sec => root.appendChild(sec));
+    add(gov); add(ag); add(mayor);
+  }catch(err){
+    const div = document.createElement('div');
+    div.style.color = 'crimson';
+    div.style.padding = '20px';
+    div.textContent = 'Error loading data: ' + (err && err.message ? err.message : String(err));
+    root.appendChild(div);
+  }
+}
+
+loadAll();
+</script>
+</body>
+</html>

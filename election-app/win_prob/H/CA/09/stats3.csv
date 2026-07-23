@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,Contra Costa,06013,4995,3809,0,100.0,100.00
+2024-11-05T15-30-22,CA,San Joaquin,06077,115515,126146,0,100.0,100.00
+2024-11-05T15-30-22,CA,Stanislaus,06099,664,228,0,100.0,100.00

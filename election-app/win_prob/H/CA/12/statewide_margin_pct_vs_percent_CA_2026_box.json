@@ -1,0 +1,13 @@
+[
+  {
+    "timestamp": "2024-11-05T15-30-22",
+    "statewide_percent_in": 100.0,
+    "mean": 100.0,
+    "median": 100.0,
+    "q1": 100.0,
+    "q3": 100.0,
+    "whisker_low": 100.0,
+    "whisker_high": 100.0,
+    "trials": 200000
+  }
+]

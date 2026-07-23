@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,NJ,Bergen,34003,119958,176817,6278,100.0,100.00
+2024-11-05T15-30-22,NJ,Passaic,34031,17540,13322,732,100.0,100.00
+2024-11-05T15-30-22,NJ,Sussex,34037,27789,18220,1233,100.0,100.00

@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,MI,Kent,26081,126670,169152,7635,100.0,100.00
+2024-11-05T15-30-22,MI,Muskegon,26121,22183,29793,1705,100.0,100.00
+2024-11-05T15-30-22,MI,Ottawa,26139,35099,26565,1487,100.0,100.00

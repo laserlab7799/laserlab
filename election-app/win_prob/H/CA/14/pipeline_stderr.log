@@ -1,0 +1,17 @@
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.47rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.47rows/s]
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.41rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.41rows/s]
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.38rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.37rows/s]
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:01<00:00,  1.52s/rows]Processing rows: 100%|██████████| 1/1 [00:01<00:00,  1.52s/rows]
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:01<00:00,  1.56s/rows]Processing rows: 100%|██████████| 1/1 [00:01<00:00,  1.56s/rows]
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.37rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.37rows/s]
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.32rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  1.31rows/s]
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  2.98rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  2.98rows/s]
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  2.99rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  2.99rows/s]
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  2.45rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  2.45rows/s]
+Traceback (most recent call last):
+  File "/home/ubuntu/apps/election-app/stats/1-stats-2.py", line 27, in <module>
+    with open(INFILE, "r", newline="", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ubuntu/apps/election-app/win_prob/H/CA/14/stats2.csv'
+[failed] Command '['/home/ubuntu/.venv/bin/python3', '/home/ubuntu/apps/election-app/stats/1-stats-2.py', '--input', '/home/ubuntu/apps/election-app/win_prob/H/CA/14/stats2.csv', '--output', '/home/ubuntu/apps/election-app/win_prob/H/CA/14/_work/stats2_final_headers.csv']' returned non-zero exit status 1.
+Processing rows:   0%|          | 0/1 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  2.07rows/s]Processing rows: 100%|██████████| 1/1 [00:00<00:00,  2.06rows/s]

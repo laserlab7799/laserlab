@@ -1,0 +1,5 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,VA,Arlington,51013,26659,96185,4504,100.0,100.00
+2024-11-05T15-30-22,VA,Fairfax,51059,49648,111763,5967,100.0,100.00
+2024-11-05T15-30-22,VA,Alexandria,51510,16692,59657,2893,100.0,100.00
+2024-11-05T15-30-22,VA,Falls Church,51610,1677,6988,248,100.0,100.00

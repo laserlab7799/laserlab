@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,IL,Cook,17031,101666,239486,0,100.0,100.00
+2024-11-05T15-30-22,IL,Lake,17097,11265,11539,0,100.0,100.00

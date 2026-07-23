@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,DE,Kent,10001,42458,44222,1461,100.00,100.00
+2024-11-05T15-30-22,DE,New Castle,10003,90868,180700,4349,100.00,100.00
+2024-11-05T15-30-22,DE,Sussex,10005,81025,64836,1778,100.00,100.00

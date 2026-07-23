@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,FL,Brevard,12009,217174,136014,0,100.0,100.00
+2024-11-05T15-30-22,FL,Indian River,12061,62110,33751,0,100.0,100.00
+2024-11-05T15-30-22,FL,Orange,12095,1068,331,0,100.0,100.00

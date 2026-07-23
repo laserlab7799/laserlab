@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>2026 House Rollup</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+  body { margin: 24px; }
+  h1 { margin: 0 0 10px; font-size: 20px; }
+  .meta { color: #666; font-size: 12px; margin-bottom: 16px; }
+  table { border-collapse: collapse; width: 360px; }
+  th, td { padding: 8px 10px; border-bottom: 1px solid #ddd; text-align: left; }
+  th { font-weight: 600; }
+  tfoot td { font-weight: 700; }
+  .muted { color: #888; }
+  .ok { color: #0a0; }
+  .warn { color: #a60; }
+  .err { color: #a00; }
+  .mono { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+  .pill { display:inline-block; padding:2px 6px; border:1px solid #ccc; border-radius:12px; font-size:12px; margin-left: 8px; }
+</style>
+</head>
+<body>
+  <h1>2026 House — Rollup</h1>
+  <div class="meta">
+    Source: <code>/v2/districts/2026-11-03?statepostal=XX&officeId=H&raceTypeId=G</code>
+    <span class="pill" id="status-pill">loading…</span>
+  </div>
+  <table id="tbl">
+    <thead>
+      <tr><th>party</th><th>called</th><th>uncalled</th></tr>
+    </thead>
+    <tbody id="tbody">
+      <tr><td colspan="3" class="muted">loading…</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td>no data</td><td colspan="2" class="mono" id="nodata">0</td></tr>
+    </tfoot>
+  </table>
+
+  <script>
+    const API = ''; // same-origin; or set to 'http://localhost:9054'
+
+    async function refresh() {
+      const pill = document.getElementById('status-pill');
+      try {
+        pill.textContent = 'fetching…';
+        pill.className = 'pill';
+        const r = await fetch(API + '/rollup');
+        const data = await r.json();
+        pill.textContent = 'ok';
+        pill.className = 'pill ok';
+        render(data);
+      } catch (e) {
+        pill.textContent = 'error';
+        pill.className = 'pill err';
+        console.error(e);
+      }
+    }
+
+    function render(data){
+      const body = document.getElementById('tbody');
+      body.innerHTML = '';
+      const rows = [
+        ['dem', data.totals.dem.called, data.totals.dem.uncalled],
+        ['rep', data.totals.rep.called, data.totals.rep.uncalled],
+        ['ind', data.totals.ind.called, data.totals.ind.uncalled],
+      ];
+      for (const [party, called, uncalled] of rows){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${party}</td><td class="mono">${called}</td><td class="mono">${uncalled}</td>`;
+        body.appendChild(tr);
+      }
+      document.getElementById('nodata').textContent = data.no_data;
+    }
+
+    refresh();
+    setInterval(refresh, 15000);
+  </script>
+</body>
+</html>

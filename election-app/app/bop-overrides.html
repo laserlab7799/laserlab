@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BOP Overrides</title>
+<style>
+  :root{
+    --bg:#0b1220; --panel:#12223f; --ink:#eaf0ff; --muted:#9fb3d1;
+    --blue:#0a6fda; --red:#d81e1e; --ind:#7a4fc8; --ok:#a5f3a5; --warn:#ffd79a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif}
+  header{padding:14px 18px;border-bottom:1px solid #1d2d52;font-weight:700;letter-spacing:.04em}
+  main{max-width:1000px;margin:20px auto;padding:0 14px 40px}
+  .panel{background:var(--panel);border:1px solid #1d2d52;border-radius:12px;padding:16px;margin-bottom:16px}
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  label{font-weight:600;color:var(--muted)}
+  select, input[type="number"]{
+    background:#0f1c35;color:var(--ink);border:1px solid #28406f;border-radius:8px;
+    padding:8px 10px; min-width:100px; font:600 14px/1 system-ui;
+  }
+  .grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:10px}
+  .party{
+    background:#0f1c35;border:1px solid #28406f;border-radius:10px;padding:10px 12px
+  }
+  .party h3{margin:0 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+  .party.dem h3{color:var(--blue)}
+  .party.rep h3{color:var(--red)}
+  .party.ind h3{color:var(--ind)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  button{
+    background:#1f2d50;color:#eaf0ff;border:1px solid rgba(255,255,255,.18);
+    border-radius:10px;padding:10px 14px;font-weight:700;letter-spacing:.04em;cursor:pointer
+  }
+  button.primary{background:#0a6fda;border-color:#0a6fda}
+  button.warn{background:#3a1c1c;border-color:#6b2a2a}
+  .status{margin-top:10px;font:12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;white-space:pre-wrap}
+  .list table{width:100%;border-collapse:collapse}
+  .list th, .list td{border-bottom:1px solid #1d2d52;padding:8px 10px;text-align:left}
+  .list th{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+  .pill{display:inline-block;padding:4px 8px;border-radius:999px;font-weight:700}
+  .pill.dem{background:color-mix(in oklab, var(--blue) 30%, black)}
+  .pill.rep{background:color-mix(in oklab, var(--red) 30%, black)}
+  .pill.ind{background:color-mix(in oklab, var(--ind) 30%, black)}
+  .good{color:var(--ok)} .warn-t{color:var(--warn)}
+  .small{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>BOP Overrides — Admin</header>
+<main>
+
+  <section class="panel">
+    <div class="row" style="justify-content:space-between;align-items:baseline">
+      <div class="row">
+        <label for="yearSel">Year</label>
+        <select id="yearSel" aria-label="Election Year"></select>
+
+        <label for="chamberSel">Chamber</label>
+        <select id="chamberSel" aria-label="Chamber">
+          <option value="H">House</option>
+          <option value="S">Senate</option>
+        </select>
+      </div>
+      <div class="small">Offsets are integers you add/subtract from computed totals. They persist in <code>../temp/bop_overrides.json</code>.</div>
+    </div>
+
+    <div class="grid" style="margin-top:12px">
+      <div class="party dem">
+        <h3>Democrats</h3>
+        <label for="demInput">Offset (±)</label>
+        <input id="demInput" type="number" step="1" value="0" />
+      </div>
+      <div class="party rep">
+        <h3>Republicans</h3>
+        <label for="repInput">Offset (±)</label>
+        <input id="repInput" type="number" step="1" value="0" />
+      </div>
+      <div class="party ind">
+        <h3>Independents</h3>
+        <label for="indInput">Offset (±)</label>
+        <input id="indInput" type="number" step="1" value="0" />
+      </div>
+    </div>
+
+    <div class="actions" style="margin-top:12px">
+      <button class="primary" id="saveBtn">Save / Update</button>
+      <button id="reloadBtn">Reload</button>
+      <button class="warn" id="clearBtn" title="Remove this year/chamber override only">Clear This</button>
+    </div>
+    <div class="status" id="statusBox"></div>
+  </section>
+
+  <section class="panel list">
+    <h3 style="margin:0 0 8px">Current Overrides</h3>
+    <div class="small">One row per (year, chamber). Values shown are additive deltas applied on top of computed totals.</div>
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th>Year</th><th>Chamber</th><th>DEM</th><th>REP</th><th>IND</th><th>Updated</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </section>
+
+</main>
+
+<script>
+  const YEARS = [2026, 2024, 2022, 2020, 2018, 2016];
+  const API = {
+    GET:  '/admin/bop',
+    POST: '/admin/bop'
+  };
+
+  const els = {
+    yearSel:    document.getElementById('yearSel'),
+    chamberSel: document.getElementById('chamberSel'),
+    dem:        document.getElementById('demInput'),
+    rep:        document.getElementById('repInput'),
+    ind:        document.getElementById('indInput'),
+    save:       document.getElementById('saveBtn'),
+    reload:     document.getElementById('reloadBtn'),
+    clear:      document.getElementById('clearBtn'),
+    tbody:      document.getElementById('tbody'),
+    status:     document.getElementById('statusBox')
+  };
+
+  YEARS.forEach(y=>{
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y;
+    els.yearSel.appendChild(o);
+  });
+  els.yearSel.value = YEARS[0];
+
+  async function getAll(){
+    const r = await fetch(API.GET, {cache:'no-store'});
+    if(!r.ok){ throw new Error(`GET /admin/bop -> HTTP ${r.status}`); }
+    return await r.json();
+  }
+
+  function currentKey(){
+    return { year: Number(els.yearSel.value), chamber: els.chamberSel.value };
+  }
+
+  function showStatus(msg, ok=true){
+    els.status.textContent = (ok ? '✓ ' : '✗ ') + msg;
+    els.status.style.color = ok ? 'var(--ok)' : 'var(--warn)';
+  }
+
+  function renderTable(all){
+    const tb = els.tbody; tb.innerHTML = '';
+    const keys = Object.keys(all||{}).sort((a,b)=> b.localeCompare(a));
+    for(const k of keys){
+      const row = all[k];
+      const tr = document.createElement('tr');
+      const [year, chamber] = k.split('|');
+      const updated = row.updated || row._updated || '';
+      tr.innerHTML = `
+        <td>${year}</td>
+        <td><span class="pill ${chamber==='H'?'rep':''} ${chamber==='S'?'dem':''}">${chamber==='H'?'House':'Senate'}</span></td>
+        <td>${row.DEM??0}</td>
+        <td>${row.REP??0}</td>
+        <td>${row.IND??0}</td>
+        <td class="small">${updated}</td>
+      `;
+      tb.appendChild(tr);
+    }
+  }
+
+  function fillForm(all){
+    const {year,chamber} = currentKey();
+    const key = `${year}|${chamber}`;
+    const row = (all||{})[key] || {DEM:0, REP:0, IND:0};
+    els.dem.value = Number(row.DEM||0);
+    els.rep.value = Number(row.REP||0);
+    els.ind.value = Number(row.IND||0);
+  }
+
+  async function reload(){
+    try{
+      const all = await getAll();
+      renderTable(all);
+      fillForm(all);
+      showStatus('Loaded.');
+    }catch(e){
+      console.error(e);
+      showStatus(String(e), false);
+    }
+  }
+
+  async function save(){
+    const payload = {
+      year: Number(els.yearSel.value),
+      chamber: els.chamberSel.value,     // "H" or "S"
+      DEM: Number(els.dem.value||0),
+      REP: Number(els.rep.value||0),
+      IND: Number(els.ind.value||0)
+    };
+    const r = await fetch(API.POST, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ op:'upsert', data: payload })
+    });
+    if(!r.ok) throw new Error(`POST /admin/bop -> HTTP ${r.status}`);
+    const out = await r.json();
+    renderTable(out);
+    showStatus('Saved.');
+  }
+
+  async function clearOne(){
+    const payload = currentKey();
+    const r = await fetch(API.POST, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ op:'delete', data: payload })
+    });
+    if(!r.ok) throw new Error(`POST /admin/bop (delete) -> HTTP ${r.status}`);
+    const out = await r.json();
+    renderTable(out);
+    fillForm(out);
+    showStatus('Cleared this override.');
+  }
+
+  els.reload.addEventListener('click', reload);
+  els.save.addEventListener('click', save);
+  els.clear.addEventListener('click', clearOne);
+  els.yearSel.addEventListener('change', reload);
+  els.chamberSel.addEventListener('change', reload);
+
+  reload();
+</script>
+</body>
+</html>

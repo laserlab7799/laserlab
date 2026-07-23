@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,Imperial,06025,23105,29554,0,100.0,100.00
+2024-11-05T15-30-22,CA,Riverside,06065,82998,107574,0,100.0,100.00
+2024-11-05T15-30-22,CA,San Bernardino,06071,1091,709,0,100.0,100.00

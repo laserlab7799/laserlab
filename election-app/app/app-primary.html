@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>APP Primary Dates Editor</title>
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#121622; --ink:#e8ebff; --muted:#a7adcf;
+    --line:#232834; --accent:#7aa2ff; --ok:#3ddc97; --err:#ff5c74;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+  html,body{height:100%}
+  body{
+    margin:0; background:radial-gradient(1200px 600px at 30% -10%, #1b2440 0, transparent 60%), var(--bg);
+    color:var(--ink); font-family:var(--sans);
+  }
+  header{
+    padding:16px 18px; border-bottom:1px solid var(--line);
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  }
+  h1{margin:0; font-size:16px; letter-spacing:.2px}
+  .pill{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:4px 10px; border-radius:999px;
+    border:1px solid var(--line); background:#0f1116; color:var(--muted); font-size:12px;
+  }
+  .wrap{max-width:1050px; margin:0 auto; padding:16px 18px; display:grid; gap:14px}
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 70%), var(--panel);
+    border:1px solid var(--line); border-radius:16px; padding:14px;
+  }
+  .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  button,input,textarea{
+    background:#0f1116; color:var(--ink);
+    border:1px solid #2a2f3a; border-radius:12px;
+    font:inherit;
+  }
+  button{padding:9px 12px; cursor:pointer}
+  button.primary{border-color:var(--accent)}
+  button.danger{border-color:#ff5c74}
+  input[type="date"]{padding:8px 10px}
+  input[type="text"]{padding:8px 10px; min-width:250px}
+  textarea{
+    width:100%; min-height:84px; padding:10px 12px; resize:vertical; font-family:var(--mono); font-size:12px;
+  }
+  table{width:100%; border-collapse:collapse; font-size:13px}
+  th,td{padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{color:var(--muted); text-align:left; font-weight:600}
+  .mono{font-family:var(--mono); font-size:12px}
+  .tiny{font-size:12px; color:var(--muted)}
+  .status{font-weight:700}
+  .status.ok{color:var(--ok)}
+  .status.err{color:var(--err)}
+  .kbd{font-family:var(--mono); font-size:12px; padding:2px 6px; border:1px solid var(--line); border-radius:8px; background:#0f1116; color:var(--muted)}
+  .right{margin-left:auto}
+</style>
+</head>
+<body>
+<header>
+  <h1>APP Primary Dates (date → states)</h1>
+  <span class="pill">Saves to <span class="mono" id="path">…</span></span>
+  <span class="pill">Last load <span class="mono" id="loadedAt">—</span></span>
+  <span class="pill">Status <span class="status" id="status">—</span></span>
+  <span class="right tiny">Tip: APP is “all-party/top-two” (e.g., CA/WA House primaries). Keep it date+state scoped.</span>
+</header>
+
+<div class="wrap">
+
+  <section class="card">
+    <div class="row">
+      <button class="primary" id="loadBtn">Load current</button>
+      <button id="addRowBtn">Add row</button>
+      <button class="primary" id="saveBtn">Save mapping</button>
+      <button class="danger" id="clearBtn" title="Remove all rows">Clear</button>
+      <span class="tiny">Accepted state format: <span class="kbd">CA</span>, <span class="kbd">WA</span> (comma/space separated). Dates: <span class="kbd">YYYY-MM-DD</span>.</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th style="width:170px">Primary date</th>
+          <th>States using APP on that date</th>
+          <th style="width:90px">Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div class="tiny" style="margin-top:10px">
+      What gets saved is a JSON object like:
+      <span class="mono">{ "2024-03-05": ["CA"], "2024-08-06": ["WA"] }</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="row">
+      <div class="tiny">Raw JSON preview (read-only)</div>
+    </div>
+    <textarea id="preview" readonly></textarea>
+  </section>
+
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const api = (p, opts={}) => fetch(p, Object.assign({headers:{'Content-Type':'application/json'}}, opts));
+
+const tbody = $("#tbl tbody");
+const statusEl = $("#status");
+const pathEl = $("#path");
+const loadedAtEl = $("#loadedAt");
+const previewEl = $("#preview");
+
+function setStatus(ok, msg){
+  statusEl.textContent = msg || (ok ? "OK" : "ERROR");
+  statusEl.className = "status " + (ok ? "ok" : "err");
+}
+
+function normDate(s){
+  s = String(s||"").trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
+  return s;
+}
+
+function normStates(s){
+  const raw = String(s||"")
+    .toUpperCase()
+    .replace(/[^A-Z, \n\t]/g, " ")
+    .split(/[\s,]+/)
+    .map(x => x.trim())
+    .filter(Boolean);
+
+  const out = [];
+  const seen = new Set();
+  for (const st of raw){
+    if (!/^[A-Z]{2}$/.test(st)) continue;
+    if (!seen.has(st)){
+      seen.add(st);
+      out.push(st);
+    }
+  }
+  out.sort();
+  return out;
+}
+
+function readRows(){
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+  const out = {};
+  for (const tr of rows){
+    const d = normDate(tr.querySelector('input[type="date"]').value);
+    const st = normStates(tr.querySelector('input[type="text"]').value);
+    if (!d) continue;
+    if (!st.length) continue;
+    out[d] = st;
+  }
+  return out;
+}
+
+function renderPreview(){
+  const obj = readRows();
+  const keys = Object.keys(obj).sort();
+  const sorted = {};
+  keys.forEach(k => sorted[k] = obj[k]);
+  previewEl.value = JSON.stringify(sorted, null, 2);
+}
+
+function addRow(dateStr="", statesCsv=""){
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td><input type="date" value="${dateStr}"></td>
+    <td><input type="text" placeholder="CA, WA" value="${statesCsv}"></td>
+    <td><button class="danger">Delete</button></td>
+  `;
+  tr.querySelector("button").addEventListener("click", () => { tr.remove(); renderPreview(); });
+  tr.querySelectorAll("input").forEach(inp => inp.addEventListener("input", renderPreview));
+  tbody.appendChild(tr);
+  renderPreview();
+}
+
+function loadIntoTable(appDates){
+  tbody.innerHTML = "";
+  const keys = Object.keys(appDates || {}).sort();
+  for (const d of keys){
+    const arr = Array.isArray(appDates[d]) ? appDates[d] : [];
+    addRow(d, arr.join(", "));
+  }
+  if (!keys.length){
+    // start with one empty row for convenience
+    addRow("", "");
+  }
+}
+
+async function load(){
+  try{
+    const r = await api("/api/app_dates/load");
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.error || "load failed");
+    pathEl.textContent = j.path || "—";
+    loadedAtEl.textContent = (j.loaded_at || new Date().toISOString()).replace("T"," ").slice(0,19);
+    loadIntoTable(j.app_dates || {});
+    setStatus(true, "Loaded");
+  }catch(e){
+    setStatus(false, e.message || "Load error");
+  }
+}
+
+async function save(){
+  try{
+    const obj = readRows();
+    const keys = Object.keys(obj);
+    // allow empty, but warn (some people want to disable APP quickly)
+    const payload = { app_dates: obj, updated_at: new Date().toISOString() };
+
+    const r = await api("/api/app_dates/save", {method:"POST", body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.error || "save failed");
+
+    pathEl.textContent = j.path || pathEl.textContent;
+    setStatus(true, "Saved");
+    // Re-render from server-normalized version (sorted, de-duped)
+    loadIntoTable(j.app_dates || obj);
+  }catch(e){
+    setStatus(false, e.message || "Save error");
+  }
+}
+
+$("#loadBtn").addEventListener("click", load);
+$("#saveBtn").addEventListener("click", save);
+$("#addRowBtn").addEventListener("click", () => addRow("", ""));
+$("#clearBtn").addEventListener("click", () => { tbody.innerHTML=""; addRow("",""); setStatus(true,"Cleared"); });
+
+load();
+</script>
+</body>
+</html>

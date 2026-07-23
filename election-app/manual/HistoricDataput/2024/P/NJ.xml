@@ -1,0 +1,433 @@
+<Vote ApiVersion="3.1" ApiBuild="3.1.1" ElectionDate="2024-11-05" Timestamp="2025-10-29T18:45:04.619327Z">
+<Race Test="0" ResultsType="c" ID="0" EventID="20241105" StateID="31" Type="General" TypeID="G" TabulationStatus="Vote Certified" RaceCallStatus="Called" OfficeID="P" OfficeName="President" EEVP="100.00" National="1" State="1">
+<Incumbents>
+<Candidate First="Joe" Last="Biden" Party="Dem" PolID="1036" PolNum="1036" CandidateID="1036"/>
+</Incumbents>
+<Parameters>
+<Vote total="4272725" registered="6659963">
+<Expected actual="4272725" eevpCap="100.0">
+<VoteTypes electionDayInPerson="2218926" earlyInPerson="1172842" absenteeMail="880957" advanceTotal="2053799"/>
+</Expected>
+</Vote>
+</Parameters>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="1" ID="31" Name="New Jersey" Level="state" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="6393" precinctsReportingProportional="6393">
+<Vote total="4272725" registered="6659963">
+<Expected actual="4272725" eevpCap="100.0">
+<VoteTypes electionDayInPerson="2218926" earlyInPerson="1172842" absenteeMail="880957" advanceTotal="2053799"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="6393" Total="6393" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="2220713" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="1968215"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="39041"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="23479"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="10500"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="5105"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="3024"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="1371"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="1277"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31001" Name="Atlantic" Level="subunit" FIPSCode="34001" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="151" precinctsReportingProportional="151">
+<Vote total="129759" registered="206088">
+<Expected actual="129759" eevpCap="100.0">
+<VoteTypes absenteeMail="20867" advanceTotal="57361" earlyInPerson="36494" electionDayInPerson="72398"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="151" Total="151" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="61879" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="65817"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="740"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="636"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="288"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="169"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="144"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="56"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="30"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31002" Name="Bergen" Level="subunit" FIPSCode="34003" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="562" precinctsReportingProportional="562">
+<Vote total="459077" registered="687031">
+<Expected actual="459077" eevpCap="100.0">
+<VoteTypes absenteeMail="81893" advanceTotal="194544" earlyInPerson="112651" electionDayInPerson="264533"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="562" Total="562" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="232660" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="217096"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="5349"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1975"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="1158"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="539"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="173"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="75"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="52"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31003" Name="Burlington" Level="subunit" FIPSCode="34005" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="366" precinctsReportingProportional="366">
+<Vote total="229466" registered="369570">
+<Expected actual="229466" eevpCap="100.0">
+<VoteTypes absenteeMail="48069" advanceTotal="102945" earlyInPerson="54876" electionDayInPerson="126521"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="366" Total="366" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="132275" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="94116"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="1293"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="942"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="527"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="156"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="97"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="42"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="18"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31004" Name="Camden" Level="subunit" FIPSCode="34007" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="343" precinctsReportingProportional="343">
+<Vote total="246954" registered="393341">
+<Expected actual="246954" eevpCap="100.0">
+<VoteTypes absenteeMail="89763" advanceTotal="126495" earlyInPerson="36732" electionDayInPerson="120459"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="343" Total="343" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="155522" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="87767"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="1407"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1218"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="510"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="238"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="128"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="122"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="42"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31005" Name="Cape May" Level="subunit" FIPSCode="34009" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="127" precinctsReportingProportional="127">
+<Vote total="54568" registered="76481">
+<Expected actual="54568" eevpCap="100.0">
+<VoteTypes absenteeMail="10591" advanceTotal="26165" earlyInPerson="15574" electionDayInPerson="28403"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="127" Total="127" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="21648" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="32151"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="383"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="150"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="107"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="68"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="36"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="16"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="9"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31006" Name="Cumberland" Level="subunit" FIPSCode="34011" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="92" precinctsReportingProportional="92">
+<Vote total="55885" registered="97652">
+<Expected actual="55885" eevpCap="100.0">
+<VoteTypes absenteeMail="12748" advanceTotal="25488" earlyInPerson="12740" electionDayInPerson="30397"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="92" Total="92" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="26577" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="28675"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="255"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="186"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="87"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="61"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="30"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="9"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="5"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31007" Name="Essex" Level="subunit" FIPSCode="34013" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="574" precinctsReportingProportional="574">
+<Vote total="313283" registered="588348">
+<Expected actual="313283" eevpCap="100.0">
+<VoteTypes absenteeMail="58601" advanceTotal="134371" earlyInPerson="75770" electionDayInPerson="178912"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="574" Total="574" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="224596" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="83908"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="2356"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1050"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="682"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="494"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="96"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="57"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="44"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31008" Name="Gloucester" Level="subunit" FIPSCode="34015" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="229" precinctsReportingProportional="229">
+<Vote total="164635" registered="224344">
+<Expected actual="164635" eevpCap="100.0">
+<VoteTypes absenteeMail="35416" advanceTotal="74505" earlyInPerson="39089" electionDayInPerson="90130"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="229" Total="229" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="78708" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="83326"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1258"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="603"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="406"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="131"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="108"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="68"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="27"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31009" Name="Hudson" Level="subunit" FIPSCode="34017" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="468" precinctsReportingProportional="468">
+<Vote total="231181" registered="418295">
+<Expected actual="231181" eevpCap="100.0">
+<VoteTypes absenteeMail="27509" advanceTotal="102649" earlyInPerson="75140" electionDayInPerson="128532"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="468" Total="468" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="144765" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="79913"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="3298"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1369"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="649"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="517"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="280"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="236"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="154"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31010" Name="Hunterdon" Level="subunit" FIPSCode="34019" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="117" precinctsReportingProportional="117">
+<Vote total="80925" registered="108737">
+<Expected actual="80925" eevpCap="100.0">
+<VoteTypes absenteeMail="19296" advanceTotal="45475" earlyInPerson="26179" electionDayInPerson="35450"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="117" Total="117" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="36995" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="42391"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="501"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="488"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="321"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="107"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="62"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="39"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="21"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31011" Name="Mercer" Level="subunit" FIPSCode="34021" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="243" precinctsReportingProportional="243">
+<Vote total="163270" registered="268133">
+<Expected actual="163270" eevpCap="100.0">
+<VoteTypes absenteeMail="45943" advanceTotal="87998" earlyInPerson="42055" electionDayInPerson="75272"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="243" Total="243" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="107558" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="52274"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="1690"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="907"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="390"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="218"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="103"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="86"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="44"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31012" Name="Middlesex" Level="subunit" FIPSCode="34023" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="615" precinctsReportingProportional="615">
+<Vote total="365187" registered="588393">
+<Expected actual="365187" eevpCap="100.0">
+<VoteTypes absenteeMail="115136" advanceTotal="203028" earlyInPerson="87892" electionDayInPerson="162159"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="615" Total="615" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="191802" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="162459"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="6996"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1909"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="884"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="534"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="289"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="197"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="117"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31013" Name="Monmouth" Level="subunit" FIPSCode="34025" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="466" precinctsReportingProportional="466">
+<Vote total="360143" registered="505482">
+<Expected actual="360143" eevpCap="100.0">
+<VoteTypes absenteeMail="58237" advanceTotal="187568" earlyInPerson="129331" electionDayInPerson="172575"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="466" Total="466" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="156382" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="197409"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="2615"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="2142"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="874"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="327"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="278"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="65"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="51"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31014" Name="Morris" Level="subunit" FIPSCode="34027" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="398" precinctsReportingProportional="398">
+<Vote total="284666" registered="397598">
+<Expected actual="284666" eevpCap="100.0">
+<VoteTypes absenteeMail="55750" advanceTotal="137485" earlyInPerson="81735" electionDayInPerson="147181"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="398" Total="398" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="135672" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="143439"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="2296"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1668"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="888"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="310"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="216"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="121"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="56"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31015" Name="Ocean" Level="subunit" FIPSCode="34029" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="413" precinctsReportingProportional="413">
+<Vote total="337135" registered="479805">
+<Expected actual="337135" eevpCap="100.0">
+<VoteTypes absenteeMail="61367" advanceTotal="169495" earlyInPerson="108128" electionDayInPerson="167640"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="413" Total="413" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="105789" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="227232"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1996"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="882"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="585"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="235"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="206"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="165"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="45"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31016" Name="Passaic" Level="subunit" FIPSCode="34031" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="283" precinctsReportingProportional="283">
+<Vote total="202767" registered="337682">
+<Expected actual="202767" eevpCap="100.0">
+<VoteTypes absenteeMail="25703" advanceTotal="84259" earlyInPerson="58556" electionDayInPerson="118508"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="283" Total="283" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="95156" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="100954"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="4429"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1125"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="372"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="293"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="247"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="98"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="93"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31017" Name="Salem" Level="subunit" FIPSCode="34033" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="43" precinctsReportingProportional="43">
+<Vote total="31001" registered="49957">
+<Expected actual="31001" eevpCap="100.0">
+<VoteTypes absenteeMail="4984" advanceTotal="12537" earlyInPerson="7553" electionDayInPerson="18464"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="43" Total="43" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="12275" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="18229"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="277"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="94"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="87"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="24"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="11"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="4"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31018" Name="Somerset" Level="subunit" FIPSCode="34035" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="267" precinctsReportingProportional="267">
+<Vote total="177412" registered="261432">
+<Expected actual="177412" eevpCap="100.0">
+<VoteTypes absenteeMail="40949" advanceTotal="99817" earlyInPerson="58868" electionDayInPerson="77595"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="267" Total="267" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="98790" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="74101"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="2447"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="958"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="667"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="246"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="113"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="52"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="38"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31019" Name="Sussex" Level="subunit" FIPSCode="34037" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="119" precinctsReportingProportional="119">
+<Vote total="84629" registered="121124">
+<Expected actual="84629" eevpCap="100.0">
+<VoteTypes absenteeMail="12497" advanceTotal="36676" earlyInPerson="24179" electionDayInPerson="47953"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="119" Total="119" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="31019" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="52123"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="681"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="364"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="272"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="86"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="55"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="19"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="10"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31020" Name="Union" Level="subunit" FIPSCode="34039" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="431" precinctsReportingProportional="431">
+<Vote total="240632" registered="391202">
+<Expected actual="240632" eevpCap="100.0">
+<VoteTypes absenteeMail="44447" advanceTotal="114580" earlyInPerson="70133" electionDayInPerson="126052"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="431" Total="431" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="147327" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="89063"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="1648"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="1197"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="688"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="290"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="284"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="70"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="65"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="NJ" ReportingUnitLevel="2" ID="31021" Name="Warren" Level="subunit" FIPSCode="34041" EEVP="100.00" ElectTotal="14" LastUpdated="2025-10-01T12:02:14.391000Z" PollClosingTime="2024-11-06T01:00:00.000000Z">
+<Parameters precinctsReportingActual="86" precinctsReportingProportional="86">
+<Vote total="60150" registered="89268">
+<Expected actual="60150" eevpCap="100.0">
+<VoteTypes absenteeMail="11191" advanceTotal="30358" earlyInPerson="19167" electionDayInPerson="29792"/>
+</Expected>
+</Vote>
+</Parameters>
+<Precincts Reporting="86" Total="86" ReportingPct="100.00"/>
+<Candidate ID="64984" Party="Dem" First="Kamala" Last="Harris" PolID="64984" BallotOrder="1" PolNum="64984" VoteCount="23318" Winner="X" WinnerDateTime="2024-11-06T01:30:36.539Z" ElectWon="14"/>
+<Candidate ID="8639" Party="GOP" First="Donald" Last="Trump" PolID="8639" BallotOrder="2" PolNum="8639" VoteCount="35772"/>
+<Candidate ID="71841" Party="Ind" First="Robert" Last="Kennedy" PolID="71841" BallotOrder="5" PolNum="71841" VoteCount="455"/>
+<Candidate ID="895" Party="Ind" First="Jill" Last="Stein" PolID="895" BallotOrder="8" PolNum="895" VoteCount="287"/>
+<Candidate ID="69459" Party="Ind" First="Chase" Last="Oliver" PolID="69459" BallotOrder="7" PolNum="69459" VoteCount="190"/>
+<Candidate ID="73180" Party="Ind" First="Claudia" Last="De la Cruz" PolID="73180" BallotOrder="3" PolNum="73180" VoteCount="47"/>
+<Candidate ID="61513" Party="Ind" First="Randall" Last="Terry" PolID="61513" BallotOrder="9" PolNum="61513" VoteCount="43"/>
+<Candidate ID="167760" Party="Ind" First="Rachele" Last="Fruit" PolID="167760" BallotOrder="4" PolNum="167760" VoteCount="26"/>
+<Candidate ID="69442" Party="Ind" First="Joseph" Last="Kishore" PolID="69442" BallotOrder="6" PolNum="69442" VoteCount="12"/>
+</ReportingUnit>
+</Race>
+<link xmlns="http://www.w3.org/2005/Atom" rel="next" href="https://api.ap.org/v3/elections/2024-11-05?level=ru&officeid=P&racetypeid=G&resultstype=c&statepostal=NJ&national=true&minDateTime=2025-10-01T12%3A02%3A15.104350352Z"/>
+</Vote>

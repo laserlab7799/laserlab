@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Election Hub — Primary Dates List</title>
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --card:#121621;
+      --ink:#e9ecff;
+      --muted:#aab0d5;
+      --border:#232834;
+      --border2:#2a2f3a;
+      --accent:#6aa6ff;
+      --ok:#38d996;
+      --err:#ff5c7a;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:var(--bg); color:var(--ink);
+    }
+    header{
+      display:flex; align-items:center; gap:10px;
+      padding:16px 18px; border-bottom:1px solid var(--border);
+      position:sticky; top:0; background:rgba(11,13,18,.92); backdrop-filter: blur(8px);
+      z-index:10;
+    }
+    header h1{ margin:0; font-size:16px; letter-spacing:.2px; }
+    .pill{
+      display:inline-block; padding:3px 10px; border-radius:999px;
+      background:#0f1116; border:1px solid var(--border2);
+      color:var(--muted); font-size:12px;
+    }
+    .pill.ok{ color:var(--ok); border-color: rgba(56,217,150,.35); }
+    .pill.err{ color:var(--err); border-color: rgba(255,92,122,.35); }
+    .pill a{ color:inherit; text-decoration:none; }
+    .wrap{
+      max-width:1100px; margin:0 auto; padding:18px;
+      display:grid; grid-template-columns: 1.25fr .75fr; gap:16px;
+    }
+    @media (max-width: 980px){
+      .wrap{ grid-template-columns:1fr; }
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.25);
+    }
+    .card h2{ margin:0 0 10px 0; font-size:14px; color:#dfe4ff; }
+    .tiny{ font-size:12px; color:var(--muted); }
+    .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    button, input, textarea{
+      font:inherit;
+      background:#0f1116; color:var(--ink);
+      border:1px solid var(--border2);
+      border-radius:12px;
+      padding:9px 11px;
+    }
+    button{ cursor:pointer; }
+    button:hover{ border-color:#3a4254; }
+    button.primary{ border-color: rgba(106,166,255,.5); }
+    button.danger{ border-color: rgba(255,92,122,.45); }
+    textarea{
+      width:100%;
+      min-height:360px;
+      resize:vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:12px;
+      line-height:1.45;
+      padding:12px;
+    }
+    .taglist{ display:flex; flex-wrap:wrap; gap:8px; }
+    .tag{
+      padding:6px 9px;
+      border-radius:10px;
+      border:1px solid var(--border2);
+      background:#0f1116;
+      color:#daddf3;
+      font-size:12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .tag.bad{ border-color: rgba(255,92,122,.45); color: #ffd7de; }
+    .tag.main{ border-color: rgba(106,166,255,.7); }
+    .hr{ height:1px; background:var(--border); margin:12px 0; }
+    .hint{ margin-top:10px; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Election Hub — Primary Dates List</h1>
+    <span class="pill" id="status">loading…</span>
+    <span class="pill">main date: <span id="mainDate" class="mono">—</span></span>
+    <span class="pill">count: <span id="count">0</span></span>
+    <span class="pill">invalid: <span id="badCount">0</span></span>
+    <span class="pill"><a href="/election-date.html">mode/date page</a></span>
+  </header>
+
+  <div class="wrap">
+    <section class="card">
+      <h2>Edit primary dates</h2>
+      <div class="tiny">
+        One <span class="mono">YYYY-MM-DD</span> per line. Commas/spaces are ok too (we normalize).
+        Save writes to <span class="mono">../temp/primary-date.json</span> on the server.
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="row" style="margin-bottom:10px;">
+        <button id="btnLoad" class="primary">Load</button>
+        <button id="btnNormalize">Sort &amp; Dedup</button>
+        <button id="btnValidate">Validate</button>
+        <button id="btnSave" class="primary">Save</button>
+        <button id="btnClear" class="danger">Clear</button>
+      </div>
+
+      <textarea id="dates" spellcheck="false" placeholder="2024-01-23&#10;2024-02-06&#10;..."></textarea>
+
+      <div class="hint tiny">
+        Tip: after saving here, refresh <span class="mono">election-date.html</span> — its “Main primary date” dropdown is built from <span class="mono">cfg.all_primary_dates</span>.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Preview</h2>
+      <div class="tiny">Valid dates (sorted). Invalid entries show in red.</div>
+      <div class="hr"></div>
+      <div id="preview" class="taglist"></div>
+    </section>
+  </div>
+
+<script>
+  const $ = (s) => document.querySelector(s);
+
+  function setStatus(text, cls){
+    const el = $("#status");
+    el.textContent = text;
+    el.classList.remove("ok","err");
+    if (cls) el.classList.add(cls);
+  }
+
+  function splitTokens(raw){
+    return String(raw || "")
+      .split(/[\n,\t\r ]+/g)
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+
+  function isValidYMD(s){
+    // strict YYYY-MM-DD + calendar-valid
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return false;
+    const d = new Date(s + "T00:00:00Z");
+    if (Number.isNaN(d.getTime())) return false;
+    return d.toISOString().slice(0,10) === s;
+  }
+
+  function normalizeList(list){
+    const ok = [];
+    const bad = [];
+    const seen = new Set();
+    (list || []).forEach(v => {
+      const s = String(v).trim();
+      if (!s) return;
+      if (!isValidYMD(s)) { bad.push(s); return; }
+      if (!seen.has(s)) { seen.add(s); ok.push(s); }
+    });
+    ok.sort(); // lexical works for YYYY-MM-DD
+    return { ok, bad };
+  }
+
+  function renderPreview(){
+    const tokens = splitTokens($("#dates").value);
+    const { ok, bad } = normalizeList(tokens);
+
+    $("#count").textContent = String(ok.length);
+    $("#badCount").textContent = String(bad.length);
+
+    const box = $("#preview");
+    box.innerHTML = "";
+
+    ok.forEach(d => {
+      const span = document.createElement("span");
+      span.className = "tag";
+      span.textContent = d;
+      box.appendChild(span);
+    });
+
+    bad.forEach(d => {
+      const span = document.createElement("span");
+      span.className = "tag bad";
+      span.textContent = d;
+      box.appendChild(span);
+    });
+
+    return { ok, bad };
+  }
+
+  async function api(path, opts={}){
+    const o = Object.assign({
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store",
+    }, opts);
+    return fetch(path, o);
+  }
+
+  async function load(){
+    try{
+      setStatus("loading…");
+      const r = await api("/api/primary_dates/load");
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "load failed");
+
+      const dates = Array.isArray(j.dates) ? j.dates : [];
+      $("#dates").value = dates.join("\n");
+      $("#mainDate").textContent = j.main_date || "—";
+
+      renderPreview();
+      setStatus("loaded", "ok");
+    }catch(e){
+      console.warn(e);
+      setStatus("load error", "err");
+    }
+  }
+
+  async function save(){
+    try{
+      const { ok, bad } = renderPreview();
+      if (!ok.length){
+        setStatus("nothing to save", "err");
+        return;
+      }
+      if (bad.length){
+        setStatus("fix invalid first", "err");
+        return;
+      }
+
+      setStatus("saving…");
+      const payload = { dates: ok };
+      const r = await api("/api/primary_dates/save", { method:"POST", body: JSON.stringify(payload) });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "save failed");
+
+      // refresh UI from server echo
+      $("#dates").value = (j.dates || []).join("\n");
+      $("#mainDate").textContent = j.main_date || "—";
+      renderPreview();
+
+      setStatus("saved", "ok");
+    }catch(e){
+      console.warn(e);
+      setStatus("save error", "err");
+    }
+  }
+
+  $("#btnLoad").addEventListener("click", load);
+  $("#btnNormalize").addEventListener("click", () => {
+    const tokens = splitTokens($("#dates").value);
+    const { ok, bad } = normalizeList(tokens);
+    $("#dates").value = ok.concat(bad).join("\n");
+    renderPreview();
+    setStatus("normalized", bad.length ? "err" : "ok");
+  });
+  $("#btnValidate").addEventListener("click", () => {
+    const { bad } = renderPreview();
+    setStatus(bad.length ? "has invalid" : "all valid", bad.length ? "err" : "ok");
+  });
+  $("#btnSave").addEventListener("click", save);
+  $("#btnClear").addEventListener("click", () => {
+    $("#dates").value = "";
+    renderPreview();
+    setStatus("cleared");
+  });
+
+  $("#dates").addEventListener("input", () => { renderPreview(); });
+
+  // boot
+  load();
+</script>
+</body>
+</html>

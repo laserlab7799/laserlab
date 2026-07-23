@@ -1,0 +1,46 @@
+[
+  {
+    "mean": null,
+    "median": null,
+    "q1": null,
+    "q3": null,
+    "statewide_percent_in": 0.0,
+    "timestamp": "2024-11-05T15-30-22",
+    "trials": 200000,
+    "whisker_high": null,
+    "whisker_low": null
+  },
+  {
+    "mean": 46.2921125406679,
+    "median": 46.46032622504668,
+    "q1": 46.27289409159945,
+    "q3": 46.93019719106036,
+    "statewide_percent_in": 87.09,
+    "timestamp": "2024-11-05T15-30-22",
+    "trials": 200000,
+    "whisker_high": 47.14338980331818,
+    "whisker_low": 45.38088374530342
+  },
+  {
+    "mean": 50.341448249206415,
+    "median": 50.38312740723755,
+    "q1": 50.309208040310935,
+    "q3": 50.551921698074544,
+    "statewide_percent_in": 99.0,
+    "timestamp": "2024-11-05T15-30-22",
+    "trials": 200000,
+    "whisker_high": 50.84593655245494,
+    "whisker_low": 49.977670442232295
+  },
+  {
+    "mean": 50.34943086106559,
+    "median": 50.3494308610656,
+    "q1": 50.3494308610656,
+    "q3": 50.3494308610656,
+    "statewide_percent_in": 100.0,
+    "timestamp": "2024-11-05T15-30-22",
+    "trials": 200000,
+    "whisker_high": 50.3494308610656,
+    "whisker_low": 50.3494308610656
+  }
+]

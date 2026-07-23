@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,San Mateo,06081,0,58682,0,100.0,100.00
+2024-11-05T15-30-22,CA,Santa Clara,06085,0,249794,0,100.0,100.00

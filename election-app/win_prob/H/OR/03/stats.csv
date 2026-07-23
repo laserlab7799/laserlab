@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,OR,Clackamas,41005,25409,18120,2382,100.0,100.00
+2024-11-05T15-30-22,OR,Hood River,41027,3756,7398,824,100.0,100.00
+2024-11-05T15-30-22,OR,Multnomah,41051,55179,200887,19604,100.0,100.00

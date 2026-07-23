@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,SC,Greenville,45045,130105,85833,6601,100.0,100.00
+2024-11-05T15-30-22,SC,Spartanburg,45083,76811,43143,3178,100.0,100.00

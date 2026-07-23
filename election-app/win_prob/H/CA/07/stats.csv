@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,Sacramento,06067,90406,183642,0,100.0,100.00
+2024-11-05T15-30-22,CA,Solano,06095,18,28,0,100.0,100.00
+2024-11-05T15-30-22,CA,Yolo,06113,7917,13759,0,100.0,100.00

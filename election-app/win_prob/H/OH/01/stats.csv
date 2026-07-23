@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,OH,Hamilton,39061,90003,165300,0,100.0,100.00
+2024-11-05T15-30-22,OH,Warren,39165,87990,48616,0,100.0,100.00

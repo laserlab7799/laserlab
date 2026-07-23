@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,Alameda,06001,5983,12354,0,100.0,100.00
+2024-11-05T15-30-22,CA,Contra Costa,06013,116236,229971,0,100.0,100.00

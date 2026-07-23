@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,TX,Collin,48085,11253,14347,801,100.0,100.00
+2024-11-05T15-30-22,TX,Dallas,48113,71272,120160,4913,100.0,100.00
+2024-11-05T15-30-22,TX,Denton,48121,3416,6029,273,100.0,100.00

@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hub Readout</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; margin: 16px; }
+    h1 { font-size: 18px; margin: 0 0 10px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .pill { padding: 6px 10px; border: 1px solid rgba(127,127,127,.35); border-radius: 999px; font-size: 12px; }
+    .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; vertical-align: -1px; }
+    .ok { background: #2ecc71; }
+    .bad { background: #e74c3c; }
+    .muted { opacity: .8; }
+    button { padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(127,127,127,.35); background: transparent; cursor: pointer; }
+    button:hover { opacity: .9; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+    .card { border: 1px solid rgba(127,127,127,.35); border-radius: 14px; padding: 12px; }
+    .card h2 { font-size: 13px; margin: 0 0 8px; opacity: .85; }
+    pre { margin: 0; white-space: pre-wrap; word-break: break-word; line-height: 1.35; font-size: 12px; }
+    .logbox { height: 55vh; overflow: auto; background: rgba(127,127,127,.08); padding: 10px; border-radius: 12px; border: 1px solid rgba(127,127,127,.25); }
+    .line-info { }
+    .line-warn { color: #d35400; }
+    .line-err  { color: #e74c3c; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid rgba(127,127,127,.2); }
+    th { opacity: .85; }
+  </style>
+</head>
+<body>
+  <div class="row">
+    <h1>Hub Readout</h1>
+    <span id="alivePill" class="pill"><span id="aliveDot" class="dot bad"></span><span id="aliveText">checking…</span></span>
+    <span class="pill muted">Auto-updating (log ~1s, status ~3s)</span>
+    <button id="pauseBtn">Pause</button>
+    <button id="clearBtn">Clear Log</button>
+    <span id="meta" class="pill muted">since=0</span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>/admin/status</h2>
+      <pre id="statusPre">loading…</pre>
+    </div>
+    <div class="card">
+      <h2>System Load</h2>
+      <div id="sysUsage">loading…</div>
+    </div>
+
+    <div class="card">
+      <h2>/admin/last-hit</h2>
+      <div id="lastHitWrap" class="muted">loading…</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <h2>Live Log (/log)</h2>
+    <div id="logBox" class="logbox"><pre id="logPre"></pre></div>
+  </div>
+
+<script>
+(() => {
+  const aliveDot  = document.getElementById('aliveDot');
+  const aliveText = document.getElementById('aliveText');
+  const statusPre = document.getElementById('statusPre');
+  const lastHitWrap = document.getElementById('lastHitWrap');
+  const logPre = document.getElementById('logPre');
+  const logBox = document.getElementById('logBox');
+  const meta = document.getElementById('meta');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  let paused = false;
+  let since = 0;
+  let logLines = [];
+  const MAX_LINES = 2500;
+
+  function setAlive(ok, msg) {
+    aliveDot.className = 'dot ' + (ok ? 'ok' : 'bad');
+    aliveText.textContent = msg;
+  }
+
+  function safeJsonStringify(obj) {
+    try { return JSON.stringify(obj, null, 2); } catch (e) { return String(obj); }
+  }
+
+  function classifyLine(lvl) {
+    const s = String(lvl || '').toUpperCase();
+    if (s.includes('ERR')) return 'line-err';
+    if (s.includes('WARN')) return 'line-warn';
+    return 'line-info';
+  }
+
+  function renderLog() {
+    // Render as HTML spans so we can color by level
+    const html = logLines.map(x => {
+      const cls = classifyLine(x.lvl);
+      const ts = x.ts || '';
+      const lvl = (x.lvl || 'INFO').toUpperCase();
+      const msg = x.msg || '';
+      const line = `[${ts}] ${lvl}: ${msg}`;
+      return `<span class="${cls}">${escapeHtml(line)}</span>`;
+    }).join('\n');
+    logPre.innerHTML = html;
+    // autoscroll
+    logBox.scrollTop = logBox.scrollHeight;
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'","&#039;");
+  }
+
+  async function pollHealth() {
+    if (paused) return;
+    try {
+      const r = await fetch(`/health?_=${Date.now()}`, { cache: 'no-store' });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      setAlive(true, 'healthy');
+    } catch (e) {
+      setAlive(false, 'down / error');
+    }
+  }
+
+  async function pollStatus() {
+    if (paused) return;
+    // If your build doesn't have /admin/status, this will just show an error once.
+    try {
+      const r = await fetch(`/admin/status?_=${Date.now()}`, { cache: 'no-store' });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const j = await r.json();
+      statusPre.textContent = safeJsonStringify(j);
+    } catch (e) {
+      statusPre.textContent = `Unavailable (${e.message}).\nIf you didn’t include /admin/status, you can ignore this.`;
+    }
+  }
+
+  async function pollLastHit() {
+    if (paused) return;
+    try {
+      const r = await fetch(`/admin/last-hit?_=${Date.now()}`, { cache: 'no-store' });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const j = await r.json();
+
+      // Expecting a list (most recent hits). Render a small table if it is.
+      if (Array.isArray(j)) {
+        const rows = j.slice(-15).reverse();
+        const html = `
+          <table>
+            <thead><tr><th>when</th><th>ok</th><th>note</th></tr></thead>
+            <tbody>
+              ${rows.map(x => {
+                const when = x.ts || x.when || x.time || '';
+                const ok = (x.ok === true || x.status === 'ok' || x.http_ok === true) ? 'yes' : (x.ok === false ? 'no' : '');
+                const note = x.url || x.msg || x.note || x.error || '';
+                return `<tr><td>${escapeHtml(when)}</td><td>${escapeHtml(ok)}</td><td>${escapeHtml(note)}</td></tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+        lastHitWrap.innerHTML = html;
+      } else {
+        lastHitWrap.innerHTML = `<pre>${escapeHtml(safeJsonStringify(j))}</pre>`;
+      }
+    } catch (e) {
+      lastHitWrap.innerHTML = `<span class="muted">Unavailable (${escapeHtml(e.message)}). If you didn’t include /admin/last-hit, ignore this.</span>`;
+    }
+  }
+
+  async function pollLog() {
+    if (paused) return;
+    try {
+      const r = await fetch(`/log?since=${encodeURIComponent(String(since))}&_=${Date.now()}`, { cache: 'no-store' });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const j = await r.json();
+
+      // Accept a couple possible shapes:
+      // A) { max_seq, entries:[{seq,ts,lvl,msg}...] }
+      // B) { max_seq, items:[...] }
+      // C) direct list [...]
+      const entries = (j && (j.entries || j.items)) || (Array.isArray(j) ? j : []);
+      const maxSeq = j && (j.max_seq || j.maxSeq || j.since || j.latest_seq);
+
+      if (Array.isArray(entries) && entries.length) {
+        for (const e of entries) {
+          // update since based on entry seq if present
+          if (e && typeof e.seq === 'number') since = Math.max(since, e.seq);
+          logLines.push({
+            ts: e.ts || e.time || '',
+            lvl: e.lvl || e.level || 'INFO',
+            msg: e.msg || e.message || String(e)
+          });
+        }
+        if (logLines.length > MAX_LINES) logLines = logLines.slice(-MAX_LINES);
+        renderLog();
+      }
+
+      if (typeof maxSeq === 'number') since = Math.max(since, maxSeq);
+      meta.textContent = `since=${since} | paused=${paused ? 'yes' : 'no'} | lines=${logLines.length}`;
+    } catch (e) {
+      // don’t spam; just show alive=false and keep going
+      setAlive(false, 'log error');
+      meta.textContent = `since=${since} | paused=${paused ? 'yes' : 'no'} | log error`;
+    }
+  }
+
+  pauseBtn.addEventListener('click', () => {
+    paused = !paused;
+    pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+    meta.textContent = `since=${since} | paused=${paused ? 'yes' : 'no'} | lines=${logLines.length}`;
+  });
+
+  clearBtn.addEventListener('click', () => {
+    logLines = [];
+    logPre.innerHTML = '';
+    meta.textContent = `since=${since} | paused=${paused ? 'yes' : 'no'} | lines=${logLines.length}`;
+  });
+
+  // kick off loops
+  pollHealth(); pollStatus(); pollLastHit(); pollLog();
+  setInterval(pollLog,    1000);
+  setInterval(pollHealth, 3000);
+  setInterval(pollStatus, 3000);
+  setInterval(pollLastHit,5000);
+})();
+    async function pollSystemUsage() {
+      if (paused) return;
+      try {
+        const r = await fetch(`/admin/system-usage?_=${Date.now()}`, { cache: 'no-store' });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const j = await r.json();
+
+        let html = `
+          <div>CPU ${j.cpu_percent.toFixed(1)} %</div>
+          <div>RAM ${j.mem_used_mb.toFixed(0)} / ${j.mem_total_mb.toFixed(0)} MB (${j.mem_percent.toFixed(1)} %)</div>
+          <div>Hub RSS ${j.app_rss_mb.toFixed(0)} MB</div>
+          <div>Pipelines running: ${j.pipeline_count}</div>
+          <div>Pipeline peak RSS: ${j.pipeline_peak_rss_mb.toFixed(0)} MB</div>
+        `;
+
+        if (j.pipelines && j.pipelines.length) {
+          html += `<hr/>`;
+          html += j.pipelines.map(p =>
+            `<div>
+               <strong>${p.key}</strong>
+               — PID ${p.pid}
+               — CPU ${p.cpu_percent.toFixed(1)} %
+               — RSS ${p.rss_mb.toFixed(0)} MB
+             </div>`
+          ).join("");
+        }
+
+        document.getElementById('sysUsage').innerHTML = html;
+
+      } catch (e) {
+        document.getElementById('sysUsage').innerHTML =
+          `<span class="muted">system-usage unavailable</span>`;
+      }
+    }
+
+
+    // add to loops
+    pollSystemUsage();
+    setInterval(pollSystemUsage, 3000);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,GA,Cobb,13067,38781,95624,0,100.0,100.00
+2024-11-05T15-30-22,GA,Douglas,13097,11764,35438,0,100.0,100.00
+2024-11-05T15-30-22,GA,Fayette,13113,3015,7177,0,100.0,100.00
+2024-11-05T15-30-22,GA,Fulton,13121,40349,138788,0,100.0,100.00

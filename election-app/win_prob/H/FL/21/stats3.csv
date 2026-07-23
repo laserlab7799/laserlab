@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,FL,Martin,12085,68667,28855,0,100.0,100.00
+2024-11-05T15-30-22,FL,Palm Beach,12099,103928,64929,0,100.0,100.00
+2024-11-05T15-30-22,FL,St. Lucie,12111,104840,77528,0,100.0,100.00

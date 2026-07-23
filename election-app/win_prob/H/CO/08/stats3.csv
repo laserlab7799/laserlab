@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CO,Adams,08001,86842,108131,5929,100.0,100.00
+2024-11-05T15-30-22,CO,Larimer,08069,7267,5787,335,100.0,100.00
+2024-11-05T15-30-22,CO,Weld,08123,69211,46953,3154,100.0,100.00

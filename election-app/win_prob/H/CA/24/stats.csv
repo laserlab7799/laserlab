@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,San Luis Obispo,06079,36690,57345,0,100.0,100.00
+2024-11-05T15-30-22,CA,Santa Barbara,06083,65628,114298,0,100.0,100.00
+2024-11-05T15-30-22,CA,Ventura,06111,25437,43081,0,100.0,100.00

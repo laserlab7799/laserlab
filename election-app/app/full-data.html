@@ -1,0 +1,473 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FullData Fetch & Save</title>
+  <style>
+    :root{
+      --bg:#0b0f17;
+      --panel:#111827;
+      --panel2:#0f172a;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --line:#243041;
+      --good:#22c55e;
+      --bad:#ef4444;
+      --warn:#f59e0b;
+      --btn:#1f2937;
+      --btn2:#0b1220;
+      --accent:#60a5fa;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 20% 10%, #0f1a33 0%, var(--bg) 55%) fixed;
+    }
+    .wrap{
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px 40px;
+    }
+    header{
+      display:flex;
+      gap:14px;
+      align-items:flex-end;
+      justify-content:space-between;
+      padding: 10px 6px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1{
+      margin:0;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+    .sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size: 13px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    label{
+      color:var(--muted);
+      font-size: 12px;
+    }
+    input{
+      background: rgba(0,0,0,.25);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+      min-width: 220px;
+    }
+    input::placeholder{ color:#6b7280; }
+    button{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform .05s ease, border-color .15s ease;
+    }
+    button:hover{ border-color: #365074; }
+    button:active{ transform: translateY(1px); }
+    .btn-primary{
+      border-color: rgba(96,165,250,.35);
+      box-shadow: 0 0 0 1px rgba(96,165,250,.15) inset;
+    }
+    .btn-danger{
+      border-color: rgba(239,68,68,.35);
+      box-shadow: 0 0 0 1px rgba(239,68,68,.12) inset;
+    }
+    .btn-ghost{
+      background: transparent;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      background: rgba(0,0,0,.15);
+    }
+    .mono{ font-family: var(--mono); }
+    .status{
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: rgba(0,0,0,.18);
+      font-size: 13px;
+      color: var(--muted);
+      white-space: pre-wrap;
+      min-height: 44px;
+    }
+    .status b{ color: var(--text); }
+    .ok{ color: var(--good); }
+    .bad{ color: var(--bad); }
+    .warn{ color: var(--warn); }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    th, td{
+      text-align:left;
+      padding: 10px 8px;
+      border-bottom: 1px solid rgba(36,48,65,.6);
+      vertical-align: middle;
+    }
+    th{
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: .2px;
+    }
+    .right{ text-align:right; }
+    .muted{ color: var(--muted); }
+    .actions{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+    a.link{
+      color: var(--accent);
+      text-decoration:none;
+    }
+    a.link:hover{ text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>FullData Fetch & Save</h1>
+        <div class="sub">On-demand pull of AP full dataset → parse → save to <span class="mono">../FullData/&lt;YEAR&gt;.json</span></div>
+      </div>
+      <div class="pill">
+        Endpoint:
+        <span class="mono" id="epPreview">/api/fulldata/fetch-save</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="row">
+          <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+            <label for="dateInput">Election date (mm.dd.yyyy)</label>
+            <input id="dateInput" placeholder="11.05.2024" value="11.05.2024" />
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label>&nbsp;</label>
+            <button class="btn-primary" id="btnFetch">Fetch → Save (overwrite)</button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label>&nbsp;</label>
+            <button class="btn-ghost" id="btnRefresh">Refresh list</button>
+          </div>
+        </div>
+
+        <div class="status" id="statusBox">Ready.</div>
+      </div>
+
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <div style="font-weight:600">FullData folder</div>
+            <div class="muted" style="font-size:12px;margin-top:4px">
+              Files in <span class="mono">../FullData</span>
+            </div>
+          </div>
+          <div class="pill">
+            Count: <span class="mono" id="fileCount">0</span>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>File</th>
+              <th class="right">Size</th>
+              <th class="right">Modified</th>
+              <th class="right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="fileTbody">
+            <tr><td colspan="4" class="muted">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<script>
+    
+    let isFetching = false;
+    let fetchStartedAt = 0;
+    let lastSaved = null;   // { saved_as, date_in, whenISO }
+    let lastError = null;   // string
+    let lastRefreshISO = null;
+    let fetchTargetFile = null; // e.g., "2024.json"
+    let fileMtimeMs = {};        // { "2024.json": 1707160000000, ... }
+    let fetchMinMtimeMs = 0;     // require the target file mtime to be >= this to consider fetch complete
+
+  const $ = (id) => document.getElementById(id);
+
+  function setStatus(msg, cls="") {
+    const box = $("statusBox");
+    box.className = "status";
+    if (cls) box.classList.add(cls);
+    box.innerHTML = msg;
+  }
+
+    function updateStatusFromState() {
+      if (isFetching) {
+        const secs = Math.max(0, Math.round((performance.now() - fetchStartedAt) / 1000));
+        setStatus(`Fetching… <span class="mono">${secs}s</span>`, "");
+        return;
+      }
+
+      if (lastError) {
+        setStatus(`<span class="bad"><b>${lastError}</b></span>`, "bad");
+        return;
+      }
+
+      if (lastSaved) {
+        setStatus(`<span class="ok"><b>Saved</b></span> <span class="mono">${lastSaved.saved_as}</span>`, "");
+        return;
+      }
+
+      setStatus(`Ready.`, "");
+    }
+
+
+  function fmtBytes(n) {
+    if (n == null) return "";
+    const units = ["B","KB","MB","GB","TB"];
+    let v = Number(n);
+    let i = 0;
+    while (v >= 1024 && i < units.length-1) { v /= 1024; i++; }
+    return (i === 0 ? v.toFixed(0) : v.toFixed(1)) + " " + units[i];
+  }
+
+  function parseMmDdYyyy(s) {
+    const m = (s || "").trim().match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+    if (!m) return null;
+    const mm = Number(m[1]), dd = Number(m[2]), yyyy = Number(m[3]);
+    if (mm < 1 || mm > 12 || dd < 1 || dd > 31) return null;
+    return { mm: m[1], dd: m[2], yyyy: m[3] };
+  }
+
+    async function refreshList() {
+      const tbody = $("fileTbody");
+
+      // don’t blank the table every poll; keep it stable if possible
+      // (optional) you can comment this out if you prefer a “Loading…” flash
+      // tbody.innerHTML = `<tr><td colspan="4" class="muted">Loading…</td></tr>`;
+
+      try {
+        const r = await fetch("/api/fulldata/list", { cache: "no-store" });
+        const j = await r.json();
+        if (!r.ok || !j.ok) throw new Error(j.error || ("HTTP " + r.status));
+
+        const files = j.files || [];
+        lastRefreshISO = new Date().toISOString();
+
+        // build/update a mtime lookup map (used to detect overwrite)
+        fileMtimeMs = {};
+        for (const f of files) {
+          const t = new Date(f.mtime).getTime();
+          if (Number.isFinite(t)) fileMtimeMs[f.name] = t;
+        }
+
+        // ✅ Only flip to Saved if the target file exists AND its mtime advanced past our gate.
+        // This fixes "click fetch again and nothing happens" when overwriting the same YEAR file.
+        if (isFetching && fetchTargetFile) {
+          const hit = files.find(f => f.name === fetchTargetFile);
+          if (hit) {
+            const hitMs = new Date(hit.mtime).getTime();
+            if (Number.isFinite(hitMs) && hitMs >= fetchMinMtimeMs) {
+              isFetching = false;
+              lastError = null;
+              // keep status minimal (no date/refresh lines)
+              lastSaved = { saved_as: fetchTargetFile };
+            }
+          }
+        }
+
+        $("fileCount").textContent = String(files.length);
+
+        if (!files.length) {
+          tbody.innerHTML = `<tr><td colspan="4" class="muted">No files yet.</td></tr>`;
+        } else {
+          tbody.innerHTML = files.map(f => {
+            const safe = encodeURIComponent(f.name);
+            return `
+              <tr>
+                <td class="mono">${f.name}</td>
+                <td class="right">${fmtBytes(f.size)}</td>
+                <td class="right"><span class="mono">${(f.mtime || "").replace("T"," ").slice(0,19)}</span></td>
+                <td class="right">
+                  <div class="actions">
+                    <a class="link" href="/api/fulldata/download/${safe}">Download</a>
+                    <button class="btn-danger" data-del="${f.name}">Delete</button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join("");
+
+          // wire delete buttons
+          tbody.querySelectorAll("button[data-del]").forEach(btn => {
+            btn.addEventListener("click", async () => {
+              const name = btn.getAttribute("data-del");
+              if (!name) return;
+              if (!confirm(`Delete ${name}?`)) return;
+              try {
+                btn.disabled = true;
+                const r = await fetch("/api/fulldata/delete", {
+                  method: "DELETE",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ file: name })
+                });
+                const j = await r.json().catch(() => ({}));
+                if (!r.ok || !j.ok) throw new Error(j.error || ("HTTP " + r.status));
+                await refreshList(); // immediate refresh after delete
+              } catch (e) {
+                lastError = `Delete failed: ${String(e.message || e)}`;
+              } finally {
+                btn.disabled = false;
+              }
+            });
+          });
+        }
+
+        // ✅ status update every poll
+        updateStatusFromState();
+
+      } catch (e) {
+        $("fileCount").textContent = "0";
+        tbody.innerHTML = `<tr><td colspan="4" class="muted">Failed to load list.</td></tr>`;
+        lastError = `List failed: ${String(e.message || e)}`;
+        updateStatusFromState();
+      }
+    }
+
+
+    async function fetchSave() {
+      const raw = $("dateInput").value;
+      const d = parseMmDdYyyy(raw);
+      if (!d) {
+        lastError = "Bad date format (expected mm.dd.yyyy)";
+        lastSaved = null;
+        updateStatusFromState();
+        return;
+      }
+
+      // determine year file up front
+      fetchTargetFile = `${d.yyyy}.json`;
+
+      // force visible state change on every click
+      lastSaved = null;
+      lastError = null;
+
+      // gate: require the file's mtime to be greater than what we last saw (or "now" if unknown)
+      const prev = fileMtimeMs[fetchTargetFile] || 0;
+      fetchMinMtimeMs = Math.max(prev + 1, Date.now());
+
+      // ✅ start fetch state (this was missing)
+      isFetching = true;
+      fetchStartedAt = performance.now();
+      updateStatusFromState();
+      $("btnFetch").disabled = true;
+
+      const ctrl = new AbortController();
+      const timeoutMs = 30000; // 30s: UI will fall back to polling even if server takes longer
+      const t = setTimeout(() => ctrl.abort(), timeoutMs);
+
+      try {
+        const r = await fetch("/api/fulldata/fetch-save", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ date: raw }),
+          signal: ctrl.signal
+        });
+
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw new Error(j.error || ("HTTP " + r.status));
+
+        // keep status minimal (you said cut the extra lines)
+        lastSaved = { saved_as: j.saved_as };
+        isFetching = false;
+
+      } catch (e) {
+        // If the request times out, DON'T treat it as failure — keep polling for the file.
+        if (String(e.name) === "AbortError") {
+          lastError = null; // not an error; we will detect completion by polling the folder
+          // leave isFetching true; refreshList() will flip it to Saved when file mtime advances
+        } else {
+          lastError = `Fetch/Save failed: ${String(e.message || e)}`;
+          lastSaved = null;
+          isFetching = false;
+        }
+      } finally {
+        clearTimeout(t);
+        $("btnFetch").disabled = false;
+        updateStatusFromState();
+        refreshList(); // immediate refresh after click
+      }
+    }
+
+  $("btnFetch").addEventListener("click", fetchSave);
+  $("btnRefresh").addEventListener("click", refreshList);
+
+  // initial paint
+  updateStatusFromState();
+  refreshList();
+
+  // ✅ auto-refresh every 5 seconds
+  setInterval(() => {
+    refreshList(); // always poll; it will also unstick fetching when the file exists
+  }, 5000);
+
+
+</script>
+</body>
+</html>

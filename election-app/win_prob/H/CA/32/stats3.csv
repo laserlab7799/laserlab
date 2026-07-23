@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CA,Los Angeles,06037,108165,212328,0,100.0,100.00
+2024-11-05T15-30-22,CA,Ventura,06111,546,606,0,100.0,100.00

@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Year Config Builder</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#111c29;
+      --text:#e8eef6;
+      --muted:#9fb0c3;
+      --line:rgba(255,255,255,.12);
+      --good:#19c37d;
+      --bad:#ff5a5f;
+      --warn:#f7b955;
+      --btn:#1f2b3a;
+      --btn2:#243449;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --r:12px;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background: radial-gradient(1200px 800px at 10% 0%, #101b2a 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 22px 18px 60px;
+    }
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom: 14px;
+    }
+    h1{
+      margin:0;
+      font-size: 22px;
+      letter-spacing:.2px;
+    }
+    .sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns: 1fr;}
+    }
+    .card{
+      background: linear-gradient(180deg, var(--panel) 0%, #0c121a 100%);
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: 0 14px 36px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .card .hd{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 12px 14px;
+      border-bottom:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.03) 0%, rgba(255,255,255,.0) 100%);
+    }
+    .card .hd .t{
+      font-weight: 650;
+      letter-spacing:.2px;
+      font-size: 14px;
+    }
+    .card .bd{
+      padding: 12px 14px 14px;
+    }
+    .row{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin: 8px 0;
+    }
+    label{
+      font-size: 12px;
+      color:var(--muted);
+      display:block;
+      margin-bottom:6px;
+    }
+    input[type="text"], input[type="number"], textarea, select{
+      background: #0b121b;
+      color: var(--text);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      padding: 9px 10px;
+      outline:none;
+      font-size: 14px;
+      width:100%;
+      box-sizing:border-box;
+    }
+    input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus{
+      border-color: rgba(25,195,125,.65);
+      box-shadow: 0 0 0 3px rgba(25,195,125,.13);
+    }
+    textarea{
+      min-height: 180px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.35;
+      resize: vertical;
+      tab-size: 2;
+    }
+    .btns{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    button{
+      appearance:none;
+      border:1px solid rgba(255,255,255,.14);
+      background: var(--btn);
+      color:var(--text);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    button:hover{background: var(--btn2);}
+    button:active{transform: translateY(1px);}
+    button.primary{
+      border-color: rgba(25,195,125,.45);
+      background: rgba(25,195,125,.18);
+    }
+    button.primary:hover{background: rgba(25,195,125,.24);}
+    button.danger{
+      border-color: rgba(255,90,95,.45);
+      background: rgba(255,90,95,.12);
+    }
+    button.danger:hover{background: rgba(255,90,95,.18);}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .pill.good{border-color: rgba(25,195,125,.4); color: rgba(25,195,125,.95);}
+    .pill.bad{border-color: rgba(255,90,95,.45); color: rgba(255,90,95,.95);}
+    .pill.warn{border-color: rgba(247,185,85,.45); color: rgba(247,185,85,.95);}
+    table{
+      width:100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td{
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      padding: 8px 6px;
+      vertical-align: middle;
+    }
+    th{
+      color: var(--muted);
+      font-weight: 650;
+      text-align:left;
+      font-size: 12px;
+      letter-spacing:.2px;
+    }
+    td .mini{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:3px;
+    }
+    .inline{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .radio{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .tools{
+      display:flex;
+      gap:6px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+    .tools button{
+      padding: 7px 8px;
+      font-size: 12px;
+    }
+    .note{
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 10px;
+    }
+    .mono{
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+    .kpi{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .kpi .pill{white-space:nowrap;}
+    .foot{
+      margin-top: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .small{
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .hr{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Year Config Builder</h1>
+        <p class="sub">
+          This page builds a single JSON file (suggested name: <span class="mono">years.json</span>) that your main UI can load to render the year buttons
+          and decide what counts as “live” vs “historic”.
+        </p>
+      </div>
+      <div class="kpi" id="kpis">
+        <span class="pill" id="pillStatus">Ready</span>
+        <span class="pill" id="pillYears">Years: 0</span>
+        <span class="pill" id="pillLive">Live: —</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: editor -->
+      <div class="card">
+        <div class="hd">
+          <div class="t">Config editor</div>
+          <div class="btns">
+            <button id="btnLoad">Load from URL</button>
+            <button id="btnAuto" title="Probe a range of years and add any that exist as historic JSON files">Auto-detect historic</button>
+            <button id="btnAdd" class="primary">Add year</button>
+          </div>
+        </div>
+        <div class="bd">
+          <div class="row">
+            <div style="flex: 1 1 420px;">
+              <label>Config URL (optional load helper)</label>
+              <input id="cfgUrl" type="text" value="./years.json" />
+              <div class="note">
+                If this URL exists, “Load from URL” will fetch it and populate the editor. Browsers can’t directly overwrite
+                files on the server without a backend endpoint, so “Download” is the normal workflow.
+              </div>
+            </div>
+            <div style="flex: 1 1 220px;">
+              <label>Download filename</label>
+              <input id="dlName" type="text" value="years.json" />
+              <div class="note">This is the filename used by “Download JSON”.</div>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="row" style="align-items:flex-end;">
+            <div style="flex: 1 1 240px;">
+              <label>Default year (what the UI selects on load)</label>
+              <input id="defaultYear" type="text" placeholder="e.g., 2026" />
+            </div>
+            <div style="flex: 1 1 240px;">
+              <label>Primary years (comma-separated)</label>
+              <input id="primaryYears" type="text" value="2024" />
+            </div>
+            <div style="flex: 1 1 240px;">
+              <label>Historic JSON base path (for auto-detect)</label>
+              <input id="historicBase" type="text" value="./HistoricData" />
+              <div class="note">Auto-detect checks <span class="mono">{base}/{year}.json</span>.</div>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <div style="overflow:auto;">
+            <table id="yearsTable">
+              <thead>
+                <tr>
+                  <th style="width:120px;">Year</th>
+                  <th style="width:140px;">Source</th>
+                  <th>Label (optional)</th>
+                  <th style="width:84px; text-align:center;">Default</th>
+                  <th style="width:180px; text-align:right;">Tools</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="row">
+            <div style="flex: 1 1 520px;">
+              <label>House district map mapping (optional)</label>
+              <textarea id="districtMapJson" spellcheck="false"></textarea>
+              <div class="note">
+                Optional, but helpful if redistricting means different years need different topojson files.
+                Leave blank to omit from output.
+              </div>
+            </div>
+            <div style="flex: 1 1 240px;">
+              <label>District fallback year (optional)</label>
+              <input id="districtFallbackYear" type="text" placeholder="e.g., 2024" />
+              <div class="note">Used if a year is missing from the mapping.</div>
+
+              <div class="hr"></div>
+
+              <div class="btns">
+                <button id="btnNormalize">Normalize / sort</button>
+                <button id="btnClear" class="danger">Clear editor</button>
+              </div>
+
+              <div class="note" style="margin-top:10px;">
+                Normalize will sort years desc, ensure one default year is set, and keep one “live” year.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: JSON preview + actions -->
+      <div class="card">
+        <div class="hd">
+          <div class="t">Output JSON preview</div>
+          <div class="btns">
+            <button id="btnCopy">Copy JSON</button>
+            <button id="btnDownload">Download JSON</button>
+            <button id="btnSave" class="primary">Save to Server</button>
+          </div>
+
+        </div>
+        <div class="bd">
+          <label>years.json</label>
+          <textarea id="outJson" spellcheck="false"></textarea>
+
+          <div class="foot">
+            <div class="small" id="msg"></div>
+            <div class="small">Tip: keep this file next to <span class="mono">index.html</span> and have the UI fetch <span class="mono">./years.json</span>.</div>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="note">
+            Suggested schema (what this page writes):
+            <div class="mono" style="margin-top:6px;">
+              { "default_year": "2026", "primary_years": ["2024"], "years": [ {"year":"2026","source":"live"}, {"year":"2024","source":"historic"} ] }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+
+  // ---- DOM handles ----
+  const cfgUrl = $("cfgUrl");
+  const dlName = $("dlName");
+  const defaultYear = $("defaultYear");
+  const primaryYears = $("primaryYears");
+  const historicBase = $("historicBase");
+  const yearsTbody = $("yearsTable").querySelector("tbody");
+  const districtMapJson = $("districtMapJson");
+  const districtFallbackYear = $("districtFallbackYear");
+  const outJson = $("outJson");
+  const msg = $("msg");
+
+  const pillStatus = $("pillStatus");
+  const pillYears = $("pillYears");
+  const pillLive = $("pillLive");
+
+  // ---- State ----
+  let rows = []; // {year, source, label, isDefault}
+  let lastLoaded = null;
+
+  function nowTag(){
+    const d = new Date();
+    return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  }
+  function setMsg(text, kind=""){
+    msg.textContent = text || "";
+    pillStatus.textContent = kind ? kind : "Ready";
+    pillStatus.className = "pill" + (kind==="OK" ? " good" : kind==="ERR" ? " bad" : kind==="WARN" ? " warn" : "");
+  }
+
+  function sanitizeYear(y){
+    const s = String(y ?? "").trim();
+    if (!s) return "";
+    // allow 4-digit years only
+    if (!/^\d{4}$/.test(s)) return "";
+    return s;
+  }
+
+  function ensureOneDefault(){
+    const def = sanitizeYear(defaultYear.value);
+    if (def){
+      let found = false;
+      rows.forEach(r => {
+        const isDef = (sanitizeYear(r.year) === def);
+        r.isDefault = isDef;
+        if (isDef) found = true;
+      });
+      if (!found && rows.length) {
+        // if user typed a default that isn't in rows, pick first row
+        rows[0].isDefault = true;
+        defaultYear.value = sanitizeYear(rows[0].year);
+      }
+    } else {
+      // If blank, pick first row as default
+      rows.forEach(r => r.isDefault = false);
+      if (rows.length){
+        rows[0].isDefault = true;
+        defaultYear.value = sanitizeYear(rows[0].year);
+      }
+    }
+  }
+
+  function ensureAtLeastOneLive(){
+    const hasLive = rows.some(r => r.source === "live");
+    if (!hasLive && rows.length){
+      rows[0].source = "live";
+    }
+  }
+
+  function sortRowsDesc(){
+    rows.sort((a,b) => (parseInt(b.year,10)||0) - (parseInt(a.year,10)||0));
+  }
+
+  function normalize(){
+    // remove invalid years
+    rows = rows
+      .map(r => ({...r, year: sanitizeYear(r.year)}))
+      .filter(r => r.year);
+
+    // default label = year
+    rows.forEach(r => {
+      r.label = String(r.label ?? "").trim();
+      if (!r.label) r.label = r.year;
+      r.source = (r.source === "live") ? "live" : "historic";
+      r.isDefault = !!r.isDefault;
+    });
+
+    sortRowsDesc();
+    ensureAtLeastOneLive();
+
+    // Make default year coherent
+    ensureOneDefault();
+
+    // If default year isn't live/historic year present, fix it
+    const def = sanitizeYear(defaultYear.value);
+    if (def && !rows.some(r => r.year === def) && rows.length){
+      defaultYear.value = rows[0].year;
+      rows[0].isDefault = true;
+    }
+
+    updatePreview();
+    renderTable();
+    updateKpis();
+    setMsg("Normalized.", "OK");
+  }
+
+  function updateKpis(){
+    pillYears.textContent = `Years: ${rows.length}`;
+    const live = rows.find(r => r.source === "live");
+    pillLive.textContent = `Live: ${live ? live.year : "—"}`;
+  }
+
+  function renderTable(){
+    yearsTbody.innerHTML = "";
+    rows.forEach((r, idx) => {
+      const tr = document.createElement("tr");
+
+      // year
+      const tdYear = document.createElement("td");
+      const y = document.createElement("input");
+      y.type = "text";
+      y.value = r.year;
+      y.placeholder = "2026";
+      y.addEventListener("input", () => { r.year = y.value; updatePreviewDebounced(); });
+      tdYear.appendChild(y);
+      tr.appendChild(tdYear);
+
+      // source
+      const tdSrc = document.createElement("td");
+      const sel = document.createElement("select");
+      sel.innerHTML = `
+        <option value="live">live</option>
+        <option value="historic">historic</option>
+      `;
+      sel.value = r.source || "historic";
+      sel.addEventListener("change", () => { r.source = sel.value; updatePreviewDebounced(); updateKpis(); });
+      tdSrc.appendChild(sel);
+      tr.appendChild(tdSrc);
+
+      // label
+      const tdLabel = document.createElement("td");
+      const lab = document.createElement("input");
+      lab.type = "text";
+      lab.value = r.label || "";
+      lab.placeholder = "Button label (optional)";
+      lab.addEventListener("input", () => { r.label = lab.value; updatePreviewDebounced(); });
+      tdLabel.appendChild(lab);
+      tr.appendChild(tdLabel);
+
+      // default
+      const tdDef = document.createElement("td");
+      tdDef.style.textAlign = "center";
+      const radioWrap = document.createElement("div");
+      radioWrap.className = "radio";
+      const rad = document.createElement("input");
+      rad.type = "radio";
+      rad.name = "defaultYearRad";
+      rad.checked = !!r.isDefault;
+      rad.addEventListener("change", () => {
+        rows.forEach(rr => rr.isDefault = false);
+        r.isDefault = true;
+        defaultYear.value = sanitizeYear(r.year) || "";
+        updatePreview();
+        renderTable();
+        updateKpis();
+      });
+      radioWrap.appendChild(rad);
+      tdDef.appendChild(radioWrap);
+      tr.appendChild(tdDef);
+
+      // tools
+      const tdTools = document.createElement("td");
+      tdTools.style.textAlign = "right";
+      const tools = document.createElement("div");
+      tools.className = "tools";
+
+      const up = document.createElement("button");
+      up.textContent = "Up";
+      up.disabled = (idx === 0);
+      up.addEventListener("click", () => {
+        if (idx <= 0) return;
+        const tmp = rows[idx-1]; rows[idx-1] = rows[idx]; rows[idx] = tmp;
+        renderTable(); updatePreview(); updateKpis();
+      });
+
+      const down = document.createElement("button");
+      down.textContent = "Down";
+      down.disabled = (idx === rows.length - 1);
+      down.addEventListener("click", () => {
+        if (idx >= rows.length-1) return;
+        const tmp = rows[idx+1]; rows[idx+1] = rows[idx]; rows[idx] = tmp;
+        renderTable(); updatePreview(); updateKpis();
+      });
+
+      const del = document.createElement("button");
+      del.textContent = "Delete";
+      del.className = "danger";
+      del.addEventListener("click", () => {
+        rows.splice(idx, 1);
+        ensureOneDefault();
+        ensureAtLeastOneLive();
+        renderTable(); updatePreview(); updateKpis();
+      });
+
+      tools.appendChild(up);
+      tools.appendChild(down);
+      tools.appendChild(del);
+      tdTools.appendChild(tools);
+      tr.appendChild(tdTools);
+
+      yearsTbody.appendChild(tr);
+    });
+  }
+
+  function parsePrimaryYears(){
+    const list = (primaryYears.value || "")
+      .split(",")
+      .map(s => sanitizeYear(s))
+      .filter(Boolean);
+    // unique
+    return Array.from(new Set(list));
+  }
+
+  function parseDistrictMapJson(){
+    const raw = (districtMapJson.value || "").trim();
+    if (!raw) return null;
+    try{
+      const obj = JSON.parse(raw);
+      if (obj && typeof obj === "object" && !Array.isArray(obj)) return obj;
+      throw new Error("district_map_by_year must be an object");
+    }catch(e){
+      throw new Error("District map JSON is not valid JSON: " + e.message);
+    }
+  }
+
+  function buildOutputObject(){
+    // Ensure normalized-ish output, but don't mutate rows unless asked.
+    const yrs = rows
+      .map(r => ({
+        year: sanitizeYear(r.year),
+        source: (r.source === "live") ? "live" : "historic",
+        label: String(r.label ?? "").trim() || sanitizeYear(r.year),
+        default: !!r.isDefault
+      }))
+      .filter(r => r.year);
+
+    // If no explicit default, use the defaultYear field if it matches.
+    let def = sanitizeYear(defaultYear.value);
+    if (!yrs.some(y => y.default)){
+      if (def && yrs.some(y => y.year === def)){
+        yrs.forEach(y => y.default = (y.year === def));
+      } else if (yrs.length){
+        yrs[0].default = true;
+        def = yrs[0].year;
+      }
+    } else {
+      // sync defaultYear input
+      const dRow = yrs.find(y => y.default);
+      if (dRow) def = dRow.year;
+    }
+
+    // Ensure at least one live year
+    if (!yrs.some(y => y.source === "live") && yrs.length){
+      yrs[0].source = "live";
+    }
+
+    const out = {
+      default_year: def || (yrs[0]?.year || ""),
+      primary_years: parsePrimaryYears(),
+      years: yrs.map(y => ({year:y.year, source:y.source, label:y.label}))
+    };
+
+    // Optional district mapping
+    const fb = sanitizeYear(districtFallbackYear.value);
+    const dm = (districtMapJson.value || "").trim() ? parseDistrictMapJson() : null;
+    if (dm){
+      out.district_map_by_year = dm;
+      if (fb) out.district_map_fallback_year = fb;
+    } else if (fb) {
+      // If they set a fallback year but no mapping, still include fallback year
+      out.district_map_fallback_year = fb;
+    }
+
+    return out;
+  }
+
+  function updatePreview(){
+    try{
+      const out = buildOutputObject();
+      outJson.value = JSON.stringify(out, null, 2);
+      setMsg(`Updated preview at ${nowTag()}.`, "OK");
+    } catch (e){
+      setMsg(e.message, "ERR");
+    }
+  }
+
+  let _t = null;
+  function updatePreviewDebounced(){
+    clearTimeout(_t);
+    _t = setTimeout(() => {
+      try { ensureOneDefault(); } catch {}
+      updatePreview();
+      updateKpis();
+    }, 120);
+  }
+
+  function downloadText(filename, text){
+    const blob = new Blob([text], {type:"application/json"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      URL.revokeObjectURL(a.href);
+      a.remove();
+    }, 0);
+  }
+
+  async function copyToClipboard(text){
+    try{
+      await navigator.clipboard.writeText(text);
+      setMsg("Copied JSON to clipboard.", "OK");
+    }catch(e){
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+      setMsg("Copied (fallback).", "OK");
+    }
+  }
+
+  function addYearRow(y="", source="historic", label="", isDefault=false){
+    rows.push({
+      year: y || "",
+      source: source || "historic",
+      label: label || "",
+      isDefault: !!isDefault
+    });
+  }
+
+  async function loadFromUrl(url){
+    const r = await fetch(url, {cache:"no-store"});
+    if (!r.ok) throw new Error(`Fetch failed (${r.status}) for ${url}`);
+    const data = await r.json();
+    return data;
+  }
+
+  function applyLoadedConfig(data){
+    if (!data || typeof data !== "object") throw new Error("Config JSON must be an object.");
+
+    const yrs = Array.isArray(data.years) ? data.years : [];
+    rows = [];
+    yrs.forEach((y, i) => {
+      const yy = sanitizeYear(y.year);
+      if (!yy) return;
+      addYearRow(yy, (y.source==="live" ? "live" : "historic"), String(y.label ?? yy), false);
+    });
+
+    // default_year may be explicit
+    defaultYear.value = sanitizeYear(data.default_year) || "";
+    // primary_years
+    if (Array.isArray(data.primary_years)){
+      primaryYears.value = data.primary_years.map(sanitizeYear).filter(Boolean).join(",");
+    }
+    // district mapping
+    if (data.district_map_by_year && typeof data.district_map_by_year === "object"){
+      districtMapJson.value = JSON.stringify(data.district_map_by_year, null, 2);
+    } else {
+      districtMapJson.value = "";
+    }
+    districtFallbackYear.value = sanitizeYear(data.district_map_fallback_year) || "";
+
+    // if default_year not present, use first row as default
+    ensureOneDefault();
+    ensureAtLeastOneLive();
+    renderTable();
+    updatePreview();
+    updateKpis();
+  }
+
+  async function autoDetectHistoricYears(){
+    // This probes {historicBase}/{year}.json and adds matches as historic.
+    // Range: from (current year) down to 2000 (configurable by editing the code if you want).
+    const base = (historicBase.value || "./HistoricData").replace(/\/+$/,"");
+    const start = new Date().getFullYear(); // local machine year
+    const end = 2000;
+
+    setMsg(`Probing ${base}/{year}.json ...`, "WARN");
+
+    const found = [];
+    for (let y = start; y >= end; y--){
+      const url = `${base}/${y}.json`;
+      try{
+        const r = await fetch(url, {method:"HEAD", cache:"no-store"});
+        if (r.ok) found.push(String(y));
+      }catch(_){}
+    }
+
+    // Merge found as historic (don't duplicate)
+    const existing = new Set(rows.map(r => sanitizeYear(r.year)));
+    found.forEach(y => {
+      if (!existing.has(y)){
+        addYearRow(y, "historic", y, false);
+      }
+    });
+
+    sortRowsDesc();
+    ensureAtLeastOneLive();
+    ensureOneDefault();
+    renderTable();
+    updatePreview();
+    updateKpis();
+
+    setMsg(found.length ? `Auto-detect found ${found.length} historic year files.` : "Auto-detect found nothing.", found.length ? "OK" : "WARN");
+  }
+
+  // ---- Button wiring ----
+  $("btnAdd").addEventListener("click", () => {
+    addYearRow("", "historic", "", false);
+    ensureOneDefault();
+    renderTable();
+    updatePreview();
+    updateKpis();
+  });
+
+  $("btnClear").addEventListener("click", () => {
+    rows = [];
+    defaultYear.value = "";
+    primaryYears.value = "2024";
+    districtMapJson.value = "";
+    districtFallbackYear.value = "";
+    renderTable();
+    updatePreview();
+    updateKpis();
+    setMsg("Cleared.", "OK");
+  });
+
+  $("btnNormalize").addEventListener("click", () => normalize());
+
+  $("btnCopy").addEventListener("click", async () => {
+    await copyToClipboard(outJson.value || "");
+  });
+
+  $("btnDownload").addEventListener("click", () => {
+    const name = (dlName.value || "years.json").trim() || "years.json";
+    downloadText(name, outJson.value || "{}");
+    setMsg(`Downloaded ${name}.`, "OK");
+  });
+
+  $("btnLoad").addEventListener("click", async () => {
+    const url = (cfgUrl.value || "").trim();
+    if (!url) return setMsg("Enter a config URL.", "WARN");
+    try{
+      const data = await loadFromUrl(url);
+      lastLoaded = data;
+      applyLoadedConfig(data);
+      setMsg(`Loaded ${url}.`, "OK");
+    }catch(e){
+      setMsg(e.message, "ERR");
+    }
+  });
+
+  $("btnAuto").addEventListener("click", async () => {
+    try { await autoDetectHistoricYears(); }
+    catch(e){ setMsg(e.message, "ERR"); }
+  });
+
+  // ---- Initialize with a sensible default ----
+  function seed(){
+    rows = [];
+    addYearRow("2026", "live", "2026", true);
+    addYearRow("2024", "historic", "2024", false);
+    addYearRow("2022", "historic", "2022", false);
+    addYearRow("2020", "historic", "2020", false);
+    addYearRow("2018", "historic", "2018", false);
+    addYearRow("2016", "historic", "2016", false);
+    defaultYear.value = "2026";
+    primaryYears.value = "2024";
+
+    // put your current mapping here so it’s easy to edit later
+    const dm = {
+      "2016": "/topojson/tl_2017_us_cd115.json",
+      "2018": "/topojson/tl_2019_us_cd116.json",
+      "2020": "/topojson/tl_2019_us_cd116.json",
+      "2022": "/topojson/cb_2023_us_cd118_5m.json",
+      "2024": "/topojson/cb_2024_us_cd119_500k.json",
+      "2025": "/topojson/cb_2024_us_cd119_500k.json",
+      "2026": "/topojson/cb_2024_us_cd119_500k.json"
+    };
+    districtMapJson.value = JSON.stringify(dm, null, 2);
+    districtFallbackYear.value = "2024";
+
+    renderTable();
+    updatePreview();
+    updateKpis();
+    setMsg("Seeded with default values.", "OK");
+  }
+
+  seed();
+  
+  $("btnDownload").addEventListener("click", () => {
+    const name = (dlName.value || "years.json").trim() || "years.json";
+    downloadText(name, outJson.value || "{}");
+    setMsg(`Downloaded ${name}.`, "OK");
+  });
+
+  /* ADD THIS RIGHT AFTER 👇 */
+  $("btnSave").addEventListener("click", async () => {
+    try {
+      const payload = JSON.parse(outJson.value);
+
+      const r = await fetch("/api/config/years", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "save failed");
+
+      setMsg("Saved to server ✓", "OK");
+    } catch (e) {
+      console.error(e);
+      setMsg("Save failed: " + e.message, "ERR");
+    }
+  });
+
+  
+})();
+    
+</script>
+</body>
+</html>

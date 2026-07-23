@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,NE,Douglas,31055,130679,140993,0,100.0,100.00
+2024-11-05T15-30-22,NE,Sarpy,31153,19361,10165,0,100.0,100.00
+2024-11-05T15-30-22,NE,Saunders,31155,10158,3211,0,100.0,100.00

@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,NJ,Burlington,34005,83808,120027,3616,100.0,100.00
+2024-11-05T15-30-22,NJ,Mercer,34021,32715,46562,2142,100.0,100.00
+2024-11-05T15-30-22,NJ,Monmouth,34025,52931,35445,2238,100.0,100.00

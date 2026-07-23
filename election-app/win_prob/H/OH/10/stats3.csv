@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,OH,Clark,39023,19299,12316,1213,100.0,100.00
+2024-11-05T15-30-22,OH,Greene,39057,57528,28963,2685,100.0,100.00
+2024-11-05T15-30-22,OH,Montgomery,39113,136868,104141,7733,100.0,100.00

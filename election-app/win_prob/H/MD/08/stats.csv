@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,MD,Montgomery,24031,77819,292098,9612,100.0,100.00
+2024-11-05T15-30-22,MD,Prince George's,24033,2,3,0,100.0,100.00

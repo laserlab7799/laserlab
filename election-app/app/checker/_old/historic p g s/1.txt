@@ -1,0 +1,337 @@
+<ElectionResults Date="2024-11-05" StatePostal="PA" Office="P" Epoch="58590468" RaceTypeID="G">
+<ReportingUnit Name="Adams County" FIPS="42001">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="142759"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="91624"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="6734"/>
+</ReportingUnit>
+<ReportingUnit Name="Allegheny County" FIPS="42003">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="35893"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="19143"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="4786"/>
+</ReportingUnit>
+<ReportingUnit Name="Armstrong County" FIPS="42005">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="43243"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="71658"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="10815"/>
+</ReportingUnit>
+<ReportingUnit Name="Beaver County" FIPS="42007">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="16205"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="13549"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Bedford County" FIPS="42009">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="54655"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="75051"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="3601"/>
+</ReportingUnit>
+<ReportingUnit Name="Berks County" FIPS="42011">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="52841"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="41853"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="20178"/>
+</ReportingUnit>
+<ReportingUnit Name="Blair County" FIPS="42013">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="85892"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="38564"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="50835"/>
+</ReportingUnit>
+<ReportingUnit Name="Bradford County" FIPS="42015">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="102761"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="119335"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Bucks County" FIPS="42017">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="51472"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="44601"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="63217"/>
+</ReportingUnit>
+<ReportingUnit Name="Butler County" FIPS="42019">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="45304"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="42489"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="22706"/>
+</ReportingUnit>
+<ReportingUnit Name="Cambria County" FIPS="42021">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="75398"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="85818"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="37200"/>
+</ReportingUnit>
+<ReportingUnit Name="Cameron County" FIPS="42023">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="70078"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="73582"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Carbon County" FIPS="42025">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="130543"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="173221"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Centre County" FIPS="42027">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="126866"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="109902"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="2151"/>
+</ReportingUnit>
+<ReportingUnit Name="Chester County" FIPS="42029">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="46524"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="15508"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="11817"/>
+</ReportingUnit>
+<ReportingUnit Name="Clarion County" FIPS="42031">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="22920"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="17212"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="3115"/>
+</ReportingUnit>
+<ReportingUnit Name="Clearfield County" FIPS="42033">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="57140"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="71164"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="16929"/>
+</ReportingUnit>
+<ReportingUnit Name="Clinton County" FIPS="42035">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="54350"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="83996"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="26353"/>
+</ReportingUnit>
+<ReportingUnit Name="Columbia County" FIPS="42037">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="50208"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="72394"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Crawford County" FIPS="42039">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="31419"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="38103"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Cumberland County" FIPS="42041">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="46774"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="77970"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="21426"/>
+</ReportingUnit>
+<ReportingUnit Name="Dauphin County" FIPS="42043">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="33381"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="69707"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Delaware County" FIPS="42045">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="34670"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="16474"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="9874"/>
+</ReportingUnit>
+<ReportingUnit Name="Elk County" FIPS="42047">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="35666"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="42885"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="7220"/>
+</ReportingUnit>
+<ReportingUnit Name="Erie County" FIPS="42049">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="39575"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="58626"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="25473"/>
+</ReportingUnit>
+<ReportingUnit Name="Fayette County" FIPS="42051">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="39703"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="36448"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Forest County" FIPS="42053">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="9999"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="14615"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="1027"/>
+</ReportingUnit>
+<ReportingUnit Name="Franklin County" FIPS="42055">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="12374"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="16854"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="9077"/>
+</ReportingUnit>
+<ReportingUnit Name="Fulton County" FIPS="42057">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="92567"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="65509"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Greene County" FIPS="42059">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="21919"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="21919"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Huntingdon County" FIPS="42061">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="49563"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="47203"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Indiana County" FIPS="42063">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="118627"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="112036"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Jefferson County" FIPS="42065">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="11404"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="15361"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Juniata County" FIPS="42067">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="114180"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="57917"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Lackawanna County" FIPS="42069">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="64961"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="108967"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="35625"/>
+</ReportingUnit>
+<ReportingUnit Name="Lancaster County" FIPS="42071">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="90199"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="119184"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="27985"/>
+</ReportingUnit>
+<ReportingUnit Name="Lawrence County" FIPS="42073">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="28902"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="44157"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="7227"/>
+</ReportingUnit>
+<ReportingUnit Name="Lebanon County" FIPS="42075">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="58184"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="67619"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="31452"/>
+</ReportingUnit>
+<ReportingUnit Name="Lehigh County" FIPS="42077">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="92463"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="74872"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="33673"/>
+</ReportingUnit>
+<ReportingUnit Name="Luzerne County" FIPS="42079">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="37254"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="53094"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="19224"/>
+</ReportingUnit>
+<ReportingUnit Name="Lycoming County" FIPS="42081">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="102884"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="111909"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="McKean County" FIPS="42083">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="17411"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="28288"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="3074"/>
+</ReportingUnit>
+<ReportingUnit Name="Mercer County" FIPS="42085">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="39253"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="84639"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Mifflin County" FIPS="42087">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="34983"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="19518"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="10562"/>
+</ReportingUnit>
+<ReportingUnit Name="Monroe County" FIPS="42089">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="85438"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="168435"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Montgomery County" FIPS="42091">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="7085"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="14171"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Montour County" FIPS="42093">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="56273"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="81125"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="31613"/>
+</ReportingUnit>
+<ReportingUnit Name="Northampton County" FIPS="42095">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="12443"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="15490"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Northumberland County" FIPS="42097">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="8562"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="5708"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Perry County" FIPS="42099">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="68270"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="54616"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="1243"/>
+</ReportingUnit>
+<ReportingUnit Name="Philadelphia County" FIPS="42101">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="69790"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="73896"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Pike County" FIPS="42103">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="69881"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="61991"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Potter County" FIPS="42105">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="81598"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="101951"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="48160"/>
+</ReportingUnit>
+<ReportingUnit Name="Schuylkill County" FIPS="42107">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="88106"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="88106"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Snyder County" FIPS="42109">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="46257"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="58955"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Somerset County" FIPS="42111">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="79202"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="52547"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="94544"/>
+</ReportingUnit>
+<ReportingUnit Name="Sullivan County" FIPS="42113">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="117425"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="117904"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="4314"/>
+</ReportingUnit>
+<ReportingUnit Name="Susquehanna County" FIPS="42115">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="74980"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="88020"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Tioga County" FIPS="42117">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="131989"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="72181"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="2064"/>
+</ReportingUnit>
+<ReportingUnit Name="Union County" FIPS="42119">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="53666"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="63424"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="45537"/>
+</ReportingUnit>
+<ReportingUnit Name="Venango County" FIPS="42121">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="6664"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="7738"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="7095"/>
+</ReportingUnit>
+<ReportingUnit Name="Warren County" FIPS="42123">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="24561"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="27578"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Washington County" FIPS="42125">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="63734"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="60057"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+<ReportingUnit Name="Wayne County" FIPS="42127">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="85099"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="148316"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="9726"/>
+</ReportingUnit>
+<ReportingUnit Name="Westmoreland County" FIPS="42129">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="29166"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="18633"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="23867"/>
+</ReportingUnit>
+<ReportingUnit Name="Wyoming County" FIPS="42131">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="4035"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="2731"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="63"/>
+</ReportingUnit>
+<ReportingUnit Name="York County" FIPS="42133">
+<Candidate First="Donald" Last="Trump" Party="REP" VoteCount="25762"/>
+<Candidate First="Kamala" Last="Harris" Party="DEM" VoteCount="14396"/>
+<Candidate First="Robert" Last="Kennedy" Party="IND" VoteCount="0"/>
+</ReportingUnit>
+</ElectionResults>

@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,MI,Oakland,26125,10666,43890,1985,100.0,100.00
+2024-11-05T15-30-22,MI,Wayne,26163,81824,209464,15670,100.0,100.00

@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Vertical Box Plot</title>
+
+<style>
+  *{ box-sizing:border-box; }
+
+  html, body{
+    margin:0;
+    padding:12px;
+    background: transparent !important;
+    color:#111;
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  }
+
+
+  .title{
+    font-weight:800;
+    letter-spacing:.06em;
+    font-size:13px;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+
+    svg#chart{
+      width: 90%;          /* a little less wide */
+      height: 100%;
+      display: block;
+      margin-left: 60px;   /* move the whole box plot left (more room for y label) */
+      margin-right: 0;
+    }
+
+
+
+    /* match chart-only axis + label styling */
+    .axis path,
+    .axis line{
+      stroke:#111;
+      stroke-width:2;
+    }
+
+    .axis text,
+    .axisText{
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      font-size:18px;
+      font-weight:800;
+      fill:#111;
+    }
+
+    /* match chart-only dashed gridlines */
+    .gridline{
+      stroke:#94a3b8;
+      stroke-dasharray:6 6;
+      stroke-width:1.2;
+    }
+
+    /* optional: make the 0-line a touch stronger */
+    .gridline.zero{
+      stroke:#94a3b8;
+      stroke-width:1.6;
+    }
+
+
+  .box{
+    fill:#e5e7eb;
+    stroke:#111827;
+    stroke-width:1.4;
+  }
+
+  .median{
+    stroke:#111827;
+    stroke-width:2;
+  }
+
+  .whisker{
+    stroke:#111827;
+    stroke-width:1.4;
+  }
+
+  .label-pos{
+    fill:#2563eb;
+    font-size:10px;
+    font-weight:600;
+  }
+
+  .label-neg{
+    fill:#dc2626;
+    font-size:10px;
+    font-weight:600;
+  }
+    
+    .yLabel, .xLabel{
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      font-size:18px;
+      font-weight:800;
+      fill:#111;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+    }
+    .controls{
+      margin-top: -14px;          /* move UP (tweak -8 .. -22) */
+      display: flex;
+      justify-content: flex-end;  /* push to the RIGHT */
+      padding-right: 18px;        /* nudge away from edge */
+    }
+
+    #toggleLabels{
+      font: 800 12px system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      padding: 2px 2px;
+      border-radius: 8px;
+      border: 1px solid #111;
+      background: rgba(255,255,255,0.9);
+      cursor: pointer;
+    }
+
+
+    body.hide-box-labels .label-pos,
+    body.hide-box-labels .label-neg{
+      display: none;
+    }
+
+    /* hide everything except median label */
+    body.median-only .lbl-q1,
+    body.median-only .lbl-q3,
+    body.median-only .lbl-whisker_high,
+    body.median-only .lbl-whisker_low{
+      display:none;
+    }
+
+</style>
+</head>
+
+<body class="median-only">
+
+
+
+<svg id="chart"></svg>
+<div class="controls">
+  <button id="toggleLabels" type="button">Labels</button>
+</div>
+
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+(() => {
+    const btn = document.getElementById("toggleLabels");
+    let labelsVisible = true;
+
+    btn.addEventListener("click", () => {
+      labelsVisible = !labelsVisible;
+      document.body.classList.toggle("hide-box-labels", !labelsVisible);
+      btn.textContent = labelsVisible ? "Labels" : "Labels";
+    });
+
+  const svg = d3.select("#chart");
+  const margin = { top: 10, right: 20, bottom: 70, left: 90 };
+
+
+  function render(data){
+    svg.selectAll("*").remove();
+    if (!Array.isArray(data) || !data.length) return;
+
+    data = data
+      .filter(d =>
+        Number.isFinite(d.statewide_percent_in) &&
+        Number.isFinite(d.median)
+      )
+      .sort((a,b) => a.statewide_percent_in - b.statewide_percent_in);
+
+    const width  = svg.node().clientWidth;
+    const TOP_NUDGE = 50;              // <-- increase/decrease to taste
+    const height = 560 + TOP_NUDGE;    // keep plot area same, just push it down
+
+    svg
+      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("preserveAspectRatio", "xMidYMid meet");
+
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - (margin.top + TOP_NUDGE) - margin.bottom;
+
+    const g = svg.append("g")
+      .attr("transform", `translate(${margin.left},${margin.top + TOP_NUDGE})`);
+
+
+      // x axis like chart-only: 0..100 with 10-pt ticks
+      const x = d3.scaleLinear()
+        .domain([0, 100])
+        .range([0, innerW]);
+
+      // compute a reasonable box width from the spacing of points (prevents overlap)
+      const xVals = data.map(d => +d.statewide_percent_in).filter(Number.isFinite).sort((a,b)=>a-b);
+      let minDxPx = Infinity;
+      for (let k = 1; k < xVals.length; k++){
+        minDxPx = Math.min(minDxPx, x(xVals[k]) - x(xVals[k-1]));
+      }
+      if (!Number.isFinite(minDxPx) || minDxPx <= 0) minDxPx = innerW / Math.max(1, xVals.length);
+      const boxW = Math.max(14, Math.min(60, minDxPx * 0.55));
+
+
+      // --- y scale with a little padding so narrow ranges don't look "flat"
+      const yMinRaw = d3.min(data, d => d.whisker_low);
+      const yMaxRaw = d3.max(data, d => d.whisker_high);
+      const spanRaw = yMaxRaw - yMinRaw;
+
+      // pad: 10% of span, but never less than 0.05 (so 3.30–3.40 still has breathing room)
+      const pad = Math.max(0.05, spanRaw * 0.10);
+
+      let yMin = yMinRaw - pad;
+      let yMax = yMaxRaw + pad;
+
+      // helper: choose an intuitive tick step based on the span
+      function pickTickStep(span){
+        if (span >= 20) return 5;
+        if (span >= 10) return 2;
+        if (span >= 5)  return 1;
+        if (span >= 2)  return 0.5;
+        if (span >= 1)  return 0.2;
+        if (span >= 0.5) return 0.1;
+        if (span >= 0.2) return 0.05;
+        return 0.02;
+      }
+
+      const step = pickTickStep(yMax - yMin);
+
+      // snap the domain to tick boundaries so ticks land cleanly
+      yMin = Math.floor(yMin / step) * step;
+      yMax = Math.ceil(yMax / step) * step;
+
+      const y = d3.scaleLinear()
+        .domain([yMin, yMax])
+        .range([innerH, 0]);
+
+      // build ticks using the chosen step
+      let yTicks = d3.range(yMin, yMax + step * 0.5, step);
+      // --- cap tick count so labels don't get insane on big ranges ---
+      const MAX_Y_TICKS = 9; // try 7, 9, or 11
+
+      if (yTicks.length > MAX_Y_TICKS) {
+        // keep endpoints, but thin the tick list by using a larger step multiple
+        const factor = Math.ceil((yTicks.length - 1) / (MAX_Y_TICKS - 1));
+        const step2 = step * factor;
+
+        // snap again to new boundaries
+        yMin = Math.floor(yMin / step2) * step2;
+        yMax = Math.ceil(yMax / step2) * step2;
+
+        // rebuild scale + ticks
+        y.domain([yMin, yMax]);
+        yTicks = d3.range(yMin, yMax + step2 * 0.5, step2);
+
+        // keep 0 as a tick if it sits inside the domain
+        if (yMin < 0 && yMax > 0 && !yTicks.some(t => Math.abs(t) < step2 * 0.25)) {
+          yTicks.push(0);
+          yTicks = yTicks.sort((a,b) => a - b);
+        }
+      }
+
+
+      // if 0 is inside the domain, force it to exist as a tick so your 0-line stays meaningful
+      if (yMin < 0 && yMax > 0 && !yTicks.some(t => Math.abs(t) < step * 0.25)) {
+        yTicks.push(0);
+        yTicks = yTicks.sort((a,b) => a - b);
+      }
+
+
+    g.append("g")
+      .attr("class","grid")
+      .selectAll("line")
+      .data(yTicks)
+      .enter()
+      .append("line")
+      .attr("x1", 0)
+      .attr("x2", innerW)
+      .attr("y1", d => y(d))
+      .attr("y2", d => y(d))
+      .attr("class", d => d === 0 ? "gridline zero" : "gridline");
+
+
+      // y-axis tick formatter: + => D+ , - => R+ , 0 => 0
+      function fmtMarginTick(v){
+        // treat "almost zero" as zero so you don't get D+0.0 or R+0.0 due to float noise
+        if (Math.abs(v) < step * 0.25) return "0";
+
+        const a = Math.abs(v);
+
+        // decimals based on tick step
+        const decimals =
+          step >= 1    ? 0 :
+          step >= 0.1  ? 1 :
+          step >= 0.01 ? 2 : 3;
+
+        // format and trim trailing zeros (so 3.40 -> 3.4, 3.00 -> 3)
+        let n = a.toFixed(decimals);
+        if (n.includes(".")) n = n.replace(/0+$/,"").replace(/\.$/,"");
+
+
+        return (v > 0) ? `D+${n}` : `R+${n}`;
+      }
+
+
+      // left y-axis with the SAME tick values, just relabeled
+      g.append("g")
+        .attr("class","axis")
+        .call(
+          d3.axisLeft(y)
+            .tickValues(yTicks)               // keep same tick locations
+            .tickFormat(fmtMarginTick)        // change the labels
+        );
+
+      // y-axis label
+      g.append("text")
+        .attr("class","yLabel")
+        .attr("transform", `translate(${-75},${innerH/2}) rotate(-90)`)
+        .attr("text-anchor","middle")
+        .text("FINAL MARGIN (%)");
+
+
+      g.append("g")
+        .attr("class","axis")
+        .attr("transform", `translate(0,${innerH})`)
+        .call(
+          d3.axisBottom(x)
+            .tickValues(d3.range(0, 101, 10))  // 0,10,...100
+            .tickFormat(d => d)                // (or: d => d + "%")
+        );
+
+        // x-axis label
+        g.append("text")
+          .attr("class","xLabel")
+          .attr("x", innerW/2)
+          .attr("y", innerH + 44)
+          .attr("text-anchor","middle")
+          .text("VOTE % IN");
+
+
+        const col = g.selectAll(".col")
+          .data(data)
+          .enter()
+          .append("g")
+          .attr("transform", d => `translate(${x(d.statewide_percent_in) - boxW/2},0)`);
+
+
+    // whiskers
+    col.append("line")
+      .attr("class","whisker")
+      .attr("x1", boxW/2)
+      .attr("x2", boxW/2)
+      .attr("y1", d => y(d.whisker_high))
+      .attr("y2", d => y(d.whisker_low));
+
+    // box
+    col.append("rect")
+      .attr("class","box")
+      .attr("x", 0)
+      .attr("width", boxW)
+      .attr("y", d => y(d.q3))
+      .attr("height", d => Math.max(1, y(d.q1) - y(d.q3)));
+
+    // median
+    col.append("line")
+      .attr("class","median")
+      .attr("x1", 0)
+      .attr("x2", boxW)
+      .attr("y1", d => y(d.median))
+      .attr("y2", d => y(d.median));
+
+    // labels (whiskers, quartiles, median)
+    const labelDefs = [
+      { key:"whisker_high", dy:-2, anchor:"end",   xMode:"left"   },
+      { key:"q3",           dy:-2, anchor:"middle",xMode:"center" },
+      { key:"median",       dy:-2, anchor:"start", xMode:"right"  },
+      { key:"q1",           dy:12, anchor:"middle",xMode:"center" },
+      { key:"whisker_low",  dy:12, anchor:"end",   xMode:"left"   }
+    ];
+
+
+    labelDefs.forEach(ld => {
+      col.append("text")
+      .attr("x", d => {
+        if (ld.xMode === "right")  return boxW + 4; // right edge of box
+        if (ld.xMode === "left")   return -4;       // left edge of box
+        return boxW / 2;                             // centered
+      })
+        .attr("y", d => y(d[ld.key]) + ld.dy)
+        .attr("text-anchor", ld.anchor)
+        .attr("class", d => (d[ld.key] >= 0 ? "label-pos" : "label-neg") + " lbl-" + ld.key)
+        .text(d => {
+          const v = d[ld.key];
+          const decimals =
+            step >= 1    ? 0 :
+            step >= 0.1  ? 1 :
+            step >= 0.01 ? 2 : 3;
+
+            let s = v.toFixed(decimals);
+            if (s.includes(".")) s = s.replace(/0+$/,"").replace(/\.$/,"");
+            return s;
+
+        });
+    });
+
+  }
+
+  // message wiring (unchanged)
+  let BOX_DATA_URL = null;
+
+  window.addEventListener("message", e => {
+    const msg = e.data || {};
+    if (msg.type !== "setBoxDataSource") return;
+
+    BOX_DATA_URL = msg.path;
+    fetch(msg.path + "?t=" + Date.now(), { cache:"no-store" })
+      .then(r => r.json())
+      .then(render)
+      .catch(console.error);
+  });
+
+  setInterval(() => {
+    if (!BOX_DATA_URL) return;
+    fetch(BOX_DATA_URL + "?t=" + Date.now())
+      .then(r => r.json())
+      .then(render)
+      .catch(()=>{});
+  }, 5000);
+
+})();
+</script>
+
+</body>
+</html>

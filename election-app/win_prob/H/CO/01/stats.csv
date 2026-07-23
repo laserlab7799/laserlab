@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,CO,Arapahoe,08005,836,2406,71,100.0,100.00
+2024-11-05T15-30-22,CO,Denver,08031,73758,262200,6364,100.0,100.00
+2024-11-05T15-30-22,CO,Jefferson,08059,4,0,0,100.0,100.00

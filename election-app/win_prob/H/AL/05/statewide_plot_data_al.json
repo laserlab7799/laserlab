@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "state": "AL",
+    "year": 2026,
+    "sources": [
+      "plotdata_AL_2026_2026-01-22T13-42-10.jsonl",
+      "plotdata_AL_2026_2026-02-04T16-54-15.jsonl"
+    ],
+    "generated_at": "2026-02-04T21:54:32Z",
+    "notes": "Persistent accumulator: merges new plotdata JSONLs into existing output JSON. leader/trailer computed per x by max adjusted win_probability; leader_raw from raw series for same leader candidate when present. History is stored in points_by_x so deleting JSONLs does not lose past points.",
+    "leader_color_source": "mc_median_sign",
+    "leader_color_fix_applied": true,
+    "leader_color_fix_generated_at": "2026-02-04T21:55:02Z"
+  },
+  "series": {
+    "leader": {
+      "x": [
+        100.0
+      ],
+      "y": [
+        100.0
+      ],
+      "color": [
+        "red"
+      ],
+      "marker": [
+        "o"
+      ]
+    },
+    "trailer": {
+      "x": [
+        100.0
+      ],
+      "y": [
+        0.0
+      ],
+      "color": [
+        "blue"
+      ],
+      "marker": [
+        "s"
+      ]
+    },
+    "leader_raw": {
+      "x": [
+        100.0
+      ],
+      "y": [
+        100.0
+      ],
+      "color": [
+        "red"
+      ],
+      "marker": [
+        "^"
+      ]
+    },
+    "trailer_raw": {
+      "x": [
+        100.0
+      ],
+      "y": [
+        0.0
+      ],
+      "color": [
+        "blue"
+      ],
+      "marker": [
+        "^"
+      ]
+    },
+    "statewide_margin_pp": {
+      "x": [],
+      "y": []
+    }
+  },
+  "points_by_x": {
+    "100.000000000000": {
+      "adjusted": {
+        "T": 100.0,
+        "H": 0.0
+      },
+      "raw": {
+        "T": 100.0,
+        "H": 0.0
+      }
+    }
+  }
+}

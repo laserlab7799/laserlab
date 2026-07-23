@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Margin Table</title>
+
+<style>
+    *{ box-sizing:border-box; }
+    
+    body{
+        margin:0;
+        padding:16px;
+        background:#ffffff;
+        color:#111;
+        font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    }
+    
+    .title{
+        font-weight:800;
+        letter-spacing:.06em;
+        font-size:14px;
+        text-transform:uppercase;
+        margin-bottom:12px;
+    }
+    
+    table{
+        width:100%;
+        border-collapse:collapse;
+        font-size:14px;
+    }
+    
+    thead{
+        background:#f3f4f6;
+    }
+    
+    th, td{
+        padding:8px 10px;
+        border-bottom:1px solid #e5e7eb;
+        text-align:right;
+        white-space:nowrap;
+    }
+    
+    th{
+        font-weight:700;
+        text-transform:uppercase;
+        font-size:12px;
+        letter-spacing:.05em;
+        color:#374151;
+    }
+    
+    th:first-child,
+    td:first-child{
+        text-align:left;
+    }
+    
+    tbody tr:hover{
+        background:#f9fafb;
+    }
+    
+    .pos{ color:#065f46; font-weight:600; }
+    .neg{ color:#7f1d1d; font-weight:600; }
+    .zero{ color:#374151; font-weight:600; }
+    .table-shell{
+      max-width: 720px;
+      margin: 0 auto;          /* centers */
+      transform: translateX(60px); /* nudges right */
+    }
+    .table-scroll{
+      max-height: 56vh;          /* ← controls visible height */
+      overflow-y: auto;          /* ← enables vertical scroll */
+      overscroll-behavior: contain;
+    }
+
+    /* optional: hide horizontal scroll */
+    .table-scroll{
+      overflow-x: hidden;
+    }
+
+
+</style>
+</head>
+
+<body>
+
+<div class="title" id="title">Margin table</div>
+
+
+
+<div class="table-shell">
+    <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Statewide % In</th>
+                    <th>Margin (Median)</th>
+                </tr>
+            </thead>
+            <tbody id="rows">
+                <tr><td colspan="2">Waiting for data…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+(() => {
+  const rowsEl  = document.getElementById("rows");
+  const titleEl = document.getElementById("title");
+
+  function fmtPct(x){
+    return (Math.round(x * 100) / 100).toFixed(2) + "%";
+  }
+
+  function fmtMargin(x){
+    const v = Math.round(x * 100) / 100;
+    return (v > 0 ? "+" : "") + v.toFixed(2);
+  }
+
+  function marginClass(x){
+    if (x > 0) return "pos";
+    if (x < 0) return "neg";
+    return "zero";
+  }
+
+  function render(data){
+    rowsEl.innerHTML = "";
+
+    if (!Array.isArray(data) || data.length === 0){
+      rowsEl.innerHTML =
+        `<tr><td colspan="2">No data</td></tr>`;
+      return;
+    }
+
+    // sort by statewide % in
+    data.sort((a,b) => a.statewide_percent_in - b.statewide_percent_in);
+
+    for (const d of data){
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${fmtPct(d.statewide_percent_in)}</td>
+        <td class="${marginClass(d.median)}">${fmtMargin(d.median)}</td>
+      `;
+
+      rowsEl.appendChild(tr);
+    }
+  }
+
+  // messaging — identical pattern to chart / box
+  window.addEventListener("message", (e) => {
+    const msg = e.data || {};
+    if (msg.type !== "setBoxDataSource") return;
+
+    titleEl.textContent =
+      `Margin table • ${msg.state || ""}`;
+
+    rowsEl.innerHTML =
+      `<tr><td colspan="2">Loading…</td></tr>`;
+
+    fetch(msg.path + "?t=" + Date.now())
+      .then(r => r.json())
+      .then(render)
+      .catch(err => {
+        console.error("[box-table]", err);
+        rowsEl.innerHTML =
+          `<tr><td colspan="2">Error loading data</td></tr>`;
+      });
+  });
+
+})();
+</script>
+
+</body>
+</html>

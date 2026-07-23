@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Custom Images</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  :root {
+    --bg: #0b1220;
+    --panel: #0e1a30;
+    --ink: #e7f6f5;
+    --muted: #9fb8c7;
+    --accent: #38bdf8;
+    --ok: #4ade80;
+    --err: #f87171;
+  }
+
+  * {
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    background: linear-gradient(180deg, var(--bg), #05080f);
+    color: var(--ink);
+  }
+
+  header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #12233e;
+    background: var(--panel);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  main {
+    padding: 20px;
+    max-width: 720px;
+  }
+
+  .status {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .ok { color: var(--ok); }
+  .err { color: var(--err); }
+  .muted { color: var(--muted); }
+
+  ul {
+    margin: 12px 0 20px;
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  li {
+    margin-bottom: 6px;
+  }
+
+  button {
+    background: var(--accent);
+    color: #001018;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  button.busy {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  footer {
+    padding: 12px 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .uploader {
+    margin: 14px 0 18px;
+    padding: 12px;
+    border: 1px solid #12233e;
+    border-radius: 10px;
+    background: rgba(14,26,48,0.55);
+  }
+
+  .dropzone {
+    border: 2px dashed #244a7a;
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+  }
+  .dropzone.dragover {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  button.secondary {
+    background: #1f334d;
+    color: var(--ink);
+  }
+  button.danger {
+    background: #7f1d1d;
+    color: #fff;
+  }
+  button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .picked {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .progressWrap {
+    margin-top: 10px;
+  }
+  .progressBar {
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    background: #0b1220;
+    border: 1px solid #12233e;
+    overflow: hidden;
+  }
+  .progressBar > div {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 120ms linear;
+  }
+
+  .fileRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .fileRow code {
+    color: var(--ink);
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Custom Images</h1>
+</header>
+
+<main>
+    <div id="status" class="status muted">Scanning images…</div>
+
+    <button id="updateBtn">Update JSON</button>
+
+
+    <section class="uploader">
+      <div id="dropzone" class="dropzone">
+        Drag &amp; drop PNGs here (or click to choose)
+      </div>
+      <input id="fileInput" type="file" accept=".png" multiple style="display:none" />
+
+      <div id="picked" class="picked">No files selected</div>
+
+      <div class="row">
+        <button id="uploadBtn" class="secondary" disabled>Upload to /images</button>
+        <button id="cancelBtn" class="danger" disabled>Cancel upload</button>
+      </div>
+
+      <div id="progressWrap" class="progressWrap" style="display:none">
+        <div class="progressBar"><div id="progressBar"></div></div>
+        <div id="progressText" class="picked">0%</div>
+      </div>
+    </section>
+
+    <div id="summary"></div>
+
+</main>
+
+<footer>
+  Writes to <code>/images/custom-images.json</code>
+</footer>
+
+<script>
+(async function () {
+  const statusEl = document.getElementById("status");
+  const summaryEl = document.getElementById("summary");
+  const updateBtn = document.getElementById("updateBtn");
+
+  const dropzone = document.getElementById("dropzone");
+  const fileInput = document.getElementById("fileInput");
+  const pickedEl = document.getElementById("picked");
+  const uploadBtn = document.getElementById("uploadBtn");
+  const cancelBtn = document.getElementById("cancelBtn");
+  const progressWrap = document.getElementById("progressWrap");
+  const progressBar = document.getElementById("progressBar");
+  const progressText = document.getElementById("progressText");
+
+  const LIST_URL = "/images/_list";
+  const SAVE_URL = "/images/custom-images.json";
+  const UPLOAD_URL = "/images/_upload";
+  const DELETE_PREFIX = "/images/_delete/";
+
+  function isValidFirstLast(filename) {
+    return /^[a-z]+-[a-z]+\.png$/i.test(filename);
+  }
+
+  function parseName(filename) {
+    const base = filename.replace(".png", "");
+    const [first, last] = base.split("-");
+    return {
+      file: filename,
+      first: first.charAt(0).toUpperCase() + first.slice(1),
+      last:  last.charAt(0).toUpperCase() + last.slice(1)
+    };
+  }
+
+  let records = [];
+  let selectedFiles = [];
+  let currentXhr = null;
+
+  function setStatus(msg, cls) {
+    statusEl.textContent = msg;
+    statusEl.className = "status " + (cls || "muted");
+  }
+
+  function renderPicked() {
+    if (!selectedFiles.length) {
+      pickedEl.textContent = "No files selected";
+      uploadBtn.disabled = true;
+      return;
+    }
+    pickedEl.textContent = `Selected: ${selectedFiles.map(f => f.name).join(", ")}`;
+    uploadBtn.disabled = false;
+  }
+
+  function resetProgress() {
+    progressWrap.style.display = "none";
+    progressBar.style.width = "0%";
+    progressText.textContent = "0%";
+  }
+
+  async function refreshList() {
+    summaryEl.innerHTML = "";
+
+    try {
+      const res = await fetch(LIST_URL, { cache: "no-store" });
+      const files = await res.json();
+
+      records = files.filter(isValidFirstLast).map(parseName);
+
+      if (!files.length) {
+        setStatus("No images found in /images", "muted");
+      } else {
+        setStatus(`Found ${records.length} valid images (and ${files.length - records.length} ignored)`, "ok");
+      }
+
+      const ul = document.createElement("ul");
+      files.forEach((fn) => {
+        const li = document.createElement("li");
+        const row = document.createElement("div");
+        row.className = "fileRow";
+
+        const left = document.createElement("div");
+        left.innerHTML = `<code>${fn}</code>`;
+
+        const del = document.createElement("button");
+        del.className = "danger";
+        del.textContent = "Delete";
+        del.addEventListener("click", async () => {
+          if (!confirm(`Delete ${fn}?`)) return;
+          try {
+            const r = await fetch(DELETE_PREFIX + encodeURIComponent(fn), { method: "DELETE" });
+            if (!r.ok) throw new Error(await r.text());
+            setStatus(`Deleted ${fn}`, "ok");
+            await refreshList();
+          } catch (e) {
+            setStatus(`Delete failed: ${e}`, "err");
+          }
+        });
+
+        row.appendChild(left);
+        row.appendChild(del);
+        li.appendChild(row);
+        ul.appendChild(li);
+      });
+
+      summaryEl.appendChild(ul);
+
+    } catch {
+      setStatus("Failed to read image list", "err");
+    }
+  }
+
+  // --- drag & drop wiring ---
+  dropzone.addEventListener("click", () => fileInput.click());
+
+  dropzone.addEventListener("dragenter", (e) => { e.preventDefault(); dropzone.classList.add("dragover"); });
+  dropzone.addEventListener("dragover", (e) => { e.preventDefault(); dropzone.classList.add("dragover"); });
+  dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+  dropzone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropzone.classList.remove("dragover");
+    const files = Array.from(e.dataTransfer.files || []);
+    selectedFiles = files.filter(f => (f.name || "").toLowerCase().endsWith(".png"));
+    renderPicked();
+  });
+
+  fileInput.addEventListener("change", () => {
+    const files = Array.from(fileInput.files || []);
+    selectedFiles = files.filter(f => (f.name || "").toLowerCase().endsWith(".png"));
+    renderPicked();
+  });
+
+  // --- upload with progress + cancel ---
+  uploadBtn.addEventListener("click", () => {
+    if (!selectedFiles.length) return;
+
+    // prevent parallel uploads
+    if (currentXhr) return;
+
+    const fd = new FormData();
+    selectedFiles.forEach(f => fd.append("files", f, f.name));
+
+    currentXhr = new XMLHttpRequest();
+    currentXhr.open("POST", UPLOAD_URL, true);
+
+    resetProgress();
+    progressWrap.style.display = "block";
+    cancelBtn.disabled = false;
+    uploadBtn.disabled = true;
+
+    setStatus("Uploading…", "muted");
+
+    currentXhr.upload.onprogress = (evt) => {
+      if (!evt.lengthComputable) return;
+      const pct = Math.round((evt.loaded / evt.total) * 100);
+      progressBar.style.width = pct + "%";
+      progressText.textContent = pct + "%";
+    };
+
+    currentXhr.onload = async () => {
+      const ok = currentXhr.status >= 200 && currentXhr.status < 300;
+      currentXhr = null;
+      cancelBtn.disabled = true;
+      resetProgress();
+
+      if (!ok) {
+        setStatus("Upload failed", "err");
+        uploadBtn.disabled = !selectedFiles.length;
+        return;
+      }
+
+      setStatus("Upload complete", "ok");
+      selectedFiles = [];
+      fileInput.value = "";
+      renderPicked();
+      await refreshList();
+    };
+
+    currentXhr.onerror = () => {
+      currentXhr = null;
+      cancelBtn.disabled = true;
+      resetProgress();
+      setStatus("Upload failed", "err");
+      uploadBtn.disabled = !selectedFiles.length;
+    };
+
+    currentXhr.onabort = () => {
+      currentXhr = null;
+      cancelBtn.disabled = true;
+      resetProgress();
+      setStatus("Upload canceled", "muted");
+      uploadBtn.disabled = !selectedFiles.length;
+    };
+
+    currentXhr.send(fd);
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    if (currentXhr) currentXhr.abort();
+  });
+
+  /* ---- initial scan ---- */
+  setStatus("Scanning images…", "muted");
+  await refreshList();
+
+  /* ---- update button (repeatable) ---- */
+  updateBtn.addEventListener("click", async () => {
+    updateBtn.classList.add("busy");
+    updateBtn.disabled = true;
+
+    setStatus("Writing custom-images.json…", "muted");
+
+    try {
+      const res = await fetch(SAVE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(records, null, 2)
+      });
+
+      if (!res.ok) throw new Error(res.statusText);
+
+      setStatus(`custom-images.json updated (${records.length} entries)`, "ok");
+
+    } catch {
+      setStatus("Failed to write custom-images.json", "err");
+    }
+
+    updateBtn.disabled = false;
+    updateBtn.classList.remove("busy");
+  });
+})();
+</script>
+
+</body>
+</html>

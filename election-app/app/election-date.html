@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Election Hub — Date & Mode Controller</title>
+<style>
+  :root { --bg:#0b0c10; --card:#121418; --ink:#e6e8ef; --muted:#9aa3b2; --accent:#4da3ff; --ok:#4bd37b; --err:#ff6b6b; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background:var(--bg); color:var(--ink); }
+  header { padding:16px 20px; border-bottom:1px solid #20242c; display:flex; gap:12px; align-items:center; }
+  header h1 { margin:0; font-size:18px; font-weight:700; letter-spacing:.3px; }
+  .wrap { max-width:1100px; margin:20px auto; padding:0 16px; display:grid; grid-template-columns: 360px 1fr; gap:16px; }
+  .card { background:var(--card); border:1px solid #20242c; border-radius:14px; padding:14px; box-shadow:0 0 0 1px rgba(255,255,255,0.02) inset; }
+  .card h2 { margin:0 0 8px; font-size:14px; letter-spacing:.2px; color:var(--muted);}
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  label { display:inline-flex; align-items:center; gap:8px; cursor:pointer; }
+  input[type="radio"] { transform:translateY(1px); }
+  select, button, input[type="date"] {
+    background:#0f1116; color:var(--ink); border:1px solid #2a2f3a; border-radius:10px; padding:8px 10px; font:inherit;
+  }
+  button { cursor:pointer; }
+  .pill { display:inline-block; padding:3px 8px; border-radius:999px; background:#0f1116; border:1px solid #2a2f3a; color:var(--muted); font-size:12px; }
+  .flex { display:flex; gap:10px; align-items:center; }
+  .stack { display:flex; flex-direction:column; gap:8px; }
+  .list { display:flex; flex-wrap:wrap; gap:8px; }
+  .tag { padding:6px 9px; border-radius:10px; border:1px solid #2a2f3a; background:#0f1116; color:#daddf3; font-size:12px; }
+  .tag.main { border-color: var(--accent); }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { padding:8px 8px; border-bottom:1px solid #232834; }
+  th { color:var(--muted); text-align:left; font-weight:600; }
+  .status { font-weight:700; }
+  .status.ok { color:var(--ok); }
+  .status.err { color:var(--err); }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px; }
+  .tiny { font-size:12px; color:var(--muted); }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Election Hub — Mode & Date Control</h1>
+    <span class="pill" id="current-mode">loading…</span>
+    <span class="pill">last updated <span id="last-refresh" class="mono">—</span></span>
+  </header>
+
+  <div class="wrap">
+    <section class="card">
+      <h2>Mode</h2>
+      <div class="stack">
+        <div class="row">
+            <label><input type="radio" name="mode" value="general" /> General election</label>
+            <label><input type="radio" name="mode" value="primary" /> Primaries</label>
+            <label><input type="radio" name="mode" value="quick_primary" /> Quick primary</label>
+        </div>
+        <div id="general-config" class="stack">
+          <div class="row">
+            <span class="tiny">Full-dataset date</span>
+            <input type="date" id="full-date" />
+            <button id="save-general">Save</button>
+          </div>
+          <div class="tiny mono">Current FULL_DATA_URL pointer: <span id="full-url">—</span></div>
+        </div>
+
+        <div id="primary-config" class="stack" style="display:none">
+          <div class="row">
+            <span class="tiny">Pick “Main” primary date (hit twice/min). Others become secondary (hit once/min, round-robin).</span>
+          </div>
+          <div class="row">
+            <select id="main-date"></select>
+            <button id="save-primary">Save</button>
+            <button id="reset-flips" title="Reset D/R alternators">Reset D/R</button>
+          </div>
+          <div class="stack">
+            <div><span class="tiny">Main:</span> <span id="main-pill" class="tag main">—</span></div>
+            <div><span class="tiny">Secondary:</span> <div id="secondary-list" class="list"></div></div>
+            <div class="tiny">Note: CA (Mar 5, 2024) and WA (Aug 6, 2024) APP House primaries are automatically included in the rotation for those dates.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Live hits (newest first)</h2>
+      <table id="hits">
+        <thead>
+          <tr><th style="width:110px">When (UTC)</th><th style="width:90px">Which</th><th style="width:90px">Status</th><th>URL</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+<script>
+const $ = sel => document.querySelector(sel);
+const api = (p,opts={}) => fetch(p, Object.assign({headers:{'Content-Type':'application/json'}}, opts));
+
+function fmtModeBadge(mode){
+  const el = $('#current-mode');
+  el.textContent =
+    (mode === 'primary') ? 'primary mode' :
+    (mode === 'quick_primary') ? 'quick primary mode' :
+    'general mode';
+}
+
+
+function populate(cfg, fullUrl){
+  // radio
+  document.querySelectorAll('input[name="mode"]').forEach(r => {
+    r.checked = (r.value === cfg.mode);
+  });
+  fmtModeBadge(cfg.mode);
+
+  // show/hide sections
+  $('#general-config').style.display = (cfg.mode === 'general') ? 'flex' : 'none';
+  $('#primary-config').style.display = (cfg.mode === 'primary') ? 'flex' : 'none';
+  // quick_primary has no extra UI; both config panes hidden
+  if (cfg.mode === 'quick_primary') {
+    $('#general-config').style.display = 'none';
+    $('#primary-config').style.display = 'none';
+  }
+
+
+  // general
+  $('#full-date').value = (cfg.full_date || '2020-11-03');
+
+  // primary — fill select
+  const select = $('#main-date');
+  select.innerHTML = '';
+  (cfg.all_primary_dates || []).forEach(d => {
+    const o = document.createElement('option');
+    o.value = d; o.textContent = d;
+    select.appendChild(o);
+  });
+  if (cfg.main_date) select.value = cfg.main_date;
+  $('#main-pill').textContent = cfg.main_date || '—';
+
+  // derive secondaries
+  const secs = (cfg.all_primary_dates || []).filter(d => d !== cfg.main_date);
+  const list = $('#secondary-list');
+  list.innerHTML = '';
+  secs.forEach(d => {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = d;
+    list.appendChild(span);
+  });
+
+  // url badge
+  $('#full-url').textContent = fullUrl || '—';
+  $('#last-refresh').textContent = new Date().toISOString().replace('T',' ').slice(0,19);
+}
+
+async function loadCfg(){
+  const r = await api('/admin/hub-config');
+  const j = await r.json();
+  populate(j.cfg, j.current_full_url);
+}
+
+    async function save(mode){
+      const payload = { mode };
+      if (mode === 'general'){
+        payload.full_date = $('#full-date').value || '2020-11-03';
+      } else if (mode === 'primary'){
+        payload.main_date = $('#main-date').value || null;
+      } // quick_primary: no extra fields
+      const r = await api('/admin/hub-config', {method:'POST', body: JSON.stringify(payload)});
+      const j = await r.json();
+      populate(j.cfg, j.current_full_url);
+    }
+
+
+function currentMode(){ return document.querySelector('input[name="mode"]:checked')?.value || 'general'; }
+
+document.querySelectorAll('input[name="mode"]').forEach(r=>{
+  r.addEventListener('change', ()=> save(r.value));
+});
+
+$('#save-general').addEventListener('click', ()=> save('general'));
+$('#save-primary').addEventListener('click', ()=> save('primary'));
+$('#reset-flips').addEventListener('click', async ()=>{
+  await api('/admin/hub-config', {method:'POST', body: JSON.stringify({ mode: 'primary', reset_flips:true })});
+  loadCfg();
+});
+
+async function pollHits(){
+  try{
+    const r = await api('/admin/last-hit');
+    const arr = await r.json();
+    const tb = $('#hits tbody');
+    tb.innerHTML = '';
+    arr.forEach(h=>{
+      const tr = document.createElement('tr');
+      const stCls = (Number(h.status)===200) ? 'ok' : 'err';
+      tr.innerHTML = `
+        <td class="mono">${h.ts || ''}</td>
+        <td>${h.which || ''}</td>
+        <td class="status ${stCls}">${h.status}</td>
+        <td class="mono">${(h.url || '').replace(/^https?:\/\//,'')}</td>`;
+      tb.appendChild(tr);
+    });
+  }catch(e){}
+}
+setInterval(pollHits, 2000);
+
+loadCfg().then(pollHits);
+</script>
+</body>
+</html>

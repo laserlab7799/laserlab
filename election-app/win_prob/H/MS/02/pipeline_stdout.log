@@ -1,0 +1,2159 @@
+[2026-01-23 10:51:19] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-23 10:51:19] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-23 10:51:19] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-23 10:51:30] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T10-51-19.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T10-51-19.jsonl  (0 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-23 11:05:22] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-23 11:05:22] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-23 11:05:22] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-23 11:05:32] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-05-22.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-05-22.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-23 11:12:23] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-23 11:12:23] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-23 11:12:23] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-23 11:12:34] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-12-23.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-12-23.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-23 11:19:25] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-23 11:19:25] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-23 11:19:25] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-23 11:19:36] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-19-25.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-19-25.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-23 11:26:27] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-23 11:26:27] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-23 11:26:27] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-23 11:26:38] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-26-27.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-26-27.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-23 11:33:08] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-23 11:33:08] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-23 11:33:08] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-23 11:33:19] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-33-08.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-33-08.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-23 11:40:10] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-23 11:40:10] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-23 11:40:10] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-23 11:40:21] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-40-10.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-40-10.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-23 11:47:12] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-23 11:47:12] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-23 11:47:12] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-23 11:47:22] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-47-12.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-23T11-47-12.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-25 09:20:43] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-25 09:20:43] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-25 09:20:43] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-25 09:20:54] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-20-43.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-20-43.jsonl  (0 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-25 09:34:46] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-25 09:34:46] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-25 09:34:46] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-25 09:34:56] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-34-46.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-34-46.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-25 09:41:48] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-25 09:41:48] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-25 09:41:48] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-25 09:41:58] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-41-48.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-41-48.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-25 09:48:49] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-25 09:48:49] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-25 09:48:49] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-25 09:49:00] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-48-49.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-48-49.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-25 09:55:51] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-25 09:55:51] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-25 09:55:51] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-25 09:56:02] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-55-51.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T09-55-51.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-25 10:02:53] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-25 10:02:53] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-25 10:02:53] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-25 10:03:03] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T10-02-53.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T10-02-53.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-25 10:09:54] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-25 10:09:54] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-25 10:09:54] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-25 10:10:05] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T10-09-54.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T10-09-54.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-01-25 10:16:56] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-01-25 10:16:56] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-01-25 10:16:56] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-01-25 10:17:07] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T10-16-56.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-01-25T10-16-56.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)
+[2026-02-04 16:51:59] INFO: [PIPELINE] args: office=H state=MS district=02
+[2026-02-04 16:51:59] INFO: [PIPELINE] WINPROB_DIR resolved to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[2026-02-04 16:51:59] INFO: [PIPELINE] OUTDIR set to: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-statewide.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-stats-2.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv (rows=30)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-append-new.py
+Wrote 2024_county_results_with_final-old.csv (rows=30, missing_final_matches=0)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-change_header.py
+Wrote: 2024_county_results_with_final.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/1-cut-zero-fips.py
+Wrote: 2024_county_results_with_final_1.csv
+Rows before: 30
+Rows after:  30
+Dropped (fips == 0): 0
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-calc.py
+Wrote 30 rows with calculations to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/2-eevp.py
+Wrote (no-op copy): 2024_county_results_with_calcs.csv
+Columns:
+ - timestamp
+ - state
+ - county
+ - fips
+ - trump_votes
+ - harris_votes
+ - other_votes
+ - eevp
+ - state_eevp
+ - harris_votes_statewide
+ - trump_votes_statewide
+ - other_votes_statewide
+ - final_state
+ - final_county
+ - final_fips
+ - final_trump_votes
+ - final_harris_votes
+ - final_other_votes
+ - harris_percent_snapshot
+ - trump_percent_snapshot
+ - margin_snapshot
+ - harris_percent_final
+ - trump_percent_final
+ - margin_final
+ - margin_difference
+ - margin_difference_abs
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/3-calc-new.py
+Wrote 30 rows with new columns to /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/4-stats.py
+Reading 2024_county_results_with_calcs_new.csv...
+Aggregating statewide totals...
+Calculating percentages and margins...
+Writing to output_statewide_stats.csv...
+Done!
+[2026-02-04 16:52:09] INFO: [PIPELINE] ENTER win-prob generation | states=['MS'] ts_list=['2024-11-05T15-30-22']
+
+============================================================================
+[01/1] STATE = MS
+============================================================================
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/5-snapshots.py --state MS --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --use-window 1 --interval 30
+Mode: windowed-one-state
+Rows written: 30
+Distinct states in output: MS
+Rows per normalized timestamp (empty = unparseable):
+  2024-11-05T15-30-22: 30
+Wrote /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/6-pval.py /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv -t /home/ubuntu/apps/election-app/stats/parameters.csv -o /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv -c 50
+Done. Wrote: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+Total rows: 30 (chunked, resumable).
+Computed columns for PVALS = [0.01, 0.1, 1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97, 98, 99, 99.9, 99.99]
+Per p (leader): shift_{p}, margin_new_{p}, harris_percent_new_{p}, trump_percent_new_{p}, total_snapshot_{p}, total_expected_{p}, harris_votes_new_{p}, trump_votes_new_{p}
+Per p (trailing): shift_trailing_{p}, margin_new_{p}_trailing, harris_percent_new_{p}_trailing, trump_percent_new_{p}_trailing, total_snapshot_{p}_trailing, total_expected_{p}_trailing, harris_votes_new_{p}_trailing, trump_votes_new_{p}_trailing
+Checkpoint saved at: /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-margin-new.py
+Wrote data_output_with_margins_old.csv
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7-eevp-statewide.py
+Wrote data_output_with_margins.csv (copied from data_output_with_margins_old.csv)
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/7.py --input /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv --output /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png --state MS --start 2024-11-05T15-30-22 --end 2024-11-05T15-30-22 --stats /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv --stats2 /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv --interval 30 --year 2026 --jsonl /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-02-04T16-51-59.jsonl
+[info] evaluating 1 timestamps from 2024-11-05T15-30-22 to 2024-11-05T15-30-22 every 30 minutes
+[saved] probs_timeseries_MS.csv  (1 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/plotdata_MS_2026_2026-02-04T16-51-59.jsonl  (4 points)
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.json
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026_box.png
+[saved] /home/ubuntu/apps/election-app/win_prob/H/MS/02/statewide_margin_pct_vs_percent_MS_2026.png
+
+All 50 states complete. See: /home/ubuntu/apps/election-app/win_prob/H/MS/02
+
+$ /home/ubuntu/.venv/bin/python3 /home/ubuntu/apps/election-app/stats/8.py --root /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work --outdir /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[info] root  = /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work
+[info] outdir= /home/ubuntu/apps/election-app/win_prob/H/MS/02
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats_with_statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/stats2_final_headers.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_final_1.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs-old.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs_new.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/output_statewide_stats.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/probs_timeseries_PA.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/_work/2024_county_results_with_calcs.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins_old.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins.csv
+[skip]    /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_with_margins-statewide.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/snapshots_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins_statewide_eevp.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS_with_margins.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/data_output_MS.csv.checkpoint.json
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats.csv
+[deleted] /home/ubuntu/apps/election-app/win_prob/H/MS/02/stats2.csv
+[done] removed 16 file(s)

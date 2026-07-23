@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,NY,Nassau,36059,131963,135529,0,100.0,100.00
+2024-11-05T15-30-22,NY,Queens,36081,31733,38821,0,100.0,100.00
+2024-11-05T15-30-22,NY,Suffolk,36103,10998,13301,0,100.0,100.00

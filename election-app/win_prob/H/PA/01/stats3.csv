@@ -1,0 +1,3 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,PA,Bucks,42017,222693,170470,0,100.0,100.00
+2024-11-05T15-30-22,PA,Montgomery,42091,38697,31572,0,100.0,100.00

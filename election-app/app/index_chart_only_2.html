@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Win Probability • Chart</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    background:#fff;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    color:#111;
+  }
+  .wrap{
+    width:100%;
+    max-width:1400px;
+    padding:18px 14px 22px;
+  }
+    body{
+      margin:0;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+    }
+
+    .wrap{
+      position: relative;
+      width:100%;
+      height:100%;
+      max-width:none;
+      padding:0;
+      overflow: visible;
+    }
+
+  .title{
+    margin:0 0 10px;
+    font-weight:900;
+    font-size:clamp(28px, 4.5vw, 54px);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    text-align:center;
+    line-height:1.05;
+  }
+
+  /* Big readouts */
+  .bigRow{
+    position:relative;
+    width:100%;
+    height:72px;
+    margin:8px 0 10px;
+  }
+  .bigBox{
+    position:absolute;
+    top:0;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .bigBox.left{ left:0; text-align:left; }
+  .bigBox.right{ right:0; text-align:right; }
+  .bigLbl{
+    font-size:22px;
+    letter-spacing:.14em;
+    color:#6b7280;
+    font-weight:800;
+    text-transform:uppercase;
+  }
+  .bigX,.bigMargin{
+    font-weight:900;
+    letter-spacing:.02em;
+    font-variant-numeric:tabular-nums;
+    font-size:58px;
+  }
+  @media (max-width:900px){
+    .bigRow{ height:64px; }
+    .bigX,.bigMargin{ font-size:34px; }
+    .bigLbl{ font-size:14px; }
+  }
+
+  /* Plot */
+  .plotBox{
+    position:relative;
+    width:100%;
+    aspect-ratio: 16/9;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 8px 22px rgba(0,0,0,.07);
+    background:#fff;
+  }
+    .plotBox{
+      position:absolute;
+      inset:0;
+      border:none;
+      border-radius:0;
+    }
+    .wrap{ position:relative; }
+
+  svg.plot{width:100%;height:100%;display:block;background:#fff}
+  .axis path,.axis line{stroke:#111;stroke-width:2}
+  .gridline{stroke:#94a3b8;stroke-dasharray:6 6;stroke-width:1.2}
+  .lineMargin{fill:none;stroke:#0b6a8a;stroke-width:4}
+
+  .pt{stroke:none}
+  .pt.leader{fill:#6b7280}     /* gray circles */
+  .pt.trailer{fill:#9ca3af}    /* lighter gray squares */
+  .pt.dem{fill:#93c5fd}        /* light blue (raw triangles) */
+  .pt.rep{fill:#fca5a5}        /* light red  (raw triangles) */
+
+  /* ADJUSTED (non-raw) series — solid colors */
+  .pt.demStrong{fill:#1d4ed8}   /* solid blue */
+  .pt.repStrong{fill:#ef4444}   /* solid red  */
+
+  .cursorX{stroke:#111;stroke-width:6;opacity:1;pointer-events:none;transition:transform 800ms cubic-bezier(.2,.8,.2,1)}
+  .ytick{stroke:#111;stroke-width:1}
+  .ytickLbl{ font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif; font-size:30px; fill:#111; font-weight:900; }
+
+
+  /* Party-colored lines for win probability (left Y-axis) */
+  .lineRep{ fill:none; stroke:#ef4444; stroke-width:5 }
+  .lineDem{ fill:none; stroke:#1d4ed8; stroke-width:5 }
+
+  /* Controls + details */
+  .below{
+    margin-top:12px;
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:10px;
+  }
+  .nav{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  button{
+    appearance:none;
+    border:1px solid #cbd5e1;
+    background:#0f172a;
+    color:#fff;
+    padding:10px 14px;
+    border-radius:12px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  button.secondary{background:#fff;color:#111;border-color:#cbd5e1}
+  button:disabled{opacity:.5;cursor:not-allowed}
+
+  .grid{
+    width:100%;
+    max-width:980px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 320px 1fr;
+    gap:8px 14px;
+    align-items:center;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:12px 14px;
+    box-shadow:0 6px 16px rgba(0,0,0,.05);
+  }
+  .label{color:#6b7280;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
+  .value{font-variant-numeric:tabular-nums;font-size:15px}
+  @media (max-width:820px){
+    .grid{grid-template-columns: 1fr;}
+  }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+    #plot { width: 100%; height: 100%; display: block; }
+
+    body.embedded .bigRow, body.embedded .below { display: none !important; }
+
+    body.embedded .plotBox{
+      position: absolute !important;
+      left: 0% !important;
+      right: 0% !important;
+      top: 0% !important;
+      bottom: 0% !important;
+      width: auto !important;
+      height: auto !important;
+
+      /* stay confined to the iframe from index.html */
+      box-shadow: none !important;
+      border: 0 !important;
+      background: transparent !important;
+
+      /* do not clip the x-axis label/ticks */
+      border-radius: 0 !important;
+      overflow: visible !important;
+    }
+
+    /* make the SVG itself transparent too (otherwise you still get a white corner) */
+    body.embedded svg.plot{
+      background: transparent !important;
+    }
+
+    /* optional: ensure the page background inside the iframe is transparent */
+    body.embedded{
+      background: transparent !important;
+    }
+    .cursorX { display: none !important; }
+    /* unify font across all axis text */
+    .axisText{
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      fill: #111;
+    }
+.axisTitle{
+  font-size: 36px;
+}
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+
+    <div class="bigRow" aria-label="Current point readout">
+      <div class="bigBox left">
+        <div class="bigLbl">STATEWIDE % IN</div>
+        <div id="bigX" class="bigX">—</div>
+      </div>
+      <div class="bigBox right">
+        <div class="bigLbl">MARGIN</div>
+        <div id="bigMargin" class="bigMargin">—</div>
+      </div>
+    </div>
+
+    <div class="plotBox">
+        <svg id="plot" class="plot" viewBox="0 0 1310 850" preserveAspectRatio="none"></svg>
+    </div>
+
+    <div class="below">
+      <div class="nav">
+        <button id="prevBtn" class="secondary">← Back</button>
+        <button id="nextBtn" class="secondary">Next →</button>
+        <button id="animateBtn">▶ Animate</button>
+        <button id="loopBtn" class="secondary" aria-pressed="false" title="Toggle looping">Loop: Off</button>
+      </div>
+
+      <div class="grid" aria-label="Point details">
+        <div class="label">Statewide % in (x)</div><div class="value" id="xIn">—</div>
+        <div class="label">Leader win confidence (adjusted y)</div><div class="value" id="yLeader">—</div>
+        <div class="label">Leader win confidence (raw y)</div><div class="value" id="yLeaderRaw">—</div>
+        <div class="label">Trailer win confidence (adjusted y)</div><div class="value" id="yTrailer">—</div>
+        <div class="label">Trailer win confidence (raw y)</div><div class="value" id="yTrailerRaw">—</div>
+      </div>
+      <div class="label">Margin (pp)</div><div class="value" id="yMargin">—</div>
+
+      <div class="label">Point</div>
+      <div class="value"><span id="idx">0</span> / <span id="total">0</span></div>
+
+      <div class="label">Source</div><div class="value" id="srcPath">—</div>
+    </div>
+  </div>
+
+<script>
+    try {
+    if (window.self !== window.top) document.body.classList.add("embedded");
+    } catch(e) {}
+    // --- quiet tagged console noise (keeps errors) ----------------------------
+    // --- quiet tagged console noise (blocks tagged log/warn/error/info/debug) ---
+    (function(){
+      const BLOCK_PREFIXES = ["[chart]"]; // chart-only page
+
+      const orig = {
+        log: console.log.bind(console),
+        warn: console.warn.bind(console),
+        error: console.error.bind(console),
+        info: console.info.bind(console),
+        debug: console.debug.bind(console),
+      };
+
+      function shouldBlock(args){
+        const s = (typeof args?.[0] === "string") ? args[0] : "";
+        return s && BLOCK_PREFIXES.some(p => s.startsWith(p));
+      }
+
+      for (const k of Object.keys(orig)){
+        console[k] = (...args) => { if (shouldBlock(args)) return; return orig[k](...args); };
+      }
+    })();
+
+
+(() => {
+  // ---- Config ----
+  // --- quiet tagged console noise (keeps errors) ----------------------------
+  (function(){
+    const BLOCK_PREFIXES = ["[chart]"];
+
+    const origLog  = console.log.bind(console);
+    const origWarn = console.warn.bind(console);
+
+    function shouldBlock(args){
+      const s = (typeof args?.[0] === "string") ? args[0] : "";
+      return s && BLOCK_PREFIXES.some(p => s.startsWith(p));
+    }
+
+    console.log = (...args) => { if (shouldBlock(args)) return; return origLog(...args); };
+    console.warn = (...args) => { if (shouldBlock(args)) return; return origWarn(...args); };
+  })();
+
+  console.log("[chart] script loaded");
+
+  function clearPlot(){
+    // Stop any playback immediately
+    stopAnim();
+
+    // Reset data + UI immediately
+    rows = [];
+    i = 0;
+    renderRow(); // shows dashes right away
+
+    // Clear SVG plot contents but keep the cursor line
+    g.innerHTML = '';
+    g.appendChild(cursorLine);
+    drawCursorAt(0);
+  }
+
+  
+  function setDataSource(path) {
+    console.log("[chart] setDataSource called with:", path);
+
+    if (!path) {
+      console.warn("[chart] setDataSource called with empty path");
+      return;
+    }
+
+    if (path === CURRENT_DATA_URL) {
+      console.log("[chart] same path as before, ignoring");
+      return;
+    }
+
+    CURRENT_DATA_URL = path;
+    srcPathEl.textContent = path;
+
+    console.log("[chart] CURRENT_DATA_URL set");
+
+    currentIdx = 0;
+    lastPayloadHash = null;
+
+    clearPlot(); // clears + resets instantly
+    console.log("[chart] plot cleared, fetching data");
+
+    fetchData(); // fetch immediately (no waiting for the 5s poll)
+
+  }
+
+
+  const POLL_MS = 5000;
+  let CURRENT_DATA_URL = null;
+
+  // ---- Readout elements ----
+  const bigXEl = document.getElementById('bigX');
+  const bigMarginEl = document.getElementById('bigMargin');
+
+  const xInEl = document.getElementById('xIn');
+  const yLeaderEl = document.getElementById('yLeader');
+  const yLeaderRawEl = document.getElementById('yLeaderRaw');
+  const yTrailerEl = document.getElementById('yTrailer');
+  const yTrailerRawEl = document.getElementById('yTrailerRaw');
+  const yMarginEl = document.getElementById('yMargin');
+  const idxEl = document.getElementById('idx');
+  const totalEl = document.getElementById('total');
+  const srcPathEl = document.getElementById('srcPath');
+
+
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const animateBtn = document.getElementById('animateBtn');
+  const loopBtn = document.getElementById('loopBtn');
+
+  let isLoop = false;
+  loopBtn.addEventListener('click', () => {
+    isLoop = !isLoop;
+    loopBtn.textContent = isLoop ? 'Loop: On' : 'Loop: Off';
+    loopBtn.setAttribute('aria-pressed', String(isLoop));
+  });
+
+  
+  function renderCurrentPoint() {
+    if (!data || !data.length) return;
+    currentIdx = Math.min(currentIdx, data.length - 1);
+    drawAtIndex(currentIdx);
+  }
+  
+  function fmt(v,d=2){ const n=Number(v); return Number.isFinite(n) ? n.toFixed(d) : '—'; }
+
+  // ---- Plot core (copied from your index_gauge.html plot section) ----
+// ---------- Right plot (pure SVG, JSON-driven) ----------
+  const plot = document.getElementById('plot');
+  const W = 1200;
+  const H = 675;
+
+  const m = { l: 145, r: 70, t: 45, b: 110 };
+  const innerW = W - m.l - m.r;
+  const innerH = H - m.t - m.b;
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('transform', `translate(${m.l},${m.t})`);
+  plot.appendChild(g);
+  // vertical cursor line (follows current statewide % in)
+  const cursorLine = document.createElementNS(plot.namespaceURI,'line');
+  cursorLine.setAttribute('class','cursorX');
+  g.appendChild(cursorLine);
+
+  // draw a vertical line at x=0, full height; we’ll slide it with a transform
+  cursorLine.setAttribute('x1', 0);
+  cursorLine.setAttribute('x2', 0);
+  cursorLine.setAttribute('y1', 0);
+  cursorLine.setAttribute('y2', innerH);
+
+  function drawCursorAt(pct){
+    const X = tx(Number(pct) || 0);
+    cursorLine.setAttribute('transform', `translate(${X},0)`);
+  }
+
+
+  function add(el){ g.appendChild(el); return el; }
+  function tx(x){ return (x/100)*innerW; }
+  function tyLeft(y){ return innerH - (y/100)*innerH; }            // 0..100
+  let RIGHT_MIN = -10, RIGHT_MAX = 55;  // default fallback
+
+  function tyRight(pp){
+    const min = RIGHT_MIN, max = RIGHT_MAX;
+    return innerH - ((pp - min) / (max - min)) * innerH;
+  }
+
+  function setRightScaleByData(payload){
+    const ys = (payload?.series?.statewide_margin_pp?.y || [])
+      .map(Number)
+      .filter((n) => Number.isFinite(n));
+
+    if (!ys.length){
+      RIGHT_MIN = -10; RIGHT_MAX = 55; // fallback if no margin series
+      return;
+    }
+
+    let lo = Math.min(...ys);
+    let hi = Math.max(...ys);
+
+    if (lo === hi){ lo -= 1; hi += 1; }            // avoid zero-span
+    const span0 = hi - lo;
+    const pad = Math.max(2, span0 * 0.10);         // 10% padding, min 2pp
+    lo -= pad; hi += pad;
+
+    // Snap to “nice” 5-pt ticks
+    RIGHT_MIN = Math.floor(lo / 5) * 5;
+    RIGHT_MAX = Math.ceil(hi / 5) * 5;
+
+    // Guarantee a minimum visible span (20pp)
+    if (RIGHT_MAX - RIGHT_MIN < 20){
+      const mid = (RIGHT_MIN + RIGHT_MAX) / 2;
+      RIGHT_MIN = Math.floor((mid - 10) / 5) * 5;
+      RIGHT_MAX = Math.ceil((mid + 10) / 5) * 5;
+    }
+  }
+
+
+  function axis(){
+    // outer frame
+    const xAxis = document.createElementNS(plot.namespaceURI,'line');
+    xAxis.setAttribute('x1',0); xAxis.setAttribute('y1',innerH);
+    xAxis.setAttribute('x2',innerW); xAxis.setAttribute('y2',innerH);
+    xAxis.setAttribute('stroke','#111'); xAxis.setAttribute('stroke-width','2');
+    add(xAxis);
+
+    const yAxis = document.createElementNS(plot.namespaceURI,'line');
+    yAxis.setAttribute('x1',0); yAxis.setAttribute('y1',0);
+    yAxis.setAttribute('x2',0); yAxis.setAttribute('y2',innerH);
+    yAxis.setAttribute('stroke','#111'); yAxis.setAttribute('stroke-width','2');
+    add(yAxis);
+
+    // left y-axis ticks and labels (0, 50, 100 only)
+    for (const y of [0, 50, 100]){
+      const Y = tyLeft(y);
+
+      // tick mark
+      const tk = document.createElementNS(plot.namespaceURI,'line');
+      tk.setAttribute('x1', -10); tk.setAttribute('y1', Y);
+      tk.setAttribute('x2',  0); tk.setAttribute('y2', Y);
+      tk.setAttribute('class','ytick'); tk.setAttribute('stroke-width','2');
+      g.appendChild(tk);
+
+      // numeric label
+      const tl = document.createElementNS(plot.namespaceURI,'text');
+      tl.setAttribute('x', -10); tl.setAttribute('y', Y+4);
+      tl.setAttribute('text-anchor','end');
+      tl.setAttribute('class','ytickLbl');
+      tl.textContent = `${y}%`;
+      g.appendChild(tl);
+    }
+
+    // labels
+function label(txt,x,y,anchor='middle'){
+  const t = document.createElementNS(plot.namespaceURI,'text');
+  t.setAttribute('x',x);
+  t.setAttribute('y',y);
+  t.setAttribute('text-anchor',anchor);
+  t.setAttribute('class','axisText axisTitle');
+  t.textContent = txt;
+  g.appendChild(t);
+}
+
+label('% VOTES IN', innerW/2, innerH+70);
+
+    // x ticks (0, 25, 50, 75, 100 only)
+    for (const x of [0, 25, 50, 75, 100]){
+      const t = document.createElementNS(plot.namespaceURI,'text');
+      t.setAttribute('x',tx(x)); t.setAttribute('y',innerH+24); t.setAttribute('text-anchor','middle');
+      t.setAttribute('class','axisText'); t.textContent = String(x);
+      g.appendChild(t);
+    }
+  }
+  
+  function plotLineLeft(xs, ys, cls){
+    if (!xs?.length || !ys?.length) return;
+    const d=[];
+    for (let k=0;k<xs.length;k++){
+      const x=Number(xs[k]), y=Number(ys[k]);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+      const X = tx(x), Y = tyLeft(y);
+      d.push(`${d.length?'L':'M'} ${X.toFixed(2)} ${Y.toFixed(2)}`);
+    }
+    const p = document.createElementNS(plot.namespaceURI,'path');
+    p.setAttribute('d', d.join(' '));
+    p.setAttribute('class', cls);
+    g.appendChild(p);
+  }
+
+
+  function plotLine(xs, ys){
+    if (!xs?.length || !ys?.length) return;
+    const d = [];
+    for (let k=0;k<xs.length;k++){
+      const x = Number(xs[k]), y = Number(ys[k]);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+      const X = tx(x), Y = tyRight(y);
+      d.push(`${d.length?'L':'M'} ${X.toFixed(2)} ${Y.toFixed(2)}`);
+    }
+    const p = document.createElementNS(plot.namespaceURI,'path');
+    p.setAttribute('d', d.join(' ')); p.setAttribute('class','lineMargin'); g.appendChild(p);
+  }
+
+  function plotScatter(xs, ys, cls, marker='circle'){
+    if (!xs?.length || !ys?.length) return;
+    for (let k=0;k<xs.length;k++){
+      const x=Number(xs[k]), y=Number(ys[k]);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+      const X = tx(x), Y = tyLeft(y);
+      let node;
+      if (marker==='square'){
+        node = document.createElementNS(plot.namespaceURI,'rect');
+        const s=14; node.setAttribute('x', X-s/2); node.setAttribute('y', Y-s/2); node.setAttribute('width', s); node.setAttribute('height', s);
+      } else if (marker==='tri'){
+        const s=14;
+        const p1=`${X},${Y-9}`, p2=`${X-9},${Y+9}`, p3=`${X+9},${Y+9}`;
+        node = document.createElementNS(plot.namespaceURI,'polygon');
+        node.setAttribute('points', `${p1} ${p2} ${p3}`);
+      } else {
+        node = document.createElementNS(plot.namespaceURI,'circle');
+        node.setAttribute('cx', X); node.setAttribute('cy', Y); node.setAttribute('r', 8);
+      }
+      node.setAttribute('class', `pt ${cls}`);
+      g.appendChild(node);
+    }
+  }
+
+
+  
+  // ---- Series helpers (copied from index_gauge.html) ----
+function partyFromColor(color){
+    if (!color) return null; const c=String(color).toLowerCase();
+    if (c.includes('red')) return 'Republican';
+    if (c.includes('blue')) return 'Democratic';
+    return null;
+  }
+
+function putSeries(map, series, prefix){
+    const xs = Array.isArray(series.x)?series.x:[], ys=Array.isArray(series.y)?series.y:[],
+          colors=Array.isArray(series.color)?series.color:[], markers=Array.isArray(series.marker)?series.marker:[];
+    for (let k=0;k<xs.length;k++){
+      const x=Number(xs[k]); if (!Number.isFinite(x)) continue;
+      const xr = Number(x.toFixed(3));
+      const row = map.get(xr) || {x:xr, leader_y:null,trailer_y:null,leader_raw_y:null,trailer_raw_y:null,margin_y:null,
+                                  leader_color:null,leader_marker:null,trailer_color:null,trailer_marker:null};
+      const y = Number(ys[k]);
+      if (Number.isFinite(y)){
+        if (prefix==='leader') row.leader_y=y;
+        else if (prefix==='trailer') row.trailer_y=y;
+        else if (prefix==='leader_raw') row.leader_raw_y=y;
+        else if (prefix==='trailer_raw') row.trailer_raw_y=y;
+        else if (prefix==='margin') row.margin_y=y;
+      }
+      const color = colors[k], marker = markers[k];
+      if (prefix.startsWith('leader')){
+        if (color) row.leader_color=color; if (marker) row.leader_marker=marker;
+      } else if (prefix.startsWith('trailer')){
+        if (color) row.trailer_color=color; if (marker) row.trailer_marker=marker;
+      }
+      map.set(xr,row);
+    }
+  }
+
+function buildRows(payload){
+    const S = payload?.series || {};
+    const map = new Map();
+    putSeries(map, S.leader || {}, 'leader');
+    putSeries(map, S.trailer || {}, 'trailer');
+    putSeries(map, S.leader_raw || {}, 'leader_raw');
+    putSeries(map, S.trailer_raw || {}, 'trailer_raw');
+    putSeries(map, S.statewide_margin_pp || {}, 'margin');
+
+    // ---- RAW leader/trailer inference (use same source as the TABLE: points_by_x.raw.H / .raw.T) ----
+    // This ensures the chart-only page can show/plot leader/trailer RAW even if series.leader_raw/trailer_raw
+    // are missing or inconsistent.
+    const pbx = payload?.points_by_x || {};
+    if (pbx && typeof pbx === 'object'){
+      const rawByX = new Map();
+      for (const [k, v] of Object.entries(pbx)){
+        const x = Number(k);
+        if (!Number.isFinite(x)) continue;
+        const xr = Number(x.toFixed(3));
+        const raw = v?.raw || {};
+        const h = Number(raw?.H);
+        const t = Number(raw?.T);
+        rawByX.set(xr, {
+          h: Number.isFinite(h) ? h : null,
+          t: Number.isFinite(t) ? t : null,
+        });
+      }
+
+      for (const row of map.values()){
+        const rt = rawByX.get(row.x);
+        if (!rt) continue;
+
+        const h = rt.h, t = rt.t;
+        // If both are present, infer leader/trailer raw by which is higher.
+        if (Number.isFinite(h) && Number.isFinite(t)){
+          if (h >= t){
+            row.leader_raw_y = h;
+            row.trailer_raw_y = t;
+          } else {
+            row.leader_raw_y = t;
+            row.trailer_raw_y = h;
+          }
+        } else if (Number.isFinite(h) && !Number.isFinite(t)){
+          // Only Dem raw available
+          row.leader_raw_y = h;
+          row.trailer_raw_y = null;
+        } else if (!Number.isFinite(h) && Number.isFinite(t)){
+          // Only GOP raw available
+          row.leader_raw_y = t;
+          row.trailer_raw_y = null;
+        }
+      }
+    }
+
+    return Array.from(map.values()).sort((a,b)=>a.x-b.x);
+  }
+
+  // ---- Draw plot (copied from index_gauge.html) ----
+function drawPlotFromJSON(payload){
+    g.innerHTML = '';
+    setRightScaleByData(payload);
+    axis();
+    // Recompute rows for THIS payload so the party lines don't skip any x
+    const rowsLocal = buildRows(payload);
+     // keep globals in sync with what we're drawing
+     rows = rowsLocal;
+     if (i >= rows.length) i = Math.max(0, rows.length - 1);
+    const S = payload?.series || {};
+
+    // ===== DEM ONLY: adjusted line from series.leader + series.trailer =====
+    // Use the same blue-filtered series source as the plotted dots, but keep 50/50 points connected.
+    const demLX = [];
+    const demLY = [];
+    const demByX = new Map();
+
+    function addDemLinePoints(series){
+      if (!series) return;
+      const xs = series.x || [], ys = series.y || [], cs = series.color || [];
+      for (let k=0;k<xs.length;k++){
+        const x = Number(xs[k]);
+        const y = Number(ys[k]);
+        const c = (cs[k]||'').toLowerCase();
+        if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+
+        // Normal case: Democratic series is blue.
+        // Edge case: keep exact 50/50 points connected even if leader/trailer/color flips.
+        if (c.includes('blue') || y === 50) {
+          demByX.set(Number(x.toFixed(3)), { x, y });
+        }
+      }
+    }
+
+    addDemLinePoints(S.leader);
+    addDemLinePoints(S.trailer);
+
+    const demPts = Array.from(demByX.values()).sort((a, b) => a.x - b.x);
+    for (const p of demPts){
+      demLX.push(p.x);
+      demLY.push(p.y);
+    }
+
+    plotLineLeft(demLX, demLY, 'lineDem');
+
+    // --- ADJUSTED (non-raw) NEXT ---
+    // Democratic leader - circle
+    if (S.leader){
+      const xs = S.leader.x || [], ys = S.leader.y || [], cs = S.leader.color || [];
+      const demX=[], demY=[];
+      for (let k=0;k<xs.length;k++){
+        const c = (cs[k]||'').toLowerCase();
+        if (c.includes('blue')) { demX.push(xs[k]); demY.push(ys[k]); }
+      }
+      plotScatter(demX, demY, 'demStrong', 'circle');
+    }
+
+    // Democratic trailer - square
+    if (S.trailer){
+      const xs = S.trailer.x || [], ys = S.trailer.y || [], cs = S.trailer.color || [];
+      const demX=[], demY=[];
+      for (let k=0;k<xs.length;k++){
+        const c = (cs[k]||'').toLowerCase();
+        if (c.includes('blue')) { demX.push(xs[k]); demY.push(ys[k]); }
+      }
+      plotScatter(demX, demY, 'demStrong', 'square');
+    }
+
+    // --- Margin line (leave where you had it; no color changes) ---
+
+     g.appendChild(cursorLine);
+     if (rowsLocal.length) {
+       const ix = Math.min(i, rowsLocal.length - 1);
+      drawCursorAt(rowsLocal[ix].x);
+     }
+  }
+
+  // ---- Playback / UI ----
+  let rows = [];
+  let i = 0;
+  let timer = null;
+
+  function stopAnim(){
+    if (timer){ clearInterval(timer); timer=null; animateBtn.textContent='▶ Animate'; }
+  }
+
+  prevBtn.addEventListener('click', () => {
+    stopAnim();
+    i = Math.max(0, i - 1);
+    renderRow();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    stopAnim();
+    i = Math.min(rows.length - 1, i + 1);
+    renderRow();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft'){ stopAnim(); i=Math.max(0,i-1); renderRow(); }
+    if (e.key === 'ArrowRight'){ stopAnim(); i=Math.min(rows.length-1,i+1); renderRow(); }
+  });
+
+  animateBtn.addEventListener('click', () => {
+    if (timer){ stopAnim(); return; }
+    if (!rows.length) return;
+    animateBtn.textContent = '⏸ Pause';
+    timer = setInterval(() => {
+      i += 1;
+      if (i >= rows.length){
+        if (isLoop) i = 0;
+        else { stopAnim(); i = rows.length - 1; }
+      }
+      renderRow();
+    }, 900);
+  });
+
+  function renderRow(){
+    totalEl.textContent = String(rows.length || 0);
+    if (!rows.length){
+      bigXEl.textContent = '—';
+      bigMarginEl.textContent = '—';
+      bigMarginEl.style.color = '#111';
+
+      xInEl.textContent = '—';
+      yLeaderEl.textContent = '—';
+      yLeaderRawEl.textContent = '—';
+      yTrailerEl.textContent = '—';
+      yTrailerRawEl.textContent = '—';
+      yMarginEl.textContent = '—';
+      idxEl.textContent = '0';
+      drawCursorAt(0);
+      return;
+    }
+
+    if (i < 0) i = 0;
+    if (i >= rows.length) i = rows.length - 1;
+    const r = rows[i];
+
+    bigXEl.textContent = fmt(r.x, 2) + ' %';
+    const mval = Number(r.margin_y);
+    if (Number.isFinite(mval)){
+      bigMarginEl.textContent = Math.abs(mval).toFixed(2) + ' %';
+      bigMarginEl.style.color = (mval >= 0) ? '#1d4ed8' : '#ef4444';
+    } else {
+      bigMarginEl.textContent = '—';
+      bigMarginEl.style.color = '#111';
+    }
+
+    xInEl.textContent = fmt(r.x,2) + ' %';
+    yLeaderEl.textContent = fmt(r.leader_y,2) + ' p';
+    yLeaderRawEl.textContent = fmt(r.leader_raw_y,2) + ' p';
+    yTrailerEl.textContent = fmt(r.trailer_y,2) + ' p';
+    yTrailerRawEl.textContent = fmt(r.trailer_raw_y,2) + ' p';
+    yMarginEl.textContent = '—';
+
+
+    idxEl.textContent = String(i + 1);
+    drawCursorAt(r.x);
+  }
+
+  // ---- Fetch + poll ----
+  let lastSig = null;
+  function buildSig(j){
+    const xs = j?.series?.leader?.x || [];
+    const lastX = xs.length ? xs[xs.length - 1] : null;
+    return JSON.stringify([j?.meta?.generated_at || null, xs.length, lastX]);
+  }
+
+  async function fetchData() {
+    console.log("[chart] fetchData() called");
+
+    if (!CURRENT_DATA_URL) {
+      console.warn("[chart] fetchData aborted: no CURRENT_DATA_URL");
+      return;
+    }
+
+    const url = CURRENT_DATA_URL + "?t=" + Date.now();
+    console.log("[chart] fetching:", url);
+
+    let resp;
+    try {
+      resp = await fetch(url, { cache: "no-store" });
+    } catch (err) {
+      console.error("[chart] fetch failed:", err);
+      return;
+    }
+
+    console.log("[chart] fetch status:", resp.status);
+
+    if (!resp.ok) {
+      console.error("[chart] fetch not OK:", resp.status);
+      return;
+    }
+
+    let json;
+    try {
+      json = await resp.json();
+    } catch (err) {
+      console.error("[chart] json parse failed:", err);
+      return;
+    }
+
+    console.log("[chart] json loaded. keys:", Object.keys(json));
+    console.log("[chart] series keys:", Object.keys(json.series || {}));
+
+    // ⬇️ LEAVE everything below this line EXACTLY as you already had it
+    if (!json.series || !json.series.leader || !json.series.leader.x?.length) {
+      console.error("[chart] series missing or empty:", json.series);
+      return;
+    }
+
+    drawPlotFromJSON(json);
+  }
+
+
+  // Start
+  setInterval(() => {
+    if (!CURRENT_DATA_URL) return;
+    fetchData();
+  }, POLL_MS);
+
+
+
+  window.addEventListener("message", (ev) => {
+    console.log("[chart] postMessage received:", ev.data);
+
+    if (!ev.data) return;
+
+    if (ev.data.type === "GAUGE_SET_SOURCE") {
+      console.log("[chart] setting data source to:", ev.data.path);
+      setDataSource(ev.data.path);
+    }
+  });
+  console.log("[chart] message listener installed");
+
+  // 🔧 SAFETY NET: allow standalone / late-message operation
+  setTimeout(() => {
+    if (!CURRENT_DATA_URL) {
+      console.warn("[chart] no data source yet — waiting for message");
+    }
+  }, 500);
+
+
+})();
+    console.log("[chart] end of script reached");
+
+</script>
+</body>
+</html>

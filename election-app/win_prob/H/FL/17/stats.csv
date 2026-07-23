@@ -1,0 +1,4 @@
+timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
+2024-11-05T15-30-22,FL,Charlotte,12015,83705,37399,0,100.0,100.00
+2024-11-05T15-30-22,FL,Lee,12071,41019,21465,0,100.0,100.00
+2024-11-05T15-30-22,FL,Sarasota,12115,166623,105702,0,100.0,100.00
