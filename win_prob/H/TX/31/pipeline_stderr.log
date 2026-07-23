@@ -1,20 +1,0 @@
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.62rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.62rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:00<00:00,  7.01rows/s]Processing rows: 100%|██████████| 6/6 [00:00<00:00,  7.01rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.69rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.69rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:00<00:00,  6.63rows/s]Processing rows: 100%|██████████| 6/6 [00:00<00:00,  6.62rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.68rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.68rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.40rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.40rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.02rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  3.02rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:00<00:00,  7.30rows/s]Processing rows: 100%|██████████| 6/6 [00:00<00:00,  7.30rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  4.94rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  4.94rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  4.80rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  4.80rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  5.25rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  5.24rows/s]
-Traceback (most recent call last):
-  File "/home/ubuntu/apps/election-app/stats/1-stats-2.py", line 27, in <module>
-    with open(INFILE, "r", newline="", encoding="utf-8") as f:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: '/home/ubuntu/apps/election-app/win_prob/H/TX/31/stats2.csv'
-[failed] Command '['/home/ubuntu/.venv/bin/python3', '/home/ubuntu/apps/election-app/stats/1-stats-2.py', '--input', '/home/ubuntu/apps/election-app/win_prob/H/TX/31/stats2.csv', '--output', '/home/ubuntu/apps/election-app/win_prob/H/TX/31/_work/stats2_final_headers.csv']' returned non-zero exit status 1.
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:02<00:00,  2.72rows/s]Processing rows: 100%|██████████| 6/6 [00:02<00:00,  2.72rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  4.29rows/s]Processing rows: 100%|██████████| 6/6 [00:01<00:00,  4.29rows/s]
-Processing rows:   0%|          | 0/6 [00:00<?, ?rows/s]Processing rows: 100%|██████████| 6/6 [00:00<00:00,  7.47rows/s]Processing rows: 100%|██████████| 6/6 [00:00<00:00,  7.47rows/s]

@@ -1,4 +1,0 @@
-timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
-2024-11-05T15-30-22,PA,Cumberland,42041,70036,64891,0,100.0,100.00
-2024-11-05T15-30-22,PA,Dauphin,42043,66986,80272,0,100.0,100.00
-2024-11-05T15-30-22,PA,York,42133,68545,55271,0,100.0,100.00
