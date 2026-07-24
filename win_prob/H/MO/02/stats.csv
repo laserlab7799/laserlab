@@ -1,5 +1,0 @@
-timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
-2024-11-05T15-30-22,MO,Franklin,29071,37255,14199,2403,100.0,100.00
-2024-11-05T15-30-22,MO,St. Charles,29183,36153,20592,1809,100.0,100.00
-2024-11-05T15-30-22,MO,St. Louis County,29189,150461,144111,8195,100.0,100.00
-2024-11-05T15-30-22,MO,Warren,29219,9575,3154,485,100.0,100.00

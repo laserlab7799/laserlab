@@ -1,5 +1,0 @@
-timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
-2024-11-05T15-30-22,PA,Chester,42029,0,0,0,0.0,100.00
-2024-11-05T15-30-22,PA,Delaware,42045,120100,203876,0,100.0,100.00
-2024-11-05T15-30-22,PA,Montgomery,42091,14692,42178,0,100.0,100.00
-2024-11-05T15-30-22,PA,Philadelphia,42101,7563,21700,0,100.0,100.00

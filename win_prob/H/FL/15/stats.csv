@@ -1,4 +1,0 @@
-timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
-2024-11-05T15-30-22,FL,Hillsborough,12057,113853,98776,0,100.0,100.00
-2024-11-05T15-30-22,FL,Pasco,12101,47973,33904,0,100.0,100.00
-2024-11-05T15-30-22,FL,Polk,12105,33508,19681,0,100.0,100.00

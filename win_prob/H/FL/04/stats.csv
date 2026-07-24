@@ -1,4 +1,0 @@
-timestamp,state,county,fips,trump_votes,harris_votes,other_votes,eevp,state_eevp
-2024-11-05T15-30-22,FL,Clay,12019,89235,35325,0,100.0,100.00
-2024-11-05T15-30-22,FL,Duval,12031,83618,115305,0,100.0,100.00
-2024-11-05T15-30-22,FL,Nassau,12089,49511,15282,0,100.0,100.00
