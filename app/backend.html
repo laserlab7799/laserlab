@@ -566,10 +566,23 @@
     // ------------------------- Config -------------------------
     // Always include the exact origin (scheme + host + port), so we never “fall back” to :80
     const API_BASE = window.location.origin.replace(/\/$/, "") + "/api/fs";
+    const APP_PATH_CANDIDATES = [
+      "/home/ubuntu/apps",
+      "/workspace",
+      "/opt/render/project/src",
+      "/opt/render/project",
+      "/app",
+      "/srv/app",
+      "/"
+    ];
+
     const QUICK = [
       {label:"/", path:"/"},
+      {label:"/workspace", path:"/workspace"},
+      {label:"/opt/render/project/src", path:"/opt/render/project/src"},
       {label:"/home", path:"/home"},
       {label:"/home/ubuntu", path:"/home/ubuntu"},
+      {label:"/home/ubuntu/apps", path:"/home/ubuntu/apps"},
       {label:"/var/www", path:"/var/www"},
       {label:"/etc", path:"/etc"},
       {label:"/opt", path:"/opt"},
@@ -577,7 +590,7 @@
     ];
 
     // ------------------------- State -------------------------
-    let curPath = "/home/ubuntu/apps";
+    let curPath = "/";
     let entries = [];
     let pendingDelete = null;
 
@@ -662,6 +675,35 @@
         throw new Error(msg || ("HTTP " + res.status));
       }
       return payload;
+    }
+
+    async function directoryExists(path){
+      try{
+        const payload = await apiFetch(`/list?path=${encodeURIComponent(normPath(path))}`);
+        return !!payload && Array.isArray(payload.items);
+      }catch(_err){
+        return false;
+      }
+    }
+
+    async function detectInitialPath(){
+      let savedPath = "";
+      try{
+        savedPath = localStorage.getItem("backendFileManagerPath") || "";
+      }catch(_err){}
+
+      const candidates = [];
+      for (const rawPath of [savedPath, ...APP_PATH_CANDIDATES]){
+        if (!rawPath) continue;
+        const candidate = normPath(rawPath);
+        if (!candidates.includes(candidate)) candidates.push(candidate);
+      }
+
+      for (const candidate of candidates){
+        if (await directoryExists(candidate)) return candidate;
+      }
+
+      return "/";
     }
 
     // ------------------------- UI render -------------------------
@@ -866,6 +908,11 @@
       try{
         const payload = await apiFetch(`/list?path=${encodeURIComponent(curPath)}`);
         entries = Array.isArray(payload.items) ? payload.items : [];
+
+        try{
+          localStorage.setItem("backendFileManagerPath", curPath);
+        }catch(_err){}
+
         renderTable();
 
         const count = entries.length;
@@ -1104,7 +1151,7 @@
       }
     }
 
-    function init(){
+    async function init(){
       buildQuick();
       wireDragDrop();
 
@@ -1151,9 +1198,11 @@
 
    
 
-      // initial
+      // Detect the correct server folder instead of assuming an AWS path.
+      setStatus("Detecting server path…", "AWS / Render");
+      curPath = await detectInitialPath();
       el("pathInput").value = curPath;
-      openPath(curPath);
+      await openPath(curPath);
     }
 
     init();
