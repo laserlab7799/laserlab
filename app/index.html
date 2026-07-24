@@ -813,7 +813,10 @@
       cursor:pointer;
     }
     .horseshoe-btn:hover{ background:#1a2c4d; }
-    .bop-mode #bopBtn{ background:#2980b9; color:#fff; }
+    .bop-mode:not(.trend-bop-mode) #bopBtn{ background:#2980b9; color:#fff; }
+    .bop-mode.trend-bop-mode #bopBtn{ background:#11213d; color:#eaf0ff; }
+    .bop-mode.trend-bop-mode #trendBopBtn{ background:#2980b9; color:#fff; }
+    #trendBtn{ display:none !important; }
     .horseshoe-btn .horseshoe-label{ font-weight:700; letter-spacing:.06em; }
 
     #clearInkBtn { background:#f6e8ea; color:#b00020; border-color:#f0c8cd; }
@@ -3619,6 +3622,49 @@ body.chart3-rep-only .left-panel .party-row:not(.party-REP){
       border-color: rgba(255,255,255,.08);
     }
 
+    /* Live AP Trend readout overlay. Keep the right rail above it so TREND can close it. */
+    #trendOverlay{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: calc(var(--right-rail-w) + var(--right-rail-right));
+      bottom: 0;
+      z-index: 1900;
+      background: #eef2f7;
+      overflow: hidden;
+    }
+
+    #trendOverlay[hidden]{
+      display: none !important;
+    }
+
+    #trendFrame{
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #eef2f7;
+    }
+
+    #trendBtn.active{
+      background: #2980b9;
+      color: #fff;
+    }
+
+    body.trend-mode #statusLegend,
+    body.trend-mode #zoomBox,
+    body.trend-mode #percentInBolt,
+    body.trend-mode #bopOverlay,
+    body.trend-mode #bopChart,
+    body.trend-mode #mapBopBar,
+    body.trend-mode #evBopBar,
+    body.trend-mode #lookupFlyout,
+    body.trend-mode #mainMenu,
+    body.trend-mode #pathPanel,
+    body.trend-mode #evPathMeter{
+      display: none !important;
+    }
+
     
 </style>
 
@@ -3870,10 +3916,14 @@ body.chart3-rep-only .left-panel .party-row:not(.party-REP){
             <button id="bopBtn" class="horseshoe-btn" title="Balance of Power (S/H)">
               <span class="bop-icon" aria-hidden="true">⚖️</span>
             </button>
+            <button id="trendBopBtn" class="horseshoe-btn" title="Trend Balance of Power (S/H)" aria-pressed="false">
+              <span class="bop-icon" aria-hidden="true">⚖️ T</span>
+            </button>
             <button id="gaugeBtn" class="horseshoe-btn" title="Toggle gauge">🧭</button>
             <button id="chartBtn2" class="horseshoe-btn" title="Toggle Democratic chart" disabled aria-disabled="true">📈 D</button>
             <button id="chartBtn3" class="horseshoe-btn" title="Toggle Republican chart" disabled aria-disabled="true">📈 R</button>
             <button id="boxBtn2"  class="horseshoe-btn" title="Toggle winner margin boxes" disabled aria-disabled="true">📦 W</button>
+            <button id="trendBtn" class="horseshoe-btn" title="Toggle AP Trend balance-of-power readout" aria-pressed="false">TREND</button>
             <button id="tableBtn" class="horseshoe-btn" title="Toggle table">📋</button>
 
 
@@ -3974,6 +4024,11 @@ body.chart3-rep-only .left-panel .party-row:not(.party-REP){
 
     <!-- Balance-of-Power horseshoe chart (shown only in BOP + H 2026) -->
     <div id="bopChart" class="bop-chart" hidden></div>
+
+    <!-- Live House/Senate AP Trend readout; trend.html reads /cache/trend/H and /cache/trend/S -->
+    <div id="trendOverlay" hidden>
+      <iframe id="trendFrame" title="AP Trend Balance of Power"></iframe>
+    </div>
 
     <!-- Lookup flyout (slender right-side panel, no backdrop) -->
     <!-- Lookup flyout (slender right-side panel, no backdrop) -->
@@ -5218,11 +5273,11 @@ let STATE_CLICK_FX_TOKEN = 0;
   }
 
     
-    // Lock everything except the BOP button itself
+    // Lock everything except the two BOP source buttons
     function lockUiForBop(){
       const toLock = [
-        ...document.querySelectorAll('#allButtons button:not(#bopBtn)'), // Dem/Rep/Spec + any other office/race
-        ...document.querySelectorAll('#yearButtons button')              // 2024, 2020, 2016, etc.
+        ...document.querySelectorAll('#allButtons button:not(#bopBtn):not(#trendBopBtn)'),
+        ...document.querySelectorAll('#yearButtons button')
       ];
       toLock.forEach(btn => {
         // remember we locked it (so we can unlock cleanly)
@@ -6658,6 +6713,122 @@ let STATE_CLICK_FX_TOKEN = 0;
     let selectedDistrict = null;
     
     let BOP_MODE = false;
+    window.TREND_BOP_MODE = false;
+
+    const TREND_BOP_CACHE = { H: null, S: null };
+
+    function trendBopInt(value){
+      const n = Number(String(value ?? "").replace(/,/g, ""));
+      return Number.isFinite(n) && n > 0 ? Math.trunc(n) : 0;
+    }
+
+    function trendBopParty(record, wantedTitle){
+      const wanted = String(wantedTitle || "").trim().toLowerCase();
+      const entries = Object.entries(record?.parties || {});
+      const match = entries.find(([title]) => String(title).trim().toLowerCase() === wanted);
+      return match?.[1] || { trends:{}, net_change:{} };
+    }
+
+    function trendBopValue(row, wantedName){
+      const wanted = String(wantedName || "").trim().toLowerCase();
+      const entries = Object.entries(row?.trends || {});
+      const match = entries.find(([name]) => String(name).trim().toLowerCase() === wanted);
+      return trendBopInt(match?.[1]);
+    }
+
+    function buildTrendBopSnapshot(record, office){
+      if (!record || typeof record !== "object") return null;
+
+      const dem       = trendBopParty(record, "Dem");
+      const gop       = trendBopParty(record, "GOP");
+      const caucusDem = trendBopParty(record, "Others Caucus with Dem");
+      const caucusGop = trendBopParty(record, "Others Caucus with GOP");
+      const others    = trendBopParty(record, "Others");
+
+      const sum = (rows, field) => rows.reduce((total, row) => total + trendBopValue(row, field), 0);
+      const demRows = [dem, caucusDem];
+      const repRows = [gop, caucusGop];
+      const indRows = [others];
+
+      const won = {
+        DEM: sum(demRows, "Won"),
+        REP: sum(repRows, "Won"),
+        IND: sum(indRows, "Won")
+      };
+      const leading = {
+        DEM: sum(demRows, "Leading"),
+        REP: sum(repRows, "Leading"),
+        IND: sum(indRows, "Leading")
+      };
+      const holdovers = {
+        DEM: sum(demRows, "Holdovers"),
+        REP: sum(repRows, "Holdovers"),
+        IND: sum(indRows, "Holdovers")
+      };
+      const winning = {
+        DEM: sum(demRows, "Winning Trend"),
+        REP: sum(repRows, "Winning Trend"),
+        IND: sum(indRows, "Winning Trend")
+      };
+      const called = {
+        DEM: won.DEM + holdovers.DEM,
+        REP: won.REP + holdovers.REP,
+        IND: won.IND + holdovers.IND
+      };
+
+      const insufficientEntries = Object.entries(record?.insufficient_vote || {});
+      const insufficientTotalEntry = insufficientEntries.find(
+        ([name]) => String(name).trim().toLowerCase() === "total"
+      );
+      const insufficientTotal = trendBopInt(insufficientTotalEntry?.[1]);
+      const total =
+        called.DEM + called.REP + called.IND +
+        leading.DEM + leading.REP + leading.IND +
+        insufficientTotal;
+
+      return {
+        office: String(office || record.office_type_code || "").toUpperCase(),
+        record,
+        won,
+        leading,
+        holdovers,
+        called,
+        winning,
+        insufficientTotal,
+        total
+      };
+    }
+
+    async function loadTrendBopData(office){
+      const code = String(office || "").trim().toUpperCase();
+      if (code !== "H" && code !== "S") throw new Error("Trend BOP office must be H or S.");
+
+      try {
+        const response = await fetch(`/cache/trend/${code}?t=${Date.now()}`, { cache:"no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const record = await response.json();
+        const snapshot = buildTrendBopSnapshot(record, code);
+        if (!snapshot) throw new Error("Invalid Trend BOP payload");
+        TREND_BOP_CACHE[code] = snapshot;
+        return snapshot;
+      } catch (error) {
+        if (TREND_BOP_CACHE[code]) return TREND_BOP_CACHE[code];
+        throw error;
+      }
+    }
+
+    function getTrendBopSnapshot(office){
+      const code = String(office || "").trim().toUpperCase();
+      const snapshot = TREND_BOP_CACHE[code];
+      return snapshot ? JSON.parse(JSON.stringify(snapshot)) : null;
+    }
+
+    function setTrendBopSource(on){
+      window.TREND_BOP_MODE = !!on;
+      document.body.classList.toggle("trend-bop-mode", !!on);
+      document.getElementById("trendBopBtn")?.setAttribute("aria-pressed", on ? "true" : "false");
+      document.getElementById("trendBopBtn")?.classList.toggle("active", !!on && BOP_MODE);
+    }
 
     // Manual fixed seats that aren't up this cycle (adjust as needed)
     let SENATE_HOLDOVERS_2026 = { DEM: 0, REP: 0, IND: 0 }; // default fallback
@@ -7901,6 +8072,8 @@ let STATE_CLICK_FX_TOKEN = 0;
         unlockUiFromBop();
       window._bopSeatView = null;
       BOP_MODE = false;
+      window.BOP_MODE = false;
+      setTrendBopSource(false);
       setHeaderForBop(false);
       document.body.classList.remove('bop-mode');
       try { syncSideLogo?.(); } catch {}
@@ -8457,27 +8630,201 @@ let STATE_CLICK_FX_TOKEN = 0;
 
 
     
+    window.TREND_MODE = false;
+
+    function lockUiForTrend(){
+      const toLock = [
+        ...document.querySelectorAll('#allButtons button:not(#trendBtn)'),
+        ...document.querySelectorAll('#yearButtons button')
+      ];
+
+      toLock.forEach(btn => {
+        if (btn.dataset.trendLocked === "1") return;
+
+        btn.dataset.trendLocked = "1";
+        btn.dataset.trendWasDisabled = btn.disabled ? "1" : "0";
+        btn.dataset.trendHadTitle = btn.hasAttribute("title") ? "1" : "0";
+        btn.dataset.trendOldTitle = btn.getAttribute("title") || "";
+
+        btn.disabled = true;
+        btn.setAttribute("aria-disabled", "true");
+        btn.title = "Unavailable while the TREND readout is open.";
+      });
+    }
+
+    function unlockUiFromTrend(){
+      document.querySelectorAll('[data-trend-locked="1"]').forEach(btn => {
+        const wasDisabled = btn.dataset.trendWasDisabled === "1";
+        const hadTitle = btn.dataset.trendHadTitle === "1";
+        const oldTitle = btn.dataset.trendOldTitle || "";
+
+        btn.disabled = wasDisabled;
+        btn.setAttribute("aria-disabled", wasDisabled ? "true" : "false");
+
+        if (hadTitle) btn.setAttribute("title", oldTitle);
+        else btn.removeAttribute("title");
+
+        delete btn.dataset.trendLocked;
+        delete btn.dataset.trendWasDisabled;
+        delete btn.dataset.trendHadTitle;
+        delete btn.dataset.trendOldTitle;
+      });
+
+      try { updateYearAvailability?.(); } catch {}
+      try { updatePrimaryAvailability?.(); } catch {}
+      try { updateRaceAvailability?.(); } catch {}
+      try { updateOfficeAvailability?.(); } catch {}
+    }
+
+    function enterTrendMode(){
+      if (
+        (typeof BOP_MODE !== "undefined" && BOP_MODE) ||
+        window.BOP_MODE ||
+        document.body.classList.contains("bop-mode")
+      ) {
+        try { exitBopMode?.(); } catch {}
+        document.body.classList.remove("bop-mode");
+        window.BOP_MODE = false;
+      }
+
+      if (window.GAUGE_MODE || document.body.classList.contains("gauge-mode")) {
+        try { exitGaugeMode?.(); } catch {}
+      }
+
+      if (document.body.classList.contains("path-mode")) {
+        try { exitPathMode?.(); } catch {}
+        document.body.classList.remove("path-mode");
+      }
+
+      if (document.body.classList.contains("menu-mode")) {
+        try { hideMainMenu?.(); } catch {}
+        document.body.classList.remove("menu-mode");
+      }
+
+      lockUiForTrend();
+
+      window.TREND_MODE = true;
+      document.body.classList.add("trend-mode");
+
+      const trendBtn = document.getElementById("trendBtn");
+      trendBtn?.classList.add("active");
+      trendBtn?.setAttribute("aria-pressed", "true");
+
+      document.getElementById("trendOverlay")?.removeAttribute("hidden");
+
+      const frame = document.getElementById("trendFrame");
+      if (frame) frame.src = `trend.html?t=${Date.now()}`;
+
+      try { hidePercentInBolt?.(); } catch {}
+    }
+
+    function exitTrendMode(){
+      window.TREND_MODE = false;
+      document.body.classList.remove("trend-mode");
+
+      document.getElementById("trendOverlay")?.setAttribute("hidden", "");
+
+      const frame = document.getElementById("trendFrame");
+      if (frame) frame.src = "about:blank";
+
+      const trendBtn = document.getElementById("trendBtn");
+      trendBtn?.classList.remove("active");
+      trendBtn?.setAttribute("aria-pressed", "false");
+
+      unlockUiFromTrend();
+
+      requestAnimationFrame(() => {
+        try { ensureMapRendered?.({ force: true }); } catch {}
+        try { drawShapes?.(); } catch {}
+        try { colorizeInstant?.(true); } catch {}
+        try { syncPercentBolt?.(); } catch {}
+        try { syncSideLogo?.(); } catch {}
+      });
+    }
+
+    const trendBtn = document.getElementById("trendBtn");
+    trendBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.TREND_MODE ? exitTrendMode() : enterTrendMode();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && window.TREND_MODE) exitTrendMode();
+    });
+
     const _bopBtn = document.getElementById('bopBtn');
     _bopBtn?.addEventListener('click', (e) => {
-      if (_bopBtn.disabled) return;           // ignore clicks when disabled
+      if (_bopBtn.disabled) return;
+
+      // While the Trend scales are open, clicking the original scales swaps back
+      // to the existing map-summed BOP without closing the horseshoe view.
+      if (BOP_MODE && window.TREND_BOP_MODE) {
+        setTrendBopSource(false);
+        Promise.allSettled([
+          warmOfficeCache('S','G'),
+          warmOfficeCache('H','G'),
+          loadSenateSpecialCalledCounts()
+        ]).finally(() => renderBopImmediateFromShadow(OFFICE));
+        return;
+      }
 
       const wasBop = BOP_MODE;
+      setTrendBopSource(false);
 
-      // ✅ NEW: if we're *entering* BOP from any non-H/S office, force Senate
       if (!wasBop && OFFICE !== 'H' && OFFICE !== 'S') {
         OFFICE = 'S';
-
-        // keep the UI highlight in sync immediately
         document.querySelectorAll('#allButtons button[data-office]')
           .forEach(b => b.classList.toggle('active', b.dataset.office === OFFICE));
-
-        // optional: keep header in sync right away (safe no-ops if undefined)
         updateHeaderTitle?.();
       }
 
       BOP_MODE ? exitBopMode() : enterBopMode();
 
       if (wasBop) setTimeout(() => ensureMapRendered({ force: true }), 0);
+    });
+
+    const _trendBopBtn = document.getElementById('trendBopBtn');
+    _trendBopBtn?.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (_trendBopBtn.disabled) return;
+
+      if (BOP_MODE && window.TREND_BOP_MODE) {
+        exitBopMode();
+        return;
+      }
+
+      const target = (OFFICE === 'H' || OFFICE === 'S') ? OFFICE : 'S';
+      _trendBopBtn.disabled = true;
+      _trendBopBtn.setAttribute('aria-disabled', 'true');
+
+      try {
+        await Promise.allSettled([loadTrendBopData('H'), loadTrendBopData('S')]);
+        if (!getTrendBopSnapshot(target)) {
+          throw new Error(`No ${target === 'H' ? 'House' : 'Senate'} Trend data is cached.`);
+        }
+
+        OFFICE = target;
+        document.querySelectorAll('#allButtons button[data-office]')
+          .forEach(b => b.classList.toggle('active', b.dataset.office === OFFICE));
+
+        setTrendBopSource(true);
+
+        if (BOP_MODE) {
+          setHeaderForBop(true);
+          renderBopImmediateFromShadow(OFFICE);
+        } else {
+          enterBopMode();
+        }
+      } catch (error) {
+        setTrendBopSource(false);
+        alert(`Trend Balance of Power is unavailable: ${error.message}`);
+      } finally {
+        _trendBopBtn.disabled = false;
+        _trendBopBtn.setAttribute('aria-disabled', 'false');
+        try { updateBopAvailability(); } catch {}
+      }
     });
 
     
@@ -8854,23 +9201,39 @@ let STATE_CLICK_FX_TOKEN = 0;
     
     function updateBopAvailability(){
       const btn = document.getElementById('bopBtn');
-      if (!btn) return;
+      const trendBtn = document.getElementById('trendBopBtn');
+      if (!btn && !trendBtn) return;
 
       const isHistoricYear = (String(YEAR) !== String(LIVE_YEAR));  // non-live year
-      const isWrongOffice  = (OFFICE === 'P' || OFFICE === 'G');    // BOP only for S/H
+      const isWrongOffice  = (OFFICE === 'P' || OFFICE === 'G');    // existing BOP rule
+      const trendWrongOffice = (OFFICE !== 'H' && OFFICE !== 'S');  // Trend BOP only for S/H
 
       const disallow = isHistoricYear || isWrongOffice;
 
-      btn.disabled = disallow;
+      if (btn) {
+        btn.disabled = disallow;
+        btn.setAttribute('aria-disabled', disallow ? 'true' : 'false');
 
-      if (disallow) {
-        if (isHistoricYear) {
-          btn.title = "BOP is only available for the live year.";
+        if (disallow) {
+          if (isHistoricYear) {
+            btn.title = "BOP is only available for the live year.";
+          } else {
+            btn.title = "BOP is only available for Senate and House.";
+          }
         } else {
-          btn.title = "BOP is only available for Senate and House.";
+          btn.removeAttribute("title");
         }
-      } else {
-        btn.removeAttribute("title");
+      }
+
+      if (trendBtn) {
+        trendBtn.disabled = trendWrongOffice;
+        trendBtn.setAttribute('aria-disabled', trendWrongOffice ? 'true' : 'false');
+
+        if (trendWrongOffice) {
+          trendBtn.title = "Trend BOP is only available for Senate and House.";
+        } else {
+          trendBtn.title = "Trend Balance of Power (S/H)";
+        }
       }
 
       // If we’re currently in BOP and it just became illegal, exit immediately.
@@ -16985,18 +17348,33 @@ window.addEventListener('error', (e) => {
       const container = containerEl || containerel;
       if (!container) return;
 
-      // --- 1) Tally national called + uncalled leaders (House 2026) ---
-      const tallies    = aggregateHouseUncalledLeaderCountsNational();
-      const called     = tallies.called;     // { DEM, REP, IND }
-      const uncalled   = tallies.uncalled;   // { DEM, REP, IND }
-      if (String(YEAR) === String(LIVE_YEAR) && BOP_OFFSETS && BOP_OFFSETS[`${YEAR}|H`]) {
+      // --- 1) Tally national called + uncalled leaders (House) ---
+      const trendSnapshot = window.TREND_BOP_MODE ? getTrendBopSnapshot('H') : null;
+      if (window.TREND_BOP_MODE && !trendSnapshot) {
+        container.innerHTML = '<div style="padding:40px;color:#111;font:700 28px URW DIN,sans-serif;text-align:center">HOUSE TREND DATA UNAVAILABLE</div>';
+        return;
+      }
+      const tallies = trendSnapshot ? {
+        called: trendSnapshot.called,
+        uncalled: trendSnapshot.leading,
+        noData: trendSnapshot.insufficientTotal,
+        total: trendSnapshot.total
+      } : aggregateHouseUncalledLeaderCountsNational();
+      const called   = { ...(tallies.called || { DEM:0, REP:0, IND:0 }) };
+      const uncalled = { ...(tallies.uncalled || { DEM:0, REP:0, IND:0 }) };
+      if (!trendSnapshot && String(YEAR) === String(LIVE_YEAR) && BOP_OFFSETS && BOP_OFFSETS[`${YEAR}|H`]) {
           const o = BOP_OFFSETS[`${YEAR}|H`];
           called.DEM += (o.DEM || 0);
           called.REP += (o.REP || 0);
           called.IND += (o.IND || 0);
       }
-      const noData     = tallies.noData || 0;
-      const totalSeats = Math.max(1, tallies.total || 0);
+      const noData = Number(tallies.noData || 0);
+      const totalSeats = Math.max(1, Number(tallies.total || 0));
+      const displayTotals = trendSnapshot?.winning || {
+        DEM: called.DEM + uncalled.DEM,
+        REP: called.REP + uncalled.REP,
+        IND: called.IND + uncalled.IND
+      };
 
       // --- 2) Build SVG scaffold (rotated group + arc) ---
       const w = 900, h = 520;
@@ -17135,10 +17513,10 @@ window.addEventListener('error', (e) => {
       
       const SHOW_DELTA = false;
 
-      const demLine2 = SHOW_DELTA && uncalled.DEM ? `${called.DEM} (+${uncalled.DEM})` : String(called.DEM);
-      const repLine2 = SHOW_DELTA && uncalled.REP ? `${called.REP} (+${uncalled.REP})` : String(called.REP);
+      const demLine2 = SHOW_DELTA && uncalled.DEM ? `${displayTotals.DEM} (+${uncalled.DEM})` : String(displayTotals.DEM);
+      const repLine2 = SHOW_DELTA && uncalled.REP ? `${displayTotals.REP} (+${uncalled.REP})` : String(displayTotals.REP);
 
-      // Democrats — upper left
+      // Democrats - upper left
       labelG.append('text')
         .attr('x', leftX + DEM_DX)
         .attr('y', topY  + DEM_DY)
@@ -17183,9 +17561,10 @@ window.addEventListener('error', (e) => {
       }
     
 
-    function addTitleAndLegendForSenate(svg, { called, calledAdj, leaders, cx, cy, innerR, outerR }){
-      // Use whichever was provided (overrides-adjusted wins if present)
+    function addTitleAndLegendForSenate(svg, { called, calledAdj, leaders, displayTotals, cx, cy, innerR, outerR }){
+      // Use exact Trend Winning Trend totals when supplied; otherwise keep the existing called totals.
       const effectiveCalled = calledAdj || called || { DEM:0, REP:0, IND:0 };
+      const effectiveTotals = displayTotals || effectiveCalled;
 
       const labelG = svg.append("g")
         .attr("font-family","URW DIN, sans-serif")
@@ -17209,13 +17588,13 @@ window.addEventListener('error', (e) => {
        
        const SHOW_DELTA = false;
 
-       const demLine2 = SHOW_DELTA && uncalled?.DEM
-         ? `${effectiveCalled.DEM} (+${uncalled.DEM})`
-         : String(effectiveCalled.DEM);
+       const demLine2 = SHOW_DELTA && leaders?.DEM
+         ? `${effectiveTotals.DEM} (+${leaders.DEM})`
+         : String(effectiveTotals.DEM);
 
-       const repLine2 = SHOW_DELTA && uncalled?.REP
-         ? `${effectiveCalled.REP} (+${uncalled.REP})`
-         : String(effectiveCalled.REP);
+       const repLine2 = SHOW_DELTA && leaders?.REP
+         ? `${effectiveTotals.REP} (+${leaders.REP})`
+         : String(effectiveTotals.REP);
 
 
   // Democrats - upper left
@@ -17392,15 +17771,25 @@ window.addEventListener('error', (e) => {
       if (!container) return;
 
       // --- compute counts ---
-      const calledBase = countSenateCalled2026();
-      const called     = (String(YEAR) === String(LIVE_YEAR)) ? addSenateHoldovers(calledBase) : calledBase;      // {DEM, REP, IND}
-      const leaders = countSenateLeaders2026();     // {DEM, REP, IND}
-      // Apply admin overrides (called bucket only)
-      const calledAdj = applyBopOffsets(YEAR, 'S', { ...called });
+      const trendSnapshot = window.TREND_BOP_MODE ? getTrendBopSnapshot('S') : null;
+      if (window.TREND_BOP_MODE && !trendSnapshot) {
+        container.innerHTML = '<div style="padding:40px;color:#111;font:700 28px URW DIN,sans-serif;text-align:center">SENATE TREND DATA UNAVAILABLE</div>';
+        return;
+      }
+      const calledBase = trendSnapshot ? trendSnapshot.won : countSenateCalled2026();
+      const called = trendSnapshot
+        ? { ...trendSnapshot.called }
+        : ((String(YEAR) === String(LIVE_YEAR)) ? addSenateHoldovers(calledBase) : calledBase);
+      const leaders = trendSnapshot ? { ...trendSnapshot.leading } : countSenateLeaders2026();
+      // Trend mode is exact endpoint data; manual BOP offsets apply only to the original scales view.
+      const calledAdj = trendSnapshot ? { ...called } : applyBopOffsets(YEAR, 'S', { ...called });
+      const trendHoldovers = trendSnapshot
+        ? { ...trendSnapshot.holdovers }
+        : (SENATE_HOLDOVERS_2026 || { DEM:0, REP:0, IND:0 });
 
-      // Map to the 7.html keys
+      // Map to the existing dark-called / light-leading painter.
       const data = {
-          dem_called:  calledAdj.DEM,
+        dem_called:  calledAdj.DEM,
         dem_leading: leaders.DEM,
         ind_called:  calledAdj.IND,
         ind_leading: leaders.IND,
@@ -17446,7 +17835,16 @@ window.addEventListener('error', (e) => {
 
           addTitleAndLegendForSenate(
              d3.select(svg),
-             { called, calledAdj, leaders, cx: cfg.cx, cy: cfg.cy, innerR: cfg.innerR, outerR }
+             {
+               called,
+               calledAdj,
+               leaders,
+               displayTotals: trendSnapshot?.winning || null,
+               cx: cfg.cx,
+               cy: cfg.cy,
+               innerR: cfg.innerR,
+               outerR
+             }
            );
           
       // Divider + "FOR MAJORITY"
@@ -17496,9 +17894,9 @@ window.addEventListener('error', (e) => {
         rep_leading: data.rep_leading
       })
       
-      // after colorWithData({ ... })
-      if (String(YEAR) === String(LIVE_YEAR)) {
-        const hold = SENATE_HOLDOVERS_2026 || {DEM:0, REP:0, IND:0};
+      // Outline holdovers. In Trend mode these counts come only from /cache/trend/S.
+      if (window.TREND_BOP_MODE || String(YEAR) === String(LIVE_YEAR)) {
+        const hold = trendHoldovers;
 
         const seats  = Array.from(svg.querySelectorAll('circle.seat'));
         const left   = seats.slice(0, 50);
@@ -17537,7 +17935,7 @@ window.addEventListener('error', (e) => {
       
       
       // === NEW: per-bucket USPS labels (called/leading by party; alpha within each bucket) ===
-      if (String(YEAR) === String(LIVE_YEAR)) {
+      if (!window.TREND_BOP_MODE && String(YEAR) === String(LIVE_YEAR)) {
         const seats  = Array.from(svg.querySelectorAll('circle.seat'));
         const left   = seats.slice(0, 50);
         const right  = seats.slice(50);
@@ -17708,6 +18106,16 @@ window.addEventListener('error', (e) => {
 
     function computeHouseBopTotals(){
       try{
+        if (window.TREND_BOP_MODE) {
+          const trend = getTrendBopSnapshot('H');
+          return trend ? {
+            DEM: Number(trend.winning.DEM || 0),
+            REP: Number(trend.winning.REP || 0),
+            IND: Number(trend.winning.IND || 0),
+            total: Number(trend.total || 0)
+          } : {DEM:0, REP:0, IND:0, total:0};
+        }
+
         const t = aggregateHouseUncalledLeaderCountsNational?.();
         if (!t) return {DEM:0, REP:0, IND:0, total:0};
 
@@ -17740,6 +18148,16 @@ window.addEventListener('error', (e) => {
 
     function computeSenateBopTotals(){
       try{
+        if (window.TREND_BOP_MODE) {
+          const trend = getTrendBopSnapshot('S');
+          return trend ? {
+            DEM: Number(trend.winning.DEM || 0),
+            REP: Number(trend.winning.REP || 0),
+            IND: Number(trend.winning.IND || 0),
+            total: Number(trend.total || 100)
+          } : {DEM:0, REP:0, IND:0, total:0};
+        }
+
         const calledBase = countSenateCalled2026?.() || {DEM:0, REP:0, IND:0};
         const hold = (String(YEAR)==="2026" ? (SENATE_HOLDOVERS_2026||{DEM:0, REP:0, IND:0}) : {DEM:0, REP:0, IND:0});
         const called = {
@@ -17774,12 +18192,14 @@ window.addEventListener('error', (e) => {
 
       if (kind === 'H') {
         t = computeHouseBopTotals();
-        t = applyBopOffsets(YEAR, 'H', t);
+        if (!window.TREND_BOP_MODE) t = applyBopOffsets(YEAR, 'H', t);
       } else if (kind === 'S') {
         t = computeSenateBopTotals();
-        bopLog("Tallies pre-offset", {YEAR, kind, t: {...t}});
-        t = applyBopOffsets(YEAR, kind, t);
-        bopLog("Tallies post-offset", {YEAR, kind, t: {...t}});
+        if (!window.TREND_BOP_MODE) {
+          bopLog("Tallies pre-offset", {YEAR, kind, t: {...t}});
+          t = applyBopOffsets(YEAR, kind, t);
+          bopLog("Tallies post-offset", {YEAR, kind, t: {...t}});
+        }
       }
 
 
@@ -17942,20 +18362,27 @@ window.addEventListener('error', (e) => {
     window.enterBopMode = function(){
       try{
         const target = (OFFICE === 'S' || OFFICE === 'H') ? OFFICE : 'S';
-        BOP_MODE = true; OFFICE = target;
+        BOP_MODE = true;
+        window.BOP_MODE = true;
+        OFFICE = target;
         setHeaderForBop?.(true);
         document.body.classList.add('bop-mode');
+        document.body.classList.toggle('trend-bop-mode', !!window.TREND_BOP_MODE);
         try { syncSideLogo?.(); } catch {}
         hidePercentInBolt?.();
         updateHeaderTitle?.();
         try { updateRaceAvailability?.(); } catch {}
 
-        // Warm Senate/House caches AND specials, then render from shadow
-        Promise.allSettled([
-          warmOfficeCache('S','G'),
-          warmOfficeCache('H','G'),
-          loadSenateSpecialCalledCounts()   // <-- specials prefetch (skips CA)
-        ]).finally(() => {
+        // The original scales warm map data; the Trend scales warm only the two Trend endpoints.
+        const warmers = window.TREND_BOP_MODE
+          ? [loadTrendBopData('S'), loadTrendBopData('H')]
+          : [
+              warmOfficeCache('S','G'),
+              warmOfficeCache('H','G'),
+              loadSenateSpecialCalledCounts()
+            ];
+
+        Promise.allSettled(warmers).finally(() => {
           renderBopImmediateFromShadow(target);
         });
 
@@ -17976,8 +18403,13 @@ window.addEventListener('error', (e) => {
         document.querySelectorAll('#allButtons button[data-office]')
           .forEach(b => b.classList.toggle('active', b.dataset.office === OFFICE));
         setHeaderForBop?.(true);
-        // warm the target cache, then swap instantly
-        warmOfficeCache(t,'G').finally(() => renderBopImmediateFromShadow(t));
+        // Keep the selected source exact when switching House/Senate inside BOP.
+        const ready = window.TREND_BOP_MODE
+          ? loadTrendBopData(t)
+          : warmOfficeCache(t,'G');
+        Promise.resolve(ready)
+          .catch(() => null)
+          .finally(() => renderBopImmediateFromShadow(t));
       }, true);
     });
     // Keep prewarm fresh: on DOM ready and after each poll tick.
@@ -17986,11 +18418,16 @@ window.addEventListener('error', (e) => {
       try { loadSenateSpecialCalledCounts(); } catch {}
       try { loadBopOffsets(); } catch {}
     });
-    // --- hard refresh overrides every 10s ---
+    // --- hard refresh every 10s ---
     setInterval(async () => {
       try {
-        await loadBopOffsets();                 // always re-fetch offsets
-        if (window.BOP_MODE) {                  // if BOP view is up, redraw the UI
+        if (window.TREND_BOP_MODE) {
+          await Promise.allSettled([loadTrendBopData('H'), loadTrendBopData('S')]);
+        } else {
+          await loadBopOffsets();
+        }
+
+        if (BOP_MODE || window.BOP_MODE) {
           try { prewarmBopCharts?.(); } catch {}
           try { updateBopTallies?.(OFFICE); } catch {}
           try { renderBopImmediateFromShadow?.(OFFICE); } catch {}

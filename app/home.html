@@ -193,30 +193,29 @@
 
 <script>
 (function(){
-  const ROOT_8080 = "http://98.87.214.119:8080";
-  const ROOT_443  = "http://98.87.214.119:443";
+  const BASE = window.location.origin.replace(/\/$/, "");
 
   const pages = [
-    { title: "Election App",          desc: "Main election application",                   url: ROOT_8080 + "/", tags:["App"] },
-    { title: "Backend file uploader", desc: "Upload, download, and manage backend files",  url: ROOT_8080 + "/backend.html", tags:["Admin"] },
-    { title: "BOP overrides",         desc: "Adjust balance of power overrides",           url: ROOT_8080 + "/bop-overrides.html", tags:["Admin"] },
-    { title: "Custom images",         desc: "Upload and manage candidate images",          url: ROOT_8080 + "/custom-images.html", tags:["Admin"] },
-    { title: "Election date",         desc: "Run API endpoint calls / date tools",         url: ROOT_8080 + "/election-date.html", tags:["Tools"] },
+    { title: "Election App",          desc: "Main election application",                   url: BASE + "/", tags:["App"] },
+    { title: "Backend file uploader", desc: "Upload, download, and manage backend files",  url: BASE + "/backend.html", tags:["Admin"] },
+    { title: "BOP overrides",         desc: "Adjust balance of power overrides",           url: BASE + "/bop-overrides.html", tags:["Admin"] },
+    { title: "Custom images",         desc: "Upload and manage candidate images",          url: BASE + "/custom-images.html", tags:["Admin"] },
+    { title: "Election date",         desc: "Run API endpoint calls / date tools",         url: BASE + "/election-date.html", tags:["Tools"] },
 
     // NEW:
-    { title: "Primary date input",    desc: "Edit primary dates + all-party primary mapping", url: ROOT_8080 + "/primary-dates-new.html", tags:["Tools"] },
-    { title: "Full URL editor",       desc: "Edit main general/full-data URL endpoint list",  url: ROOT_8080 + "/full-url.html", tags:["Tools"] },
+    { title: "Primary date input",    desc: "Edit primary dates + all-party primary mapping", url: BASE + "/primary-dates-new.html", tags:["Tools"] },
+    { title: "Full URL editor",       desc: "Edit main general/full-data URL endpoint list",  url: BASE + "/full-url.html", tags:["Tools"] },
 
-        { title: "Results type",         desc: "Toggle AP resultstype (b / t)",              url: ROOT_8080 + "/results-type.html", tags:["Tools"] },
+    { title: "Results type",          desc: "Toggle AP resultstype (b / t)",                url: BASE + "/results-type.html", tags:["Tools"] },
 
-{ title: "Server load",           desc: "View server load and basic health",           url: ROOT_8080 + "/load.html", tags:["Tools"] },
-    { title: "Override admin",        desc: "Override control panel",                      url: ROOT_8080 + "/override-admin.html", tags:["Admin"] },
-    { title: "App control panel",     desc: "Server/app control panel",                    url: ROOT_443 + "/", tags:[":443"] },
-    { title: "Pipeline targets",      desc: "Select races for prediction model",           url: ROOT_8080 + "/pipeline-targets.html", tags:["Model"] },
-    { title: "Readout",               desc: "Readout of app tasks",                        url: ROOT_8080 + "/readout.html", tags:["Tools"] },
-    { title: "Senate holdovers",      desc: "Edit senate holdovers by year",               url: ROOT_8080 + "/senate-holdovers.html", tags:["Admin"] },
-    { title: "Year settings",         desc: "Set year for live election and historic data",url: ROOT_8080 + "/year.html", tags:["Admin"] },
-    { title: "Get historic data",    desc: "Fetch and save AP full dataset", url: ROOT_8080 + "/full-data.html", tags:["Tools"] },
+    { title: "Server load",           desc: "View server load and basic health",            url: BASE + "/load.html", tags:["Tools"] },
+    { title: "Override admin",        desc: "Override control panel",                       url: BASE + "/override-admin.html", tags:["Admin"] },
+    { title: "App control panel",     desc: "Server/app control panel",                     url: BASE + "/", tags:["App"] },
+    { title: "Pipeline targets",      desc: "Select races for prediction model",            url: BASE + "/pipeline-targets.html", tags:["Model"] },
+    { title: "Readout",               desc: "Readout of app tasks",                         url: BASE + "/readout.html", tags:["Tools"] },
+    { title: "Senate holdovers",      desc: "Edit senate holdovers by year",                url: BASE + "/senate-holdovers.html", tags:["Admin"] },
+    { title: "Year settings",         desc: "Set year for live election and historic data", url: BASE + "/year.html", tags:["Admin"] },
+    { title: "Get historic data",     desc: "Fetch and save AP full dataset",                url: BASE + "/full-data.html", tags:["Tools"] },
   ];
 
   const grid = document.getElementById("grid");
@@ -275,7 +274,7 @@
 
   q.addEventListener("input", updateCount);
 
-  document.getElementById("openApp").onclick = () => window.open(ROOT_8080 + "/", "_blank", "noopener");
+  document.getElementById("openApp").onclick = () => window.open(BASE + "/", "_blank", "noopener");
 
   render();
 })();

@@ -7,7 +7,7 @@
 import os, time, json, threading, itertools, queue, random
 import sys, subprocess
 from collections import deque
-from datetime import datetime
+from datetime import datetime, timezone
 from flask import Flask, send_from_directory, jsonify, request
 from werkzeug.utils import secure_filename
 import requests
@@ -31,6 +31,36 @@ FINGERPRINTS_PATH = APP_STATE_DIR / "race_fingerprints.json"
 
 # Hub sleep default (seconds)
 SLEEP_S = float(os.getenv("SLEEP_S", "60.0"))
+
+def _safe_env_float(name, default, minimum):
+    try:
+        value = float(os.getenv(name, str(default)))
+        if value != value or value in (float("inf"), float("-inf")):
+            raise ValueError
+    except (TypeError, ValueError):
+        value = float(default)
+    return max(float(minimum), value)
+
+# AP Trend reports use their own cadence and do not alter the main election poll schedule.
+TREND_ENABLED = os.getenv("TREND_ENABLED", "1").strip().lower() not in (
+    "0", "false", "no", "off",
+)
+TREND_POLL_INTERVAL_SECONDS = _safe_env_float(
+    "TREND_POLL_INTERVAL_SECONDS", 120.0, 1.0
+)
+TREND_TIMEOUT_SECONDS = _safe_env_float(
+    "TREND_TIMEOUT_SECONDS", 15.0, 1.0
+)
+TREND_URLS = {
+    "H": os.getenv(
+        "TREND_H_URL",
+        "https://api.ap.org/v3/reports/Trend-h-20241105-US-Live",
+    ),
+    "S": os.getenv(
+        "TREND_S_URL",
+        "https://api.ap.org/v3/reports/Trend-s-20241105-US-Live",
+    ),
+}
 
 def load_fingerprints():
     if not FINGERPRINTS_PATH.exists():
@@ -506,17 +536,36 @@ HTTP.headers.update({
     "x-api-key": AP_API_KEY
 })
 
+# Keep Trend traffic isolated from the main election-data Session.
+TREND_HTTP = requests.Session()
+TREND_HTTP.trust_env = False
+TREND_HTTP.mount("http://", HTTPAdapter(max_retries=_retries))
+TREND_HTTP.mount("https://", HTTPAdapter(max_retries=_retries))
+TREND_HTTP.headers.update(HTTP.headers)
+TREND_HTTP.headers["Accept"] = "application/xml"
+
 _recent_pipelines = deque(maxlen=20)
 
 
 _hub_started = False
+_hub_start_lock = threading.Lock()
+
 def _start_hub_once():
     # start the polling thread exactly once per process
     global _hub_started
-    if _hub_started:
-        return
-    _hub_started = True
-    threading.Thread(target=_hub_loop, daemon=True).start()
+    with _hub_start_lock:
+        if _hub_started:
+            return
+        _hub_started = True
+        try:
+            threading.Thread(
+                target=_hub_loop,
+                daemon=True,
+                name="election-hub-poller",
+            ).start()
+        except Exception:
+            _hub_started = False
+            raise
     
     # start the periodic stats export thread (optional)
     try:
@@ -2768,10 +2817,14 @@ USPS_TO_STATEFP = {
 
 # ---------------- Cache & Stats -----------------
 _cache_lock = threading.Lock()
+_snapshot_file_lock = threading.Lock()
+_trend_stats_lock = threading.Lock()
 _log_seq = 0
 _cache = {
     # cache_by_combo: { "P:G": { "states": { "CA": {...}}, "updated": ts }, ... }
     "cache_by_combo": {},
+    # AP Trend reports live outside cache_by_combo so existing combo readers are unchanged.
+    "balance_of_power": {},
     "last_cycle_end": 0.0,
     "log": deque(maxlen=4000),
 }
@@ -2781,6 +2834,14 @@ _stats = {
     "errors": 0,
     # per_combo_state: { "P:G|CA": {"last_fetch": ts, "ok": n, "err": n}, ... }
     "per_combo_state": {},
+}
+_trend_stats = {
+    "upstream_calls": 0,
+    "upstream_bytes": 0,
+    "errors": 0,
+    "last_success": {},
+    "last_update": {},
+    "last_error": {},
 }
 _inflight = set()
 
@@ -2795,12 +2856,43 @@ def log(msg, lvl="INFO"):
 # -------------- Snapshot (optional) -------------
 def _snapshot_save():
     try:
-        with _cache_lock:
-            data = {
-                "cache_by_combo": _cache["cache_by_combo"],
-                "last_cycle_end": _cache["last_cycle_end"],
-            }
-        with open(CACHE_SNAPSHOT_PATH,"w") as f: json.dump(data,f)
+        # Serialize writers before capturing cache state so an older capture cannot
+        # overwrite a newer one when the main and Trend pollers finish together.
+        with _snapshot_file_lock:
+            with _cache_lock:
+                data = {
+                    "cache_by_combo": dict(_cache["cache_by_combo"]),
+                    "balance_of_power": dict(_cache.get("balance_of_power") or {}),
+                    "last_cycle_end": _cache["last_cycle_end"],
+                }
+
+            previous_mode = None
+            try:
+                previous_mode = os.stat(CACHE_SNAPSHOT_PATH).st_mode & 0o7777
+            except OSError:
+                pass
+
+            tmp_path = (
+                f"{CACHE_SNAPSHOT_PATH}.{os.getpid()}."
+                f"{threading.get_ident()}.tmp"
+            )
+            try:
+                with open(tmp_path, "w", encoding="utf-8") as f:
+                    json.dump(data, f)
+                if previous_mode is not None:
+                    try:
+                        os.chmod(tmp_path, previous_mode)
+                    except OSError:
+                        pass
+                os.replace(tmp_path, CACHE_SNAPSHOT_PATH)
+                tmp_path = None
+            finally:
+                if tmp_path and os.path.exists(tmp_path):
+                    try:
+                        os.unlink(tmp_path)
+                    except OSError:
+                        pass
+
         log(f"Saved snapshot to {CACHE_SNAPSHOT_PATH}")
     except Exception as e:
         log(f"Snapshot save error: {e}","WARN")
@@ -2809,8 +2901,12 @@ def _snapshot_load():
     try:
         if os.path.exists(CACHE_SNAPSHOT_PATH):
             with open(CACHE_SNAPSHOT_PATH,"r") as f: data=json.load(f)
+            loaded_bop = data.get("balance_of_power", {})
             with _cache_lock:
                 _cache["cache_by_combo"] = data.get("cache_by_combo",{})
+                _cache["balance_of_power"] = (
+                    loaded_bop if isinstance(loaded_bop, dict) else {}
+                )
                 _cache["last_cycle_end"] = data.get("last_cycle_end",0.0)
                 # merge stats shallowly
                 for k,v in data.get("_stats",{}).items():
@@ -4532,6 +4628,339 @@ def _fetch_state(usps: str, office: str, race_type: str):
         with _cache_lock:
             _inflight.discard(inflight_key)
 
+
+_TREND_REQUIRED_PARTIES = {
+    "dem",
+    "gop",
+    "others caucus with dem",
+    "others caucus with gop",
+    "others",
+}
+_TREND_REQUIRED_VALUES = {
+    "Won",
+    "Leading",
+    "Holdovers",
+    "Winning Trend",
+    "Current",
+    "InsufficientVote",
+}
+_TREND_REQUIRED_NET_CHANGE = {"Winners", "Leaders"}
+_TREND_REQUIRED_INSUFFICIENT = {
+    "Dem Open",
+    "GOP Open",
+    "Caucus with Dem Open",
+    "Caucus with GOP Open",
+    "Oth Open",
+    "Dem Incumbent",
+    "GOP Incumbent",
+    "Caucus with Dem Incumbent",
+    "Caucus with GOP Incumbent",
+    "Oth Incumbent",
+    "Total",
+}
+_TREND_PAYLOAD_KEYS = (
+    "office",
+    "office_type_code",
+    "test",
+    "timestamp",
+    "parties",
+    "insufficient_vote",
+    "source_url",
+)
+
+
+def _trend_xml_local_name(tag):
+    return tag.rsplit("}", 1)[-1] if isinstance(tag, str) else ""
+
+
+def _trend_xml_attr(node, name):
+    wanted = str(name).lower()
+    for key, value in node.attrib.items():
+        if _trend_xml_local_name(key).lower() == wanted:
+            return value
+    return None
+
+
+def _trend_number(raw):
+    if raw is None:
+        return None
+    value = str(raw).strip()
+    try:
+        return int(value.replace(",", ""))
+    except (TypeError, ValueError):
+        return value
+
+
+def _trend_values(parent):
+    values = {}
+    if parent is None:
+        return values
+    for node in list(parent):
+        if _trend_xml_local_name(node.tag).lower() != "trend":
+            continue
+        name = (_trend_xml_attr(node, "name") or "").strip()
+        if name:
+            values[name] = _trend_number(_trend_xml_attr(node, "value"))
+    return values
+
+
+def _trend_child(parent, local_name):
+    wanted = str(local_name).lower()
+    for node in list(parent):
+        if _trend_xml_local_name(node.tag).lower() == wanted:
+            return node
+    return None
+
+
+def _trend_timestamp_epoch(value):
+    text = str(value or "").strip()
+    if not text:
+        return None
+    if text[-1:].upper() == "Z":
+        text = text[:-1] + "+00:00"
+    try:
+        parsed = datetime.fromisoformat(text)
+    except (TypeError, ValueError):
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.timestamp()
+
+
+def _parse_trend_balance(xml_text, expected_office_code):
+    if not _looks_like_xml(xml_text):
+        return None
+    try:
+        root = ET.fromstring(xml_text)
+    except (ET.ParseError, TypeError, ValueError):
+        return None
+
+    if _trend_xml_local_name(root.tag).lower() != "trendtable":
+        return None
+
+    expected = (expected_office_code or "").strip().upper()
+    office_code = (_trend_xml_attr(root, "OfficeTypeCode") or "").strip().upper()
+    test_value = (_trend_xml_attr(root, "Test") or "").strip().lower()
+    timestamp = (_trend_xml_attr(root, "timestamp") or "").strip()
+
+    if expected not in ("H", "S") or office_code != expected:
+        return None
+    if test_value not in ("0", "false", "no"):
+        return None
+    if _trend_timestamp_epoch(timestamp) is None:
+        return None
+
+    parties = {}
+    for party in list(root):
+        if _trend_xml_local_name(party.tag).lower() != "party":
+            continue
+        title = (_trend_xml_attr(party, "title") or "").strip()
+        if not title:
+            continue
+        parties[title] = {
+            "trends": _trend_values(party),
+            "net_change": _trend_values(_trend_child(party, "NetChange")),
+        }
+
+    parties_by_name = {name.lower(): row for name, row in parties.items()}
+    if not _TREND_REQUIRED_PARTIES.issubset(parties_by_name):
+        return None
+
+    for party_name in _TREND_REQUIRED_PARTIES:
+        row = parties_by_name[party_name]
+        trends = row.get("trends") or {}
+        net_change = row.get("net_change") or {}
+        if not _TREND_REQUIRED_VALUES.issubset(trends):
+            return None
+        if not _TREND_REQUIRED_NET_CHANGE.issubset(net_change):
+            return None
+        if any(
+            not isinstance(trends[name], int) or trends[name] < 0
+            for name in _TREND_REQUIRED_VALUES
+        ):
+            return None
+        if any(
+            not isinstance(net_change[name], int)
+            for name in _TREND_REQUIRED_NET_CHANGE
+        ):
+            return None
+
+    insufficient_vote = _trend_values(
+        _trend_child(root, "InsufficientVote")
+    )
+    if not _TREND_REQUIRED_INSUFFICIENT.issubset(insufficient_vote):
+        return None
+    if any(
+        not isinstance(insufficient_vote[name], int)
+        or insufficient_vote[name] < 0
+        for name in _TREND_REQUIRED_INSUFFICIENT
+    ):
+        return None
+
+    return {
+        "office": _trend_xml_attr(root, "office"),
+        "office_type_code": office_code,
+        "test": _trend_xml_attr(root, "Test"),
+        "timestamp": timestamp,
+        "parties": parties,
+        "insufficient_vote": insufficient_vote,
+    }
+
+
+def _trend_note_error(office_code):
+    with _trend_stats_lock:
+        _trend_stats["errors"] += 1
+        _trend_stats["last_error"][office_code] = time.time()
+
+
+def _trend_note_success(office_code, changed):
+    now = time.time()
+    with _trend_stats_lock:
+        _trend_stats["last_success"][office_code] = now
+        _trend_stats["last_error"][office_code] = None
+        if changed:
+            _trend_stats["last_update"][office_code] = now
+
+
+def _fetch_trend_once(office_code, url):
+    office_code = (office_code or "").strip().upper()
+    with _trend_stats_lock:
+        _trend_stats["upstream_calls"] += 1
+
+    try:
+        response = TREND_HTTP.get(url, timeout=TREND_TIMEOUT_SECONDS)
+    except requests.exceptions.RequestException as e:
+        _trend_note_error(office_code)
+        log(f"Transport error (Trend {office_code}): {e}", "WARN")
+        return False
+
+    with _trend_stats_lock:
+        _trend_stats["upstream_bytes"] += len(response.content or b"")
+
+    if response.status_code != 200:
+        _trend_note_error(office_code)
+        log(f"HTTP {response.status_code} from Trend {office_code}", "WARN")
+        return False
+
+    parsed = _parse_trend_balance(response.text, office_code)
+    if parsed is None:
+        _trend_note_error(office_code)
+        log(
+            f"Incomplete, test, or invalid Trend {office_code} response; "
+            "keeping last good balance-of-power data.",
+            "WARN",
+        )
+        return False
+
+    parsed["source_url"] = url
+    parsed_timestamp = _trend_timestamp_epoch(parsed.get("timestamp"))
+    fetched_at = time.time()
+    fetched_at_utc = datetime.now(timezone.utc).strftime(
+        "%Y-%m-%dT%H:%M:%SZ"
+    )
+
+    stale = False
+    changed = False
+    with _cache_lock:
+        bop_cache = _cache.setdefault("balance_of_power", {})
+        previous = bop_cache.get(office_code)
+        previous_timestamp = (
+            _trend_timestamp_epoch(previous.get("timestamp"))
+            if isinstance(previous, dict)
+            else None
+        )
+
+        if (
+            previous_timestamp is not None
+            and parsed_timestamp < previous_timestamp
+        ):
+            stale = True
+        else:
+            previous_payload = (
+                {key: previous.get(key) for key in _TREND_PAYLOAD_KEYS}
+                if isinstance(previous, dict)
+                else None
+            )
+            changed = previous_payload != parsed
+            if changed:
+                record = dict(parsed)
+                record["fetched_at"] = fetched_at
+                record["fetched_at_utc"] = fetched_at_utc
+                bop_cache[office_code] = record
+
+    if stale:
+        _trend_note_error(office_code)
+        log(
+            f"Older Trend {office_code} response ignored; "
+            "keeping newer cached balance-of-power data.",
+            "WARN",
+        )
+        return False
+
+    _trend_note_success(office_code, changed)
+    if changed:
+        log(
+            f"Fetched Trend {office_code}: "
+            f"{len(parsed.get('parties') or {})} parties"
+        )
+    else:
+        log(f"Trend {office_code} unchanged.")
+    return changed
+
+
+def _trend_loop():
+    log(
+        "AP Trend poller starting: "
+        f"H/S every {TREND_POLL_INTERVAL_SECONDS:g}s."
+    )
+    while True:
+        cycle_started = time.monotonic()
+        any_changed = False
+
+        for office_code, url in TREND_URLS.items():
+            try:
+                if _fetch_trend_once(office_code, url):
+                    any_changed = True
+            except Exception as e:
+                _trend_note_error(office_code)
+                log(
+                    f"Unhandled Trend {office_code} refresh error: {e}",
+                    "WARN",
+                )
+
+        if any_changed:
+            _snapshot_save()
+
+        elapsed = time.monotonic() - cycle_started
+        time.sleep(max(1.0, TREND_POLL_INTERVAL_SECONDS - elapsed))
+
+
+_trend_started = False
+_trend_start_lock = threading.Lock()
+
+def _start_trend_once():
+    global _trend_started
+
+    if not TREND_ENABLED:
+        log("AP Trend poller disabled by TREND_ENABLED.")
+        return False
+
+    with _trend_start_lock:
+        if _trend_started:
+            return True
+        try:
+            threading.Thread(
+                target=_trend_loop,
+                daemon=True,
+                name="ap-trend-poller",
+            ).start()
+        except Exception as e:
+            log(f"Could not start AP Trend poller: {e}", "WARN")
+            return False
+        _trend_started = True
+        return True
+
+
 def _hub_loop():
     log("Hub (mode-aware) poller starting..." if HUB_MODE else "Hub disabled (serve-only).")
 
@@ -4557,7 +4986,8 @@ def _hub_loop():
 
     _primary_snapshot_load()
 
-
+    # Start only after loading p_cache.json so startup cannot overwrite fresh Trend data.
+    _start_trend_once()
 
     step = 0
     while True:
@@ -4878,6 +5308,27 @@ def admin_system_usage():
 def cache_p():
     # Exactly what your UI expects today (P general)
     return cache_ru()  # will default to office=P, raceTypeId=G below
+
+@app.route("/cache/trend/<chamber>")
+def cache_trend(chamber):
+    chamber = (chamber or "").strip().upper()
+
+    if chamber not in ("H", "S"):
+        return jsonify({
+            "error": "Invalid chamber. Use H for House or S for Senate."
+        }), 400
+
+    with _cache_lock:
+        trend_data = (_cache.get("balance_of_power") or {}).get(chamber)
+        if trend_data:
+            trend_data = json.loads(json.dumps(trend_data))
+
+    if not trend_data:
+        return jsonify({
+            "error": f"No Trend data is currently cached for {chamber}."
+        }), 404
+
+    return jsonify(trend_data)
 
 @app.route("/cache/ru")
 def cache_ru():
@@ -5298,4 +5749,3 @@ def overrides_delete():
 if __name__ == "__main__":
     _start_hub_once()
     app.run(host="0.0.0.0", port=int(os.getenv("PORT","9052")))
-
