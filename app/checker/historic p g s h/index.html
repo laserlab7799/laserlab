@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>P/G/S/H Results (Historic + 2026 Live)</title>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://d3js.org/topojson.v3.min.js"></script>
+<style>
+  :root{--bg:#0b1220;--fg:#eaf0ff;--muted:#9fb3d1;--card:#14233d;}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--fg);font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{height:52px;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#0e1730;border-bottom:1px solid rgba(255,255,255,.12)}
+  .stage{position:relative;display:grid;grid-template-columns:1fr 360px;height:calc(100svh - 52px);gap:12px;padding:12px}
+  .map-shell{background:#10151f;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+  #map{width:100%;height:100%}
+  aside{background:var(--card);border:1px solid rgba(255,255,255,.14);border-radius:12px;display:flex;flex-direction:column;min-height:0}
+  h2{margin:0;padding:10px 12px;font-size:14px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.08)}
+  .body{padding:12px;overflow:auto}
+  label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+  select,button{width:100%;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:#1f2d50;color:var(--fg);cursor:pointer}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .kv{font:12px ui-monospace,monospace}
+  .cand{font:13px ui-monospace,monospace;margin:2px 0}
+</style>
+</head>
+<body>
+  <header>
+    <strong>P/G/S/H Viewer</strong>
+    <span id="status" class="kv">ready</span>
+  </header>
+
+  <div class="stage">
+    <div class="map-shell">
+      <svg id="map"></svg>
+    </div>
+
+    <aside>
+      <h2>Controls</h2>
+      <div class="body">
+        <div class="row" style="margin-bottom:10px">
+          <div>
+            <label for="yearSel">Year</label>
+            <select id="yearSel">
+              <option value="2026">2026 (Live)</option>
+              <option value="2024" selected>2024</option>
+              <option value="2022">2022</option>
+              <option value="2020">2020</option>
+              <option value="2018">2018</option>
+              <option value="2016">2016</option>
+            </select>
+          </div>
+          <div>
+            <label for="officeSel">Office</label>
+            <select id="officeSel">
+              <option value="P">President</option>
+              <option value="G" selected>Governor</option>
+              <option value="S">Senate</option>
+              <option value="H">House</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row" style="margin-bottom:10px">
+          <div>
+            <label for="stateSel">State</label>
+            <select id="stateSel" disabled>
+              <option value="">Select a year…</option>
+            </select>
+          </div>
+          <div>
+            <label for="unitSel">Unit (incl. “Statewide Total”)</label>
+            <select id="unitSel" disabled>
+              <option value="">Select a state…</option>
+            </select>
+          </div>
+        </div>
+
+        <hr style="margin:14px 0;border-color:rgba(255,255,255,.08)"/>
+
+        <div id="details"></div>
+      </div>
+    </aside>
+  </div>
+
+<script>
+const statusEl  = document.getElementById("status");
+const yearSel   = document.getElementById("yearSel");
+const officeSel = document.getElementById("officeSel");
+const stateSel  = document.getElementById("stateSel");
+const unitSel   = document.getElementById("unitSel");
+const details   = document.getElementById("details");
+
+const NATIONAL_SENTINEL = "__NAT__";
+
+let projection, path, svg, rootG, stateGeoms = null;
+
+init();
+
+async function init(){
+  svg = d3.select("#map");
+  rootG = svg.append("g");
+  projection = d3.geoAlbersUsa();
+  path = d3.geoPath().projection(projection);
+
+  // simple static base map (no zoom helper)
+  const stTopo = await d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json");
+  stateGeoms  = topojson.feature(stTopo, stTopo.objects.states).features;
+
+  const mapShell = document.querySelector(".map-shell");
+  function resize(){
+    const w = mapShell.clientWidth, h = mapShell.clientHeight;
+    svg.attr("width", w).attr("height", h);
+    projection.translate([w/2,h/2]).scale(Math.min(w,h)*1.25);
+    redrawBase();
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  // Wire selectors
+  yearSel.onchange   = handleYearOrOfficeChange;
+  officeSel.onchange = handleYearOrOfficeChange;
+  stateSel.onchange  = handleStateChange;
+  unitSel.onchange   = handleUnitChange;
+
+  // initial load for 2024 Governor (matches default selection)
+  await handleYearOrOfficeChange();
+}
+
+function redrawBase(){
+  rootG.selectAll("path").remove();
+  rootG.selectAll("path.state")
+    .data(stateGeoms)
+    .join("path")
+    .attr("class","state")
+    .attr("d", path)
+    .attr("fill","#0f1726")
+    .attr("stroke","#2c3e58")
+    .attr("stroke-width",0.75)
+    .attr("vector-effect","non-scaling-stroke");
+}
+
+async function handleYearOrOfficeChange(){
+  const year   = yearSel.value;
+  const office = officeSel.value;
+
+  // 2026 live = disable lists; just message
+  if (year === "2026"){
+    stateSel.disabled  = true;
+    unitSel.disabled   = true;
+    stateSel.innerHTML  = `<option value="">(Historic only — pick 2016–2024)</option>`;
+    unitSel.innerHTML   = `<option value="">(Historic only — pick 2016–2024)</option>`;
+    details.innerHTML = `<div class="kv">2026 is live via API (/cache/ru?office=${office}).</div>`;
+    statusEl.textContent = `Year 2026 — live (${office})`;
+    return;
+  }
+
+  // Historic years: load states for P/G/S/H
+  stateSel.disabled = false;
+  unitSel.disabled = true;
+  unitSel.innerHTML = `<option value="">Select a state…</option>`;
+
+  statusEl.textContent = "Loading states…";
+  const r = await fetch(`/historic/list?year=${encodeURIComponent(year)}&office=${encodeURIComponent(office)}`);
+  const j = await r.json();
+
+  stateSel.innerHTML = "";
+  // Prepend "National Total"
+  stateSel.appendChild(new Option("National Total", NATIONAL_SENTINEL));
+
+  if (j.states && j.states.length){
+    stateSel.appendChild(new Option("— Choose a state —",""));
+    j.states.forEach(s => stateSel.appendChild(new Option(s, s)));
+    statusEl.textContent = `Loaded ${j.states.length} states for ${year} (${office})`;
+  } else {
+    stateSel.appendChild(new Option("(No states found)", ""));
+    statusEl.textContent = `No states found for ${year} (${office})`;
+  }
+
+  // default to National Total for convenience
+  stateSel.value = NATIONAL_SENTINEL;
+  await handleStateChange();
+}
+
+async function handleStateChange(){
+  const year   = yearSel.value;
+  const office = officeSel.value;
+  const state  = stateSel.value;
+
+  if (!year || !office){ unitSel.disabled = true; return; }
+
+  if (state === NATIONAL_SENTINEL){
+    // National mode: disable unit list and fetch national rollup
+    unitSel.disabled = true;
+    unitSel.innerHTML = `<option value="">(National Total)</option>`;
+    statusEl.textContent = `Loading National Total…`;
+    const r = await fetch(`/historic/national?year=${encodeURIComponent(year)}&office=${encodeURIComponent(office)}`);
+    const j = await r.json();
+    renderNational(j.row, year);
+    statusEl.textContent = `National Total loaded for ${year} (${office})`;
+    return;
+  }
+
+  if (!state){ unitSel.disabled = true; return; }
+
+  statusEl.textContent = `Loading ${state} units…`;
+  const r = await fetch(`/historic/state?year=${encodeURIComponent(year)}&office=${encodeURIComponent(office)}&state=${encodeURIComponent(state)}`);
+  const j = await r.json();
+
+  unitSel.disabled = false;
+  unitSel.innerHTML = "";
+  if (j.rows && j.rows.length){
+    j.rows.forEach(row => {
+      const label = row.fips === "STATE" ? "Statewide Total" : row.name;
+      unitSel.appendChild(new Option(label, row.fips || row.name));
+    });
+    statusEl.textContent = `Loaded ${j.rows.length-1} units + statewide for ${state} ${year} (${office})`;
+  } else {
+    unitSel.appendChild(new Option("(No units found)",""));
+    statusEl.textContent = `No data for ${state} ${year} (${office})`;
+  }
+
+  unitSel.dataset.payload = JSON.stringify(j.rows || []);
+  unitSel.selectedIndex = 0;
+  handleUnitChange();
+}
+
+function handleUnitChange(){
+  const rows = JSON.parse(unitSel.dataset.payload || "[]");
+  const id = unitSel.value;
+  const row = rows.find(r => (r.fips || r.name) === id);
+  if (!row){
+    details.innerHTML = `<div class="kv">No data.</div>`;
+    return;
+  }
+
+  const officeLabel = {P:"President", G:"Governor", S:"Senate", H:"House"}[row.office] || row.office;
+  const title = row.fips === "STATE" ? "Statewide Total" : row.name;
+  const lines = (row.candidates || [])
+    .slice().sort((a,b)=>b.votes-a.votes)
+    .map(c => `<div class="cand">${c.name} (${c.party}) — ${Number(c.votes||0).toLocaleString()}</div>`)
+    .join("");
+
+  details.innerHTML =
+    `<div class="kv" style="opacity:.8;margin-bottom:6px">${row.state} • ${yearSel.value} • ${officeLabel}</div>
+     <h3 style="margin:.2rem 0 0.4rem">${title}</h3>
+     ${lines || '<div class="kv">(no candidates)</div>'}
+     <div class="kv" style="margin-top:6px">Total: ${Number(row.total||0).toLocaleString()}</div>`;
+}
+
+function renderNational(row, year){
+  if (!row){
+    details.innerHTML = `<div class="kv">No national data.</div>`;
+    return;
+  }
+  const officeLabel = {P:"President", G:"Governor", S:"Senate", H:"House"}[row.office] || row.office;
+  const lines = (row.candidates || [])
+    .slice().sort((a,b)=>b.votes-a.votes)
+    .map(c => `<div class="cand">${c.name} (${c.party}) — ${Number(c.votes||0).toLocaleString()}</div>`)
+    .join("");
+
+  details.innerHTML =
+    `<div class="kv" style="opacity:.8;margin-bottom:6px">US • ${year} • ${officeLabel}</div>
+     <h3 style="margin:.2rem 0 0.4rem">National Total</h3>
+     ${lines || '<div class="kv">(no candidates)</div>'}
+     <div class="kv" style="margin-top:6px">Total: ${Number(row.total||0).toLocaleString()}</div>`;
+}
+</script>
+</body>
+</html>

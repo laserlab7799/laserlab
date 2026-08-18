@@ -1,0 +1,675 @@
+<Vote ApiVersion="3.1" ApiBuild="3.1.1275" ElectionDate="2021-11-02" Timestamp="2025-10-27T20:03:47.740957Z">
+<Race Test="0" ResultsType="l" ID="47636" EventID="20211102" StateID="47" Type="General" TypeID="G" TabulationStatus="Vote Certified" RaceCallStatus="Called" OfficeID="A" OfficeName="Attorney General" EEVP="99.00" National="1" State="1">
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="1" ID="47" Name="Virginia" Level="state" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="2855" Total="2855" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1647534" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1621227"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47001" Name="Accomack" Level="subunit" FIPSCode="51001" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="19" Total="19" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="7784" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5034"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47002" Name="Albemarle" Level="subunit" FIPSCode="51003" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="33" Total="33" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="18809" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="32282"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47003" Name="Alleghany" Level="subunit" FIPSCode="51005" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4441" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1599"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47004" Name="Amelia" Level="subunit" FIPSCode="51007" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4681" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1652"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47005" Name="Amherst" Level="subunit" FIPSCode="51009" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="9607" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4015"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47006" Name="Appomattox" Level="subunit" FIPSCode="51011" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="5892" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1510"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47007" Name="Arlington" Level="subunit" FIPSCode="51013" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="57" Total="57" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="21223" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="73149"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47008" Name="Augusta" Level="subunit" FIPSCode="51015" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="28" Total="28" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="25840" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="7632"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47009" Name="Bath" Level="subunit" FIPSCode="51017" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1505" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="432"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47010" Name="Bedford" Level="subunit" FIPSCode="51019" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="35" Total="35" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="30692" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="8199"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47011" Name="Bland" Level="subunit" FIPSCode="51021" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2252" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="378"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47012" Name="Botetourt" Level="subunit" FIPSCode="51023" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="12967" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4092"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47013" Name="Brunswick" Level="subunit" FIPSCode="51025" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2847" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3216"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47014" Name="Buchanan" Level="subunit" FIPSCode="51027" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="20" Total="20" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4954" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="960"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47015" Name="Buckingham" Level="subunit" FIPSCode="51029" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3859" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2258"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47016" Name="Campbell" Level="subunit" FIPSCode="51031" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="19" Total="19" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="18059" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5084"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47017" Name="Caroline" Level="subunit" FIPSCode="51033" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="6883" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5129"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47018" Name="Carroll" Level="subunit" FIPSCode="51035" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="20" Total="20" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="9786" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1979"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47019" Name="Charles City" Level="subunit" FIPSCode="51036" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1549" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1823"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47020" Name="Charlotte" Level="subunit" FIPSCode="51037" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3290" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1457"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47023" Name="Clarke" Level="subunit" FIPSCode="51043" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4538" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2838"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47024" Name="Craig" Level="subunit" FIPSCode="51045" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="11" Total="11" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2052" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="430"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47025" Name="Culpeper" Level="subunit" FIPSCode="51047" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="18" Total="18" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="13222" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="6892"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47026" Name="Cumberland" Level="subunit" FIPSCode="51049" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2660" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1543"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47027" Name="Dickenson" Level="subunit" FIPSCode="51051" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3819" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="961"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47028" Name="Dinwiddie" Level="subunit" FIPSCode="51053" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="7302" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4223"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47029" Name="Essex" Level="subunit" FIPSCode="51057" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="7" Total="7" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2654" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2038"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47032" Name="Fauquier" Level="subunit" FIPSCode="51061" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="23" Total="23" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="22012" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="11861"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47033" Name="Floyd" Level="subunit" FIPSCode="51063" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="5199" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2259"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47034" Name="Fluvanna" Level="subunit" FIPSCode="51065" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="6951" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5436"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47035" Name="Franklin" Level="subunit" FIPSCode="51067" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="26" Total="26" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="17593" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="6115"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47036" Name="Frederick" Level="subunit" FIPSCode="51069" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="24" Total="24" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="24701" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="11525"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47037" Name="Giles" Level="subunit" FIPSCode="51071" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="5693" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1635"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47038" Name="Gloucester" Level="subunit" FIPSCode="51073" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="12445" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4845"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47039" Name="Goochland" Level="subunit" FIPSCode="51075" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="9591" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4906"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47040" Name="Grayson" Level="subunit" FIPSCode="51077" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="18" Total="18" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="5075" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1116"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47041" Name="Greene" Level="subunit" FIPSCode="51079" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="5848" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2935"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47042" Name="Greensville" Level="subunit" FIPSCode="51081" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1679" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1929"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47043" Name="Halifax" Level="subunit" FIPSCode="51083" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="23" Total="23" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="8606" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4831"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47044" Name="Hanover" Level="subunit" FIPSCode="51085" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="39" Total="39" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="39931" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="18920"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47045" Name="Henrico" Level="subunit" FIPSCode="51087" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="94" Total="94" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="55821" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="82377"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47046" Name="Henry" Level="subunit" FIPSCode="51089" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="27" Total="27" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="12675" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5718"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47047" Name="Highland" Level="subunit" FIPSCode="51091" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="945" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="348"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47048" Name="Isle of Wight" Level="subunit" FIPSCode="51093" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="17" Total="17" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="11900" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="6664"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47049" Name="James City" Level="subunit" FIPSCode="51095" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="22" Total="22" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="21090" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="18824"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47050" Name="King and Queen" Level="subunit" FIPSCode="51097" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2098" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1148"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47051" Name="King George" Level="subunit" FIPSCode="51099" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="7185" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3458"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47052" Name="King William" Level="subunit" FIPSCode="51101" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="6241" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2293"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47053" Name="Lancaster" Level="subunit" FIPSCode="51103" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3444" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2400"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47054" Name="Lee" Level="subunit" FIPSCode="51105" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="19" Total="19" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="6316" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="918"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47055" Name="Loudoun" Level="subunit" FIPSCode="51107" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="101" Total="101" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="70348" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="90689"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47056" Name="Louisa" Level="subunit" FIPSCode="51109" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="18" Total="18" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="11606" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5950"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47057" Name="Lunenburg" Level="subunit" FIPSCode="51111" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2985" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1596"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47058" Name="Madison" Level="subunit" FIPSCode="51113" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4611" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2060"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47059" Name="Mathews" Level="subunit" FIPSCode="51115" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3446" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1403"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47060" Name="Mecklenburg" Level="subunit" FIPSCode="51117" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="26" Total="26" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="7828" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4139"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47061" Name="Middlesex" Level="subunit" FIPSCode="51119" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3714" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1866"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47062" Name="Montgomery" Level="subunit" FIPSCode="51121" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="27" Total="27" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="16828" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="15704"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47063" Name="Nelson" Level="subunit" FIPSCode="51125" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4174" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3466"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47064" Name="New Kent" Level="subunit" FIPSCode="51127" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="8563" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3479"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47065" Name="Northampton" Level="subunit" FIPSCode="51131" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2625" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2588"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47066" Name="Northumberland" Level="subunit" FIPSCode="51133" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4145" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2336"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47067" Name="Nottoway" Level="subunit" FIPSCode="51135" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3444" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1947"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47068" Name="Orange" Level="subunit" FIPSCode="51137" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="10493" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5533"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47069" Name="Page" Level="subunit" FIPSCode="51139" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="7425" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2107"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47070" Name="Patrick" Level="subunit" FIPSCode="51141" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="5855" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1331"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47071" Name="Pittsylvania" Level="subunit" FIPSCode="51143" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="32" Total="32" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="19391" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="6476"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47072" Name="Powhatan" Level="subunit" FIPSCode="51145" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="12556" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3774"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47073" Name="Prince Edward" Level="subunit" FIPSCode="51147" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3855" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3213"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47074" Name="Prince George" Level="subunit" FIPSCode="51149" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="8526" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4646"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47077" Name="Pulaski" Level="subunit" FIPSCode="51155" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="9555" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3393"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47078" Name="Rappahannock" Level="subunit" FIPSCode="51157" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2456" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1725"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47079" Name="Richmond" Level="subunit" FIPSCode="51159" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2201" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="977"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47080" Name="Roanoke" Level="subunit" FIPSCode="51161" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="36" Total="36" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="27968" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="14670"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47081" Name="Rockbridge" Level="subunit" FIPSCode="51163" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="20" Total="20" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="6810" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3172"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47082" Name="Rockingham" Level="subunit" FIPSCode="51165" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="34" Total="34" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="26287" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="8971"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47083" Name="Russell" Level="subunit" FIPSCode="51167" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="18" Total="18" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="8118" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1491"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47084" Name="Scott" Level="subunit" FIPSCode="51169" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="20" Total="20" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="6986" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1072"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47085" Name="Shenandoah" Level="subunit" FIPSCode="51171" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="13475" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4750"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47086" Name="Smyth" Level="subunit" FIPSCode="51173" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="17" Total="17" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="8416" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1796"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47087" Name="Southampton" Level="subunit" FIPSCode="51175" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="5013" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2785"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47088" Name="Spotsylvania" Level="subunit" FIPSCode="51177" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="29" Total="29" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="32231" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="21807"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47091" Name="Surry" Level="subunit" FIPSCode="51181" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1742" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1778"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47092" Name="Sussex" Level="subunit" FIPSCode="51183" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1955" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2038"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47093" Name="Tazewell" Level="subunit" FIPSCode="51185" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="23" Total="23" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="11884" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1952"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47094" Name="Warren" Level="subunit" FIPSCode="51187" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="11152" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4488"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47095" Name="Washington" Level="subunit" FIPSCode="51191" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="22" Total="22" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="17319" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4573"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47096" Name="Westmoreland" Level="subunit" FIPSCode="51193" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="11" Total="11" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4522" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3037"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47097" Name="Wise" Level="subunit" FIPSCode="51195" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="15" Total="15" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="9583" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1878"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47098" Name="Wythe" Level="subunit" FIPSCode="51197" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="14" Total="14" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="9364" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2143"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47099" Name="York" Level="subunit" FIPSCode="51199" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="16" Total="16" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="17460" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="12272"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47100" Name="Alexandria" Level="subunit" FIPSCode="51510" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="33" Total="33" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="13632" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="44070"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47102" Name="Bristol" Level="subunit" FIPSCode="51520" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="7" Total="7" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3739" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1338"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47103" Name="Buena Vista" Level="subunit" FIPSCode="51530" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="5" Total="5" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1416" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="520"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47104" Name="Charlottesville" Level="subunit" FIPSCode="51540" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="12" Total="12" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2673" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="14471"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47105" Name="Chesapeake" Level="subunit" FIPSCode="51550" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="66" Total="66" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="47836" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="43598"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47107" Name="Colonial Heights" Level="subunit" FIPSCode="51570" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4892" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1763"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47108" Name="Covington" Level="subunit" FIPSCode="51580" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1162" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="619"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47109" Name="Danville" Level="subunit" FIPSCode="51590" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="19" Total="19" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="5801" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="6923"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47110" Name="Emporia" Level="subunit" FIPSCode="51595" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="708" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="897"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47111" Name="Fairfax City" Level="subunit" FIPSCode="51600" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3560" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="6501"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47112" Name="Falls Church" Level="subunit" FIPSCode="51610" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1542" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5403"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47113" Name="Franklin City" Level="subunit" FIPSCode="51620" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1240" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1701"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47114" Name="Fredericksburg" Level="subunit" FIPSCode="51630" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3435" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5527"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47115" Name="Galax" Level="subunit" FIPSCode="51640" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="5" Total="5" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1386" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="514"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47116" Name="Hampton" Level="subunit" FIPSCode="51650" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="33" Total="33" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="14596" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="30236"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47117" Name="Harrisonburg" Level="subunit" FIPSCode="51660" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="11" Total="11" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4296" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="6942"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47118" Name="Hopewell" Level="subunit" FIPSCode="51670" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="3085" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3159"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47119" Name="Lexington" Level="subunit" FIPSCode="51678" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="4" Total="4" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="749" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1317"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47122" Name="Manassas" Level="subunit" FIPSCode="51683" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4978" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="6242"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47123" Name="Manassas Park" Level="subunit" FIPSCode="51685" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1372" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2194"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47124" Name="Martinsville" Level="subunit" FIPSCode="51690" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1645" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="2263"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47125" Name="Newport News" Level="subunit" FIPSCode="51700" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="48" Total="48" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="21135" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="32725"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47126" Name="Norfolk" Level="subunit" FIPSCode="51710" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="51" Total="51" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="18770" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="40914"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47127" Name="Norton" Level="subunit" FIPSCode="51720" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="4" Total="4" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="842" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="344"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47128" Name="Petersburg" Level="subunit" FIPSCode="51730" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="10" Total="10" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1207" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="7625"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47129" Name="Poquoson" Level="subunit" FIPSCode="51735" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="6" Total="6" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4870" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1396"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47130" Name="Portsmouth" Level="subunit" FIPSCode="51740" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="34" Total="34" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="9809" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="19783"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47131" Name="Radford" Level="subunit" FIPSCode="51750" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="7" Total="7" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="2226" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="1931"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47132" Name="Richmond City" Level="subunit" FIPSCode="51760" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="72" Total="72" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="15723" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="63724"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47133" Name="Roanoke City" Level="subunit" FIPSCode="51770" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="23" Total="23" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="11814" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="17078"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47134" Name="Salem" Level="subunit" FIPSCode="51775" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="13" Total="13" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="6100" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3395"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47136" Name="Staunton" Level="subunit" FIPSCode="51790" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="8" Total="8" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4528" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="5163"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47137" Name="Suffolk" Level="subunit" FIPSCode="51800" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="30" Total="30" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="17184" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="19310"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47138" Name="Virginia Beach" Level="subunit" FIPSCode="51810" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="103" Total="103" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="86888" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="74430"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47139" Name="Waynesboro" Level="subunit" FIPSCode="51820" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="7" Total="7" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4361" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3417"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47140" Name="Williamsburg" Level="subunit" FIPSCode="51830" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="5" Total="5" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="1701" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="3209"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47141" Name="Winchester" Level="subunit" FIPSCode="51840" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="9" Total="9" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="4031" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="4421"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47143" Name="Chesterfield" Level="subunit" FIPSCode="51041" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="83" Total="83" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="80993" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="74719"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47144" Name="Fairfax" Level="subunit" FIPSCode="51059" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="250" Total="250" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="149398" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="287726"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47145" Name="Prince William" Level="subunit" FIPSCode="51153" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="96" Total="96" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="64148" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="88374"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47146" Name="Stafford" Level="subunit" FIPSCode="51179" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="30" Total="30" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="31397" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="25863"/>
+</ReportingUnit>
+<ReportingUnit StatePostal="VA" ReportingUnitLevel="2" ID="47147" Name="Lynchburg" Level="subunit" FIPSCode="51680" EEVP="99.00" LastUpdated="2025-10-01T11:46:51.703000Z" PollClosingTime="2021-11-02T19:00:00.000000Z">
+<Precincts Reporting="21" Total="21" ReportingPct="100.00"/>
+<Candidate ID="52114" Party="GOP" First="Jason" Last="Miyares" PolID="0" BallotOrder="2" PolNum="49434" VoteCount="13545" Winner="X" WinnerDateTime="2021-11-03T21:11:46.812Z"/>
+<Candidate ID="51517" Incumbent="1" Party="Dem" First="Mark" Last="Herring" PolID="45675" BallotOrder="1" PolNum="49353" VoteCount="11145"/>
+</ReportingUnit>
+</Race>
+<link xmlns="http://www.w3.org/2005/Atom" rel="next" href="https://api.ap.org/v3/elections/2021-11-02?level=ru&officeid=A&racetypeid=G&resultstype=l&statepostal=VA&national=true&minDateTime=2025-10-01T11%3A46%3A52.354982313Z"/>
+</Vote>

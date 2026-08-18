@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Vertical Box Plot</title>
+
+<style>
+  *{ box-sizing:border-box; }
+
+  html, body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background: transparent !important;
+    color:#111;
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  }
+
+
+  .title{
+    font-weight:800;
+    letter-spacing:.06em;
+    font-size:13px;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+
+    #medianDisplay{
+      width:100%;
+      height:100%;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      gap:0;
+      text-align:center;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      color:#111;
+      padding:clamp(42px, 7vh, 96px) clamp(8px, 2vh, 32px) clamp(8px, 2vh, 32px);
+      overflow:hidden;
+      transform: none;
+    }
+
+    #medianDisplay .medianHeader{
+      font-size:clamp(28px, 5vw, 86px);
+      font-weight:900;
+      line-height:.95;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      text-align:center;
+      white-space:nowrap;
+      max-width:98vw;
+      margin-bottom:clamp(48px, 9vh, 140px);
+    }
+
+    #medianDisplay .medianWinner{
+      font-size:clamp(30px, 5vw, 86px);
+      font-weight:900;
+      line-height:1;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+      max-width:98vw;
+      margin-bottom:clamp(38px, 7vh, 116px);
+    }
+
+    #medianDisplay .medianValue{
+      font-size:clamp(90px, 17vw, 330px);
+      font-weight:900;
+      line-height:.82;
+      letter-spacing:0em;
+      text-transform:uppercase;
+      max-width:98vw;
+    }
+
+    #medianDisplay.dem .medianWinner,
+    #medianDisplay.dem .medianValue{
+      color:#2563eb;
+    }
+
+    #medianDisplay.rep .medianWinner,
+    #medianDisplay.rep .medianValue{
+      color:#dc2626;
+    }
+
+
+
+    /* match chart-only axis + label styling */
+    .axis path,
+    .axis line{
+      stroke:#111;
+      stroke-width:2;
+    }
+
+    .axis text,
+    .axisText{
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      font-size:18px;
+      font-weight:800;
+      fill:#111;
+    }
+
+    /* match chart-only dashed gridlines */
+    .gridline{
+      stroke:#94a3b8;
+      stroke-dasharray:6 6;
+      stroke-width:1.2;
+    }
+
+    /* optional: make the 0-line a touch stronger */
+    .gridline.zero{
+      stroke:#94a3b8;
+      stroke-width:1.6;
+    }
+
+
+  .box{
+    fill:#e5e7eb;
+    stroke:#111827;
+    stroke-width:1.4;
+  }
+
+  .median{
+    stroke:#111827;
+    stroke-width:2;
+  }
+
+  .whisker{
+    stroke:#111827;
+    stroke-width:1.4;
+  }
+
+  .label-pos{
+    fill:#2563eb;
+    font-size:10px;
+    font-weight:600;
+  }
+
+  .label-neg{
+    fill:#dc2626;
+    font-size:10px;
+    font-weight:600;
+  }
+    
+    .yLabel, .xLabel{
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      font-size:18px;
+      font-weight:800;
+      fill:#111;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+    }
+    .controls{
+      margin-top: -14px;          /* move UP (tweak -8 .. -22) */
+      display: flex;
+      justify-content: flex-end;  /* push to the RIGHT */
+      padding-right: 18px;        /* nudge away from edge */
+    }
+
+    #toggleLabels{
+      font: 800 12px system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      padding: 2px 2px;
+      border-radius: 8px;
+      border: 1px solid #111;
+      background: rgba(255,255,255,0.9);
+      cursor: pointer;
+    }
+
+
+    body.hide-box-labels .label-pos,
+    body.hide-box-labels .label-neg{
+      display: none;
+    }
+
+    /* hide everything except median label */
+    body.median-only .lbl-q1,
+    body.median-only .lbl-q3,
+    body.median-only .lbl-whisker_high,
+    body.median-only .lbl-whisker_low{
+      display:none;
+    }
+
+</style>
+</head>
+
+<body class="median-only">
+
+
+
+<div id="medianDisplay">
+  <div class="medianHeader">Most likely outcome</div>
+  <div id="medianWinner" class="medianWinner">-</div>
+  <div id="medianValue" class="medianValue">-</div>
+</div>
+
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+(() => {
+  const medianDisplay = document.getElementById("medianDisplay");
+  const medianWinner = document.getElementById("medianWinner");
+  const medianValue = document.getElementById("medianValue");
+
+  function fmtBigMargin(v){
+    if (!Number.isFinite(v)) {
+      return { winner:"-", points:"-" };
+    }
+
+    const absMargin = Math.abs(v);
+
+    if (absMargin < 1.0) {
+      return (v > 0)
+        ? { winner:"DEM WINS BY:", points:"LESS THAN 1 PT" }
+        : { winner:"GOP WINS BY:", points:"LESS THAN 1 PT" };
+    }
+
+    const rounded = Math.round(absMargin);
+
+    const unit = rounded === 1 ? "PT" : "PTS";
+
+    return (v > 0)
+      ? { winner:"DEM WINS BY:", points:`${rounded} ${unit}` }
+      : { winner:"GOP WINS BY:", points:`${rounded} ${unit}` };
+  }
+
+  function syncParentChrome(){
+    try {
+      const pdoc = window.parent?.document;
+      if (!pdoc) return;
+
+      const frame = pdoc.getElementById("boxFrame2");
+      const isActive = frame && getComputedStyle(frame).display !== "none";
+
+      ["statusLegend", "zoomBox"].forEach(id => {
+        const el = pdoc.getElementById(id);
+        if (!el) return;
+
+        if (isActive) {
+          if (!el.dataset.box2MedianOldDisplay) {
+            el.dataset.box2MedianOldDisplay = el.style.display || "__EMPTY__";
+          }
+          el.style.setProperty("display", "none", "important");
+        } else if (el.dataset.box2MedianOldDisplay) {
+          const oldDisplay = el.dataset.box2MedianOldDisplay;
+          if (oldDisplay === "__EMPTY__") el.style.removeProperty("display");
+          else el.style.display = oldDisplay;
+          delete el.dataset.box2MedianOldDisplay;
+        }
+      });
+    } catch(e) {}
+  }
+
+  syncParentChrome();
+  setInterval(syncParentChrome, 500);
+
+  function render(data){
+    if (!medianDisplay) return;
+
+    if (!Array.isArray(data) || !data.length) {
+      medianWinner.textContent = "-";
+      medianWinner.textContent = "-";
+      medianValue.textContent = "-";
+      medianDisplay.classList.remove("dem", "rep");
+      syncParentChrome();
+      return;
+    }
+
+    data = data
+      .filter(d =>
+        Number.isFinite(+d.statewide_percent_in) &&
+        Number.isFinite(+d.median)
+      )
+      .sort((a,b) => +a.statewide_percent_in - +b.statewide_percent_in);
+
+    if (!data.length) {
+      medianValue.textContent = "-";
+      medianDisplay.classList.remove("dem", "rep");
+      syncParentChrome();
+      return;
+    }
+
+    const last = data[data.length - 1];
+    const median = +last.median;
+
+    const formatted = fmtBigMargin(median);
+
+    medianWinner.textContent = formatted.winner;
+    medianValue.textContent = formatted.points;
+    medianDisplay.classList.toggle("dem", median > 0);
+    medianDisplay.classList.toggle("rep", median < 0);
+    syncParentChrome();
+  }
+
+  // message wiring (unchanged)
+  let BOX_DATA_URL = null;
+
+  window.addEventListener("message", e => {
+    const msg = e.data || {};
+    if (msg.type !== "setBoxDataSource") return;
+
+    BOX_DATA_URL = msg.path;
+    fetch(msg.path + "?t=" + Date.now(), { cache:"no-store" })
+      .then(r => r.json())
+      .then(render)
+      .catch(console.error);
+  });
+
+  setInterval(() => {
+    if (!BOX_DATA_URL) return;
+    fetch(BOX_DATA_URL + "?t=" + Date.now())
+      .then(r => r.json())
+      .then(render)
+      .catch(()=>{});
+  }, 5000);
+
+})();
+</script>
+
+</body>
+</html>

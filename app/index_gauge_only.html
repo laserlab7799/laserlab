@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Gauge</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    background:#fff;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    color:#111;
+  }
+    svg.gauge{
+      max-width:980px;
+      width:100%;
+      height:auto;
+      display:block;
+      margin-top:-50px; /* <-- move gauge up (tweak -12 to -40px) */
+    }
+
+
+  .needle{transform-origin: 300px 260px; transition: transform 800ms cubic-bezier(.2,.8,.2,1);}
+
+  .tickLine{stroke:#000;stroke-width:2}
+  .tickLbl{font-size:16px;fill:#000;font-weight:600}
+
+  /* Make the gauge (band + ticks + needle) bigger */
+  #gFace{
+    transform: scale(1.18);
+    transform-origin: 300px 260px;
+    transform-box: fill-box;
+  }
+  @media (max-width: 1100px){
+    #gFace{ transform: scale(1.05); }
+  }
+
+  /* --- Combine-style outside notches (super awesome edition) --- */
+  .notch{
+    stroke-linecap: round;
+    stroke-width: 6;
+    paint-order: stroke;
+    filter: none;
+    stroke-dasharray: 16 120;
+    stroke-linejoin: round;
+    opacity: 0.95;
+  }
+  .notch.grey{ stroke: url(#notchGradGray); opacity: 0.25; }
+  .notch.yellow{ stroke: url(#notchGradYellow); opacity: 0.45; }
+  .notch.active.grey{ opacity: 1; filter: url(#notchGlowGray); }
+  .notch.active.yellow{
+    opacity: 1;
+    filter: url(#notchGlowYellow);
+    animation: none;
+  }
+
+  @keyframes notchShimmer{
+    0%   { stroke-dashoffset: 0;    }
+    100% { stroke-dashoffset: -136; }
+  }
+    .gauge-wrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 14px;
+      width: 100%;
+    }
+    .gauge-title{
+      margin: 0;
+      font-weight: 900;
+      font-size: clamp(28px, 5vw, 64px);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    #priorityBtn {
+      display: none;
+    }
+
+</style>
+</head>
+<body>
+    <div class="gauge-wrap">
+        <h1 class="gauge-title">Win Probability</h1>
+
+        <svg id="gauge" class="gauge" viewBox="0 -55 600 395" aria-label="Win probability gauge">
+  <defs>
+    <!-- One seamless band gradient (blue → yellow → red) -->
+    <linearGradient id="gradFull" gradientUnits="userSpaceOnUse" x1="100" y1="260" x2="500" y2="260">
+      <stop offset="0%"   stop-color="#0c2444"/>
+      <stop offset="5%"   stop-color="#1f56c9"/>
+      <stop offset="10%"  stop-color="#2b6cff"/>
+      <stop offset="23%"  stop-color="#ffd95a"/>
+      <stop offset="77%"  stop-color="#ffd95a"/>
+      <stop offset="90%"  stop-color="#ff4a4a"/>
+      <stop offset="100%" stop-color="#6f2a22"/>
+    </linearGradient>
+
+    <linearGradient id="needleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#000000"/>
+      <stop offset="70%"  stop-color="#0b0b0b"/>
+      <stop offset="100%" stop-color="#1c1c1c"/>
+    </linearGradient>
+
+    <filter id="needleShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+
+    <filter id="notchGlowYellow" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="b1"/>
+      <feColorMatrix in="b1" type="matrix"
+        values="1 0 0 0 0.0
+                0 1 0 0 0.0
+                0 0 1 0 0.0
+                0 0 0 12 -4" result="glow1"/>
+      <feMerge>
+        <feMergeNode in="glow1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="notchGlowGray" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="b2"/>
+      <feColorMatrix in="b2" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 8 -3" result="glow2"/>
+      <feMerge>
+        <feMergeNode in="glow2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <linearGradient id="notchGradYellow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="0">
+      <stop offset="0%"  stop-color="#ffe88a"/>
+      <stop offset="50%" stop-color="#ffd000"/>
+      <stop offset="100%" stop-color="#ffb300"/>
+    </linearGradient>
+
+    <linearGradient id="notchGradGray" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="0">
+      <stop offset="0%"  stop-color="#a3a8b3"/>
+      <stop offset="50%" stop-color="#7c8392"/>
+      <stop offset="100%" stop-color="#9aa0aa"/>
+    </linearGradient>
+  </defs>
+
+  <g id="gFace">
+    <!-- Band -->
+    <path id="bandFull" fill="none" stroke="url(#gradFull)" stroke-width="22" stroke-linecap="round"/>
+
+    <!-- Ticks -->
+    <g id="ticks"></g>
+
+    <!-- Combine-style outside notches -->
+    <g id="combNotches"></g>
+
+    <!-- Needle -->
+    <g id="needle" class="needle" filter="url(#needleShadow)">
+      <path d="M292,260 L308,260 L302.5,238 L300.6,102 L299.4,102 L297.5,238 Z"
+            fill="url(#needleGrad)" stroke="#000" stroke-width="0.5" />
+      <path d="M300.8,260 L301.8,238 L300.9,104"
+            fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1" />
+      <circle cx="300" cy="260" r="10" fill="#000"/>
+      <circle cx="300" cy="260" r="7"  fill="#111" stroke="#5b5b5b" stroke-width="0.8"/>
+      <circle cx="300" cy="260" r="2.2" fill="#ffffff"/>
+    </g>
+  </g>
+  <text id="pctInLabel"
+        x="545"
+        y="285"
+        text-anchor="end"
+        font-size="11"
+        font-weight="700"
+        letter-spacing="0.08em"
+        fill="#111"
+        opacity="0.6">
+  </text>
+  <g id="priorityBtn"
+     transform="translate(55,285)"
+     style="cursor:pointer">
+    <rect x="-32" y="-12"
+          width="64" height="22"
+          rx="6" ry="6"
+          fill="#efefef"
+          stroke="#999"
+          stroke-width="1"/>
+    <text x="0" y="3"
+          text-anchor="middle"
+          font-size="11"
+          font-weight="700"
+          letter-spacing="0.08em"
+          fill="#111"
+          opacity="0.85">
+      PRIORITY
+    </text>
+  </g>
+
+
+</svg>
+</div>
+<script>
+    const pctInLabel = document.getElementById("pctInLabel");
+    const priorityBtn = document.getElementById("priorityBtn");
+
+(() => {
+  // ---------- Gauge helpers ----------
+  const CX = 300, CY = 260, R = 200;
+  const ticksG = document.getElementById('ticks');
+  const needle = document.getElementById('needle');
+  const combNotchesG = document.getElementById('combNotches');
+
+  // --- Needle oscillation (natural, irregular) ---
+  let currentAngle = 0;
+  let targetAngle  = 0;
+  let oscReq = null;
+  let oscPhase = Math.random() * Math.PI * 2;
+  let oscDrift = Math.random() * 1000;
+  let lastT = 0;
+
+  priorityBtn.addEventListener("click", () => {
+    if (!window.CURRENT_OFFICE || !window.CURRENT_STATE) return;
+
+    fetch("/api/prioritize_pipeline", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        office: window.CURRENT_OFFICE,
+        state: window.CURRENT_STATE,
+        district: window.CURRENT_DISTRICT || null
+      })
+    }).catch(() => {});
+  });
+
+  function asPct(v, fallback = 50){
+    // handles numbers, "100", "100.0", "100%", null, undefined
+    const n = (typeof v === "string") ? parseFloat(v) : Number(v);
+    return Number.isFinite(n) ? n : fallback;
+  }
+
+  function partyFromColor(color){
+    if (!color) return null;
+    const c = String(color).trim().toLowerCase();
+
+    // keep your existing simple matches
+    if (c.includes("red"))  return "Republican";
+    if (c.includes("blue")) return "Democratic";
+
+    // ✅ add: recognize common tokens
+    if (c.includes("gop") || c.includes("rep") || c.includes("republic")) return "Republican";
+    if (c.includes("dem") || c.includes("democrat")) return "Democratic";
+
+    // ✅ add: recognize hex colors like #ff4a4a / #2b6cff
+    const mHex = c.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if (mHex){
+      let hex = mHex[1];
+      if (hex.length === 3) hex = hex.split("").map(ch => ch + ch).join("");
+      const r = parseInt(hex.slice(0,2), 16);
+      const b = parseInt(hex.slice(4,6), 16);
+      if (r > b + 20) return "Republican";
+      if (b > r + 20) return "Democratic";
+      return null;
+    }
+
+    // ✅ add: recognize rgb()/rgba()
+    const mRgb = c.match(/rgba?\(\s*([0-9.]+)\s*,\s*([0-9.]+)\s*,\s*([0-9.]+)/);
+    if (mRgb){
+      const r = Number(mRgb[1]), b = Number(mRgb[3]);
+      if (Number.isFinite(r) && Number.isFinite(b)){
+        if (r > b + 20) return "Republican";
+        if (b > r + 20) return "Democratic";
+      }
+    }
+
+    return null;
+  }
+
+  function repWinPercent(r){
+    const lp = partyFromColor(r.leader_color);
+    const tp = partyFromColor(r.trailer_color);
+
+    // ✅ if we know which party the *leader* is, convert leader winprob -> GOP winprob
+    if (lp === "Republican") return asPct(r.leader_y, 50);
+    if (lp === "Democratic") return 100 - asPct(r.leader_y, 50);
+
+    // ✅ else try the trailer
+    if (tp === "Republican") return asPct(r.trailer_y, 50);
+    if (tp === "Democratic") return 100 - asPct(r.trailer_y, 50);
+
+    // last-resort heuristic (keep your intent, but make it numeric-safe)
+    const m = asPct(r.margin_y, NaN);
+    if (Number.isFinite(m)){
+      if (m > 0) return asPct(r.trailer_y, 50);
+      if (m < 0) return asPct(r.leader_y, 50);
+    }
+
+    return 50;
+  }
+
+
+  
+  function startNeedleOscillation(){
+    if (oscReq) return;
+    const loop = (t) => {
+      if (!lastT) lastT = t;
+      const dt = (t - lastT) / 1000;
+      lastT = t;
+
+      oscDrift += dt * 0.28;
+      const baseHz = 0.7 + 0.8 * Math.sin(oscDrift * 0.9);
+      const ampDeg = 2.2 + 1.8 * Math.sin(oscDrift * 0.53 + 1.3);
+
+      oscPhase += dt * 2 * Math.PI * Math.max(0.25, baseHz);
+
+      const wobble =
+        Math.sin(oscPhase) * ampDeg +
+        Math.sin(oscPhase * 0.37 + 1.1) * (ampDeg * 0.35) +
+        (Math.random() - 0.5) * 0.20;
+
+      currentAngle += (targetAngle - currentAngle) * Math.min(1, dt * 7);
+      needle.style.transform = `rotate(${(currentAngle + wobble).toFixed(3)}deg)`;
+      oscReq = requestAnimationFrame(loop);
+    };
+    oscReq = requestAnimationFrame(loop);
+  }
+
+  function arcPath(startDeg, endDeg){
+    const sd = startDeg * Math.PI/180, ed = endDeg * Math.PI/180;
+    const sx = CX + R * Math.sin(sd), sy = CY - R * Math.cos(sd);
+    const ex = CX + R * Math.sin(ed), ey = CY - R * Math.cos(ed);
+    const large = Math.abs(endDeg - startDeg) > 180 ? 1 : 0;
+    return `M ${sx.toFixed(1)} ${sy.toFixed(1)} A ${R} ${R} 0 ${large} 1 ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+  }
+
+  function posFromPct(pct, rIn, rOut){
+    const ang = ((pct - 50) / 50) * 90;
+    const rad = ang * Math.PI/180;
+    const sin = Math.sin(rad), cos = Math.cos(rad);
+    const x1 = CX + rIn  * sin, y1 = CY - rIn  * cos;
+    const x2 = CX + rOut * sin, y2 = CY - rOut * cos;
+    return {x1,y1,x2,y2};
+  }
+
+  const notchHistory = { rep: new Set(), dem: new Set() };
+
+  function resetNotchHistory(){
+    notchHistory.rep.clear();
+    notchHistory.dem.clear();
+  }
+  function clearNotchClasses(){
+    combNotchesG.querySelectorAll('.notch.active').forEach(n => n.classList.remove('active'));
+  }
+
+  function updateNotches(repPct){
+      const rep = asPct(repPct, 50);
+    const dem = 100 - rep;
+
+    // update memory
+    combNotchesG.querySelectorAll('.notch').forEach(n => {
+      const side   = n.dataset.side;
+      const thresh = Number(n.dataset.thresh);
+      if (side === 'rep'){
+        if (rep >= thresh) notchHistory.rep.add(thresh);
+      } else {
+        if (dem >= thresh) notchHistory.dem.add(thresh);
+      }
+    });
+
+    // apply memory to DOM
+    combNotchesG.querySelectorAll('.notch').forEach(n => {
+      const side   = n.dataset.side;
+      const thresh = Number(n.dataset.thresh);
+      const lit = side === 'rep' ? notchHistory.rep.has(thresh) : notchHistory.dem.has(thresh);
+      n.classList.toggle('active', !!lit);
+    });
+  }
+
+  function addNotch(pct, side, tone){
+    const rIn = R + 10, rOut = R + 24;
+    const {x1,y1,x2,y2} = posFromPct(pct, rIn, rOut);
+    const ln = document.createElementNS('http://www.w3.org/2000/svg','line');
+    ln.setAttribute('x1', x1); ln.setAttribute('y1', y1);
+    ln.setAttribute('x2', x2); ln.setAttribute('y2', y2);
+    ln.setAttribute('class', `notch ${tone}`);
+    ln.dataset.side = side;
+    ln.dataset.thresh = side === 'rep' ? String(pct) : String(100 - pct);
+    combNotchesG.appendChild(ln);
+  }
+
+  function drawCombineNotches(){
+    combNotchesG.innerHTML = '';
+    resetNotchHistory();
+    const thresholds = [50,55,60,65,70,75,80,85,90,95];
+    for (const t of thresholds){
+      addNotch(t, 'rep', t <= 70 ? 'grey' : 'yellow');
+      addNotch(100 - t, 'dem', t <= 70 ? 'grey' : 'yellow');
+    }
+  }
+
+  function drawGauge(){
+    document.getElementById('bandFull').setAttribute('d', arcPath(-90, 90));
+    ticksG.innerHTML = '';
+
+    const specials = new Set([5, 20, 35, 50, 65, 80, 95]);
+    for (let pct=0; pct<=100; pct+=1){
+      const isSpecial = specials.has(pct);
+      const quint = (!isSpecial && pct%5===0);
+      const len = isSpecial?28:quint?12:6;
+      const sw  = isSpecial?2.8:quint?1.5:1.0;
+
+      const {x1,y1,x2,y2} = posFromPct(pct, R-len-6, R-6);
+      const ln = document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1',x1); ln.setAttribute('y1',y1);
+      ln.setAttribute('x2',x2); ln.setAttribute('y2',y2);
+      ln.setAttribute('class','tickLine'); ln.setAttribute('stroke-width',sw);
+      ticksG.appendChild(ln);
+
+      if (isSpecial){
+        const display = (pct<=50)?(100-pct):pct;
+        const bump = (pct===0||pct===100)?40:30;
+        const {x2:xl,y2:yl} = posFromPct(pct,R-len-bump,R-len-bump);
+        const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+        t.setAttribute('x',xl); t.setAttribute('y',yl);
+        t.setAttribute('text-anchor','middle'); t.setAttribute('class','tickLbl');
+        t.textContent = String(display);
+        ticksG.appendChild(t);
+      }
+    }
+
+    // DEM/GOP caps
+
+  }
+
+  function setNeedle(repPct){
+    let p = Number(repPct);
+    if (!Number.isFinite(p)) p = 50;
+    p = Math.max(0, Math.min(100, p));
+    const angle = ((p - 50) / 50) * 90;
+    targetAngle = angle;
+    startNeedleOscillation();
+  }
+
+  // ---------- Minimal data logic (to drive the needle) ----------
+  function partyFromColor(color){
+    if (!color) return null;
+    const c=String(color).toLowerCase();
+    if (c.includes('red')) return 'Republican';
+    if (c.includes('blue')) return 'Democratic';
+    return null;
+  }
+
+  function putSeries(map, series, prefix){
+    const xs = Array.isArray(series.x)?series.x:[],
+          ys = Array.isArray(series.y)?series.y:[],
+          colors = Array.isArray(series.color)?series.color:[];
+    for (let k=0;k<xs.length;k++){
+      const x=Number(xs[k]); if (!Number.isFinite(x)) continue;
+      const xr = Number(x.toFixed(3));
+      const row = map.get(xr) || {
+        x:xr,
+        leader_y:null,trailer_y:null,margin_y:null,
+        leader_color:null,trailer_color:null
+      };
+      const y = Number(ys[k]);
+      if (Number.isFinite(y)){
+        if (prefix==='leader') row.leader_y=y;
+        else if (prefix==='trailer') row.trailer_y=y;
+        else if (prefix==='margin') row.margin_y=y;
+      }
+      const color = colors[k];
+      if (prefix==='leader'){ if (color) row.leader_color=color; }
+      if (prefix==='trailer'){ if (color) row.trailer_color=color; }
+      map.set(xr,row);
+    }
+  }
+
+  function buildRows(payload){
+    const S = payload?.series || {};
+    const map = new Map();
+    putSeries(map, S.leader || {}, 'leader');
+    putSeries(map, S.trailer || {}, 'trailer');
+    putSeries(map, S.statewide_margin_pp || {}, 'margin');
+    return Array.from(map.values()).sort((a,b)=>a.x-b.x);
+  }
+
+  function repWinPercent(r){
+    const lp = partyFromColor(r.leader_color);
+    const tp = partyFromColor(r.trailer_color);
+    if (lp==='Republican') return Number(r.leader_y);
+    if (tp==='Republican') return Number(r.trailer_y);
+
+    if (Number.isFinite(r.margin_y)){
+      if (r.margin_y > 0) return Number(r.trailer_y); // Harris ahead → GOP trailer
+      if (r.margin_y < 0) return Number(r.leader_y);
+    }
+
+    if (lp === 'Democratic') return 100 - asPct(r.leader_y, 50);
+    return asPct(r.leader_y, 50);
+
+  }
+
+  function bootFromPayload(payload){
+    const rows = buildRows(payload);
+    if (!rows.length){
+      setNeedle(50);
+      resetNotchHistory();
+      clearNotchClasses();
+      updateNotches(50);
+      return;
+    }
+
+    // IMPORTANT: build notch history from ALL prior datapoints
+    resetNotchHistory();
+    clearNotchClasses();
+    for (const r of rows){
+      const repP = asPct(repWinPercent(r), 50);   // instead of: repWinPercent(r) || 50
+      updateNotches(repP);
+    }
+
+    const last = rows[rows.length - 1];
+    // ---- %IN READOUT (from last x value) ----
+    if (Number.isFinite(last.x)) {
+        pctInLabel.textContent = `% IN: ${last.x.toFixed(1)}`;
+    } else {
+      pctInLabel.textContent = "";
+    }
+
+    const repLast = asPct(repWinPercent(last), 50);  // instead of: repWinPercent(last) || 50
+    setNeedle(repLast);
+
+  }
+
+
+  // ---------- Init ----------
+  drawGauge();
+  drawCombineNotches();
+
+  // Poll JSON and update needle/notches
+  let lastSig = null;
+  function buildSig(j){
+    const xs = j?.series?.leader?.x || [];
+    const lastX = xs.length ? xs[xs.length - 1] : null;
+    return JSON.stringify([j?.meta?.generated_at || null, xs.length, lastX]);
+  }
+
+  let CURRENT_DATA_URL = null;
+
+  async function fetchGaugeData(){
+    if (!CURRENT_DATA_URL) {
+      bootFromPayload(null);
+      return;
+    }
+
+    try {
+      const r = await fetch(
+        `${CURRENT_DATA_URL}?t=${Date.now()}`,
+        { cache: "no-store" }
+      );
+
+      // ✅ SILENTLY ignore missing gauge JSON
+      if (!r.ok) {
+        // 404 = no data yet → default neutral gauge
+        bootFromPayload(null);
+        return;
+      }
+
+      const payload = await r.json();
+      bootFromPayload(payload);
+
+    } catch (err) {
+      // ✅ swallow parse/network errors quietly
+      bootFromPayload(null);
+    }
+  }
+
+
+  // ---- Listen for parent UI telling us which JSON to load ----
+
+
+  window.addEventListener("message", (ev) => {
+    const msg = ev.data;
+    if (!msg || msg.type !== "GAUGE_SET_SOURCE") return;
+
+    CURRENT_DATA_URL = msg.path;
+
+    // reset gauge state cleanly
+    resetNotchHistory();
+    clearNotchClasses();
+
+    fetchGaugeData();
+  });
+
+  // ---- Auto refresh ----
+  const GAUGE_POLL_MS = 5000; // 5s
+  setInterval(() => {
+    if (CURRENT_DATA_URL) fetchGaugeData();
+  }, GAUGE_POLL_MS);
+
+})();
+    
+
+    
+</script>
+</body>
+</html>

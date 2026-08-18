@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Hub System Load</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f1220;
+      color: #e6e9f0;
+      padding: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: #1a1f3a;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .label {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    .value {
+      font-size: 26px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid #2b3160;
+    }
+
+    th {
+      opacity: 0.8;
+      font-weight: 600;
+    }
+
+    .muted {
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🖥️ Hub System Load</h1>
+
+<div class="grid">
+  <div class="card">
+    <div class="label">CPU</div>
+    <div id="cpu" class="value">–</div>
+  </div>
+
+  <div class="card">
+    <div class="label">RAM</div>
+    <div id="ram" class="value">–</div>
+  </div>
+
+  <div class="card">
+    <div class="label">App RSS</div>
+    <div id="app-rss" class="value">–</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Pipelines Running</div>
+    <div id="pipelines" class="value">–</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Pipeline Peak RSS</div>
+    <div id="pipe-peak" class="value">–</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="label">Active Pipelines</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Target</th>
+        <th>PID</th>
+        <th>CPU %</th>
+        <th>RSS MB</th>
+        <th>Peak MB</th>
+        <th>Runtime (s)</th>
+      </tr>
+    </thead>
+    <tbody id="pipe-table">
+      <tr><td colspan="6" class="muted">No pipelines running</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+const el = id => document.getElementById(id);
+
+async function refresh() {
+  try {
+    const r = await fetch("/admin/system-usage");
+    const d = await r.json();
+
+    el("cpu").textContent = d.cpu_percent.toFixed(1) + "%";
+    el("ram").textContent = d.mem_percent.toFixed(1) + "%";
+    el("app-rss").textContent = Math.round(d.app_rss_mb) + " MB";
+    el("pipelines").textContent = d.pipeline_count;
+    el("pipe-peak").textContent = Math.round(d.pipeline_peak_rss_mb) + " MB";
+
+    const tbody = el("pipe-table");
+    tbody.innerHTML = "";
+
+    if (!d.pipelines || d.pipelines.length === 0) {
+      tbody.innerHTML =
+        `<tr><td colspan="6" class="muted">No pipelines running</td></tr>`;
+      return;
+    }
+
+    for (const p of d.pipelines) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${p.key}</td>
+        <td>${p.pid}</td>
+        <td>${p.cpu_percent.toFixed(1)}</td>
+        <td>${p.rss_mb.toFixed(1)}</td>
+        <td>${p.peak_rss_mb.toFixed(1)}</td>
+        <td>${p.runtime_sec}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+  } catch (e) {
+    console.error("load refresh failed", e);
+  }
+}
+
+// initial + poll
+refresh();
+setInterval(refresh, 1000);
+</script>
+
+</body>
+</html>

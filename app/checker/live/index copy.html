@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Election Votes — Dropdown Viewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --bg:#0b1220; --fg:#eaf0ff; --muted:#9fb3d1; --card:#14233d; --accent:#2980b9; }
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:900px;margin:32px auto;padding:16px}
+  .row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  label{font-size:13px;color:var(--muted)}
+  select{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:#18243f;color:var(--fg);min-width:160px}
+  .card{background:var(--card);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px}
+  .muted{color:var(--muted)}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+  th{color:var(--muted);font-weight:600}
+  .badgelike{display:inline-block;padding:2px 8px;border-radius:999px;background:#17274a;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2 style="margin:0 0 10px">Election Votes — Dropdown Viewer</h2>
+  <div class="muted" id="tip">Select office, state (or National Total), and county/district.</div>
+
+  <div class="card" style="margin-top:12px">
+    <div class="row">
+      <div>
+        <label>Office</label><br>
+        <select id="office">
+          <option value="P">President (P)</option>
+          <option value="G">Governor (G)</option>
+          <option value="S">Senate (S)</option>
+          <option value="H">House (H)</option>
+        </select>
+      </div>
+      <div>
+        <label>State</label><br>
+        <select id="state"></select>
+      </div>
+      <div id="countyBox">
+        <label>County</label><br>
+        <select id="county"></select>
+      </div>
+      <div id="districtBox" style="display:none">
+        <label>District</label><br>
+        <select id="district"></select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Race Type</label><br>
+        <select id="raceType">
+          <option value="G" selected>General (G)</option>
+          <option value="D">DEM Primary (D)</option>
+          <option value="R">GOP Primary (R)</option>
+        </select>
+      </div>
+      <div>
+        <label>Date</label><br>
+        <select id="date">
+          <option value="2026-11-05" selected>2026-11-05</option>
+          <option value="2024-11-05">2024-11-05</option>
+          <option value="2022-11-08">2022-11-08</option>
+          <option value="2020-11-03">2020-11-03</option>
+          <option value="2016-11-08">2016-11-08</option>
+        </select>
+      </div>
+      <div style="align-self:flex-end">
+        <span class="badgelike" id="status">ready</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div class="muted" id="selectionEcho">—</div>
+      <div class="muted" id="epochEcho"></div>
+    </div>
+    <table id="results">
+      <thead><tr><th>Candidate</th><th>Party</th><th>Votes</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="muted" id="totalEcho" style="margin-top:8px"></div>
+  </div>
+</div>
+
+<script>
+/** CONFIG */
+const API_BASE = "http://localhost:5037"; // same origin or change if needed
+
+/** ELEMENTS */
+const el = id => document.getElementById(id);
+const officeEl = el("office");
+const stateEl = el("state");
+const countyBox = el("countyBox");
+const countyEl = el("county");
+const districtBox = el("districtBox");
+const districtEl = el("district");
+const raceTypeEl = el("raceType");
+const dateEl = el("date");
+const statusEl = el("status");
+const selectionEcho = el("selectionEcho");
+const epochEcho = el("epochEcho");
+const resultsBody = document.querySelector("#results tbody");
+const totalEcho = el("totalEcho");
+
+/** CONSTANTS */
+const STATEWIDE = "__ALL__";
+const NATIONAL  = "__NAT__";
+
+/** STARTUP */
+init();
+
+async function init(){
+  status("loading states…");
+  await loadStates();
+  wireEvents();
+  await refreshSecondDropdown();
+  await renderResults();
+}
+
+function wireEvents(){
+  officeEl.addEventListener("change", async () => {
+    toggleSecondDropdown();
+    await refreshSecondDropdown();
+    await renderResults();
+  });
+  stateEl.addEventListener("change", async () => {
+    toggleSecondDropdown();
+    await refreshSecondDropdown();
+    await renderResults();
+  });
+  countyEl.addEventListener("change", renderResults);
+  districtEl.addEventListener("change", renderResults);
+  raceTypeEl.addEventListener("change", renderResults);
+  dateEl.addEventListener("change", renderResults);
+}
+
+function toggleSecondDropdown(){
+  const isHouse = officeEl.value === "H";
+  const isNational = stateEl.value === NATIONAL;
+  // For National Total, hide both secondary selectors
+  countyBox.style.display   = isNational ? "none" : (isHouse ? "none" : "");
+  districtBox.style.display = isNational ? "none" : (isHouse ? "" : "none");
+}
+
+async function loadStates(){
+  // GET /registry/states -> ["AL","AK",...]
+  const r = await fetch(`${API_BASE}/registry/states`, { cache: "no-store" });
+  const states = await r.json();
+
+  // Prepend "National Total"
+  const opts = [{value: NATIONAL, label: "National Total"}]
+    .concat(states.map(s => ({value:s, label:s})));
+
+  stateEl.innerHTML = opts.map(o => `<option value="${o.value}">${o.label}</option>`).join("");
+  // Default to National if you want, or NY if present – choose your preference:
+  if (opts.some(o => o.value === "NY")) stateEl.value = "NY";
+}
+
+async function refreshSecondDropdown(){
+  const state = stateEl.value;
+  if (!state || state === NATIONAL) return; // nothing to build for National
+
+  if (officeEl.value === "H") {
+    // House: districts list (with STATEWIDE at top)
+    const xml = await fetchDistrictXML(state);
+    const { districts } = parseDistrictXML(xml);
+    const opts = [{value: STATEWIDE, label: "STATEWIDE"}]
+      .concat(districts.map(d => ({value: String(d.number), label: d.label})));
+    districtEl.innerHTML = opts.map(o => `<option value="${o.value}">${o.label}</option>`).join("");
+    districtEl.value = STATEWIDE;
+  } else {
+    // P/G/S: counties list (with STATEWIDE at top)
+    const r = await fetch(`${API_BASE}/registry/counties?state=${encodeURIComponent(state)}`, { cache: "no-store" });
+    const rows = await r.json();
+    const opts = [{value: STATEWIDE, label: "STATEWIDE"}]
+      .concat(rows.map(c => ({ value: c.fips, label: c.name })));
+    countyEl.innerHTML = opts.map(o => `<option value="${o.value}">${o.label}</option>`).join("");
+    countyEl.value = STATEWIDE;
+  }
+}
+
+/* -------------------- RENDER -------------------- */
+
+async function renderResults(){
+  const office = officeEl.value;
+  const state  = stateEl.value;
+  const race   = raceTypeEl.value;
+  const date   = dateEl.value;
+
+  const scopeLabel = state === NATIONAL
+    ? "NATIONAL"
+    : `${state} • ${office==="H"?"district":"county"}=${office==="H"?districtEl.value:countyEl.value}`;
+
+  selectionEcho.textContent = `office=${office} • scope=${scopeLabel} • raceTypeId=${race} • date=${date}`;
+  status("fetching…");
+
+  try{
+    if (state === NATIONAL) {
+      const { list, total, epoch } = await renderNational(office, race, date);
+      paintTable(list, total);
+      epochEcho.textContent = epoch ? `Epoch=${epoch}` : "";
+    } else if (office === "H") {
+      const xmlText = await fetchDistrictXML(state, race, date);
+      const { epoch, rows } = parseDistrictXML(xmlText);
+      const choice = districtEl.value;
+      const { list, total } = choice === STATEWIDE
+        ? aggregateRows(rows)
+        : fromOneDistrict(rows, choice);
+      paintTable(list, total);
+      epochEcho.textContent = epoch ? `Epoch=${epoch}` : "";
+    } else {
+      const xmlText = await fetchCountyXML(state, office, race, date);
+      const { epoch, rows } = parseCountyXML(xmlText);
+      const choice = countyEl.value;
+      const { list, total } = choice === STATEWIDE
+        ? aggregateRows(rows)
+        : fromOneCounty(rows, choice);
+      paintTable(list, total);
+      epochEcho.textContent = epoch ? `Epoch=${epoch}` : "";
+    }
+    status("ok");
+  } catch (e){
+    console.error(e);
+    resultsBody.innerHTML = "";
+    totalEcho.textContent = "";
+    epochEcho.textContent = "";
+    status("error");
+  }
+}
+
+function paintTable(list, total){
+  list.sort((a,b)=> b.votes - a.votes);
+  resultsBody.innerHTML = list.map(r =>
+    `<tr><td>${escapeHTML(r.name)}</td><td>${r.party||""}</td><td>${fmt(r.votes)}</td></tr>`
+  ).join("");
+  totalEcho.textContent = `Total votes: ${fmt(total)}`;
+}
+
+/* -------------------- NATIONAL AGG -------------------- */
+
+async function renderNational(office, raceTypeId, date){
+  const stateCodes = getAllStateCodes(); // excludes the NATIONAL sentinel
+  let allRows = [];
+  let lastEpoch = ""; // show the most recent epoch seen (or leave blank)
+
+  if (office === "H") {
+    // Aggregate House across all states' districts
+    for (const s of stateCodes){
+      const xml = await fetchDistrictXML(s, raceTypeId, date);
+      const { epoch, rows } = parseDistrictXML(xml);
+      if (epoch) lastEpoch = epoch;
+      allRows = allRows.concat(rows);
+    }
+  } else {
+    // Aggregate P/G/S across all states' counties
+    for (const s of stateCodes){
+      const xml = await fetchCountyXML(s, office, raceTypeId, date);
+      const { epoch, rows } = parseCountyXML(xml);
+      if (epoch) lastEpoch = epoch;
+      allRows = allRows.concat(rows);
+    }
+  }
+  const { list, total } = aggregateRows(allRows);
+  return { list, total, epoch: lastEpoch };
+}
+
+function getAllStateCodes(){
+  const vals = [...stateEl.querySelectorAll("option")].map(o => o.value);
+  return vals.filter(v => v !== NATIONAL);
+}
+
+/* -------------------- FETCHERS -------------------- */
+
+async function fetchCountyXML(state, office="P", raceTypeId="G", date="2026-11-05"){
+  const url = `${API_BASE}/v2/elections/${encodeURIComponent(date)}?statepostal=${encodeURIComponent(state)}&officeId=${encodeURIComponent(office)}&raceTypeId=${encodeURIComponent(raceTypeId)}&level=ru`;
+  const r = await fetch(url, { cache: "no-store" });
+  return await r.text();
+}
+async function fetchDistrictXML(state, raceTypeId="G", date="2026-11-05"){
+  const url = `${API_BASE}/v2/districts/${encodeURIComponent(date)}?statepostal=${encodeURIComponent(state)}&raceTypeId=${encodeURIComponent(raceTypeId)}&level=ru&officeId=H`;
+  const r = await fetch(url, { cache: "no-store" });
+  return await r.text();
+}
+
+/* -------------------- XML PARSERS -------------------- */
+
+function parseCountyXML(xmlText){
+  const doc = new DOMParser().parseFromString(xmlText, "application/xml");
+  const epoch = attr(doc.querySelector("ElectionResults"), "Epoch", "");
+  const rus = [...doc.querySelectorAll("ReportingUnit")];
+  const rows = rus.map(ru => ({
+    key: attr(ru, "FIPS", "").padStart(5,"0"),
+    name: attr(ru, "Name", ""),
+    candidates: [...ru.querySelectorAll("Candidate")].map(c => ({
+      name: `${attr(c,"First","")} ${attr(c,"Last","")}`.trim(),
+      party: attr(c,"Party",""),
+      votes: int(attr(c,"VoteCount","0"))
+    }))
+  }));
+  return { epoch, rows };
+}
+
+function parseDistrictXML(xmlText){
+  const doc = new DOMParser().parseFromString(xmlText, "application/xml");
+  const epoch = attr(doc.querySelector("ElectionResults"), "Epoch", "");
+  const rus = [...doc.querySelectorAll("ReportingUnit")];
+  const rows = rus.map(ru => ({
+    key: attr(ru, "DistrictId", ""),
+    number: int(attr(ru, "District", "0")),
+    label: attr(ru, "Name", ""),
+    candidates: [...ru.querySelectorAll("Candidate")].map(c => ({
+      name: `${attr(c,"First","")} ${attr(c,"Last","")}`.trim(),
+      party: attr(c,"Party",""),
+      votes: int(attr(c,"VoteCount","0"))
+    }))
+  }));
+  return { epoch, rows, districts: rows.map(r => ({ number:r.number, label:r.label })) };
+}
+
+/* -------------------- AGGREGATION HELPERS -------------------- */
+
+function aggregateRows(rows){
+  const byKey = new Map(); // key by name|party
+  let total = 0;
+  for (const r of rows){
+    for (const c of r.candidates){
+      const k = `${c.name}|${c.party}`;
+      byKey.set(k, (byKey.get(k)||0) + c.votes);
+      total += c.votes;
+    }
+  }
+  const list = [...byKey.entries()].map(([k,v])=>{
+    const [name,party] = k.split("|");
+    return { name, party, votes:v };
+  });
+  return { list, total };
+}
+
+function fromOneCounty(rows, fips){
+  const row = rows.find(r => r.key === fips);
+  if (!row) return { list: [], total: 0 };
+  const total = row.candidates.reduce((a,c)=>a+c.votes,0);
+  return { list: row.candidates.slice(), total };
+}
+
+function fromOneDistrict(rows, numberStr){
+  const n = parseInt(numberStr, 10);
+  const row = rows.find(r => r.number === n);
+  if (!row) return { list: [], total: 0 };
+  const total = row.candidates.reduce((a,c)=>a+c.votes,0);
+  return { list: row.candidates.slice(), total };
+}
+
+/* -------------------- UTILS -------------------- */
+
+function status(s){ statusEl.textContent = s; }
+function attr(node, name, dflt){ return node ? (node.getAttribute(name) || dflt) : dflt; }
+function int(s){ const n = parseInt(String(s||"0"),10); return isNaN(n)?0:n; }
+function fmt(n){ return (n||0).toLocaleString("en-US"); }
+function escapeHTML(s){ return String(s||"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+setInterval(() => { renderResults(); }, 5000);
+</script>
+</body>
+</html>

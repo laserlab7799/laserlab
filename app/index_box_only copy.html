@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Margin Distribution • Boxes</title>
+
+<script src="/scripts/d3.v6.min.js"></script>
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin:0;
+    background:#fff;
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    color:#111;
+    overflow:hidden;
+  }
+
+  .wrap {
+    width:100%;
+    height:100%;
+    padding:12px;
+  }
+
+  svg {
+    width:100%;
+    height:100%;
+  }
+
+  .axis path,
+  .axis line {
+    stroke:#000;
+    stroke-width:1;
+  }
+
+  .grid line {
+    stroke:#ddd;
+    stroke-dasharray:3 3;
+  }
+
+  .whisker {
+    stroke:#444;
+    stroke-width:2;
+  }
+
+  .box {
+    fill:#cbd5e1;
+    stroke:#0f172a;
+    stroke-width:1.5;
+  }
+
+  .median {
+    stroke:#0f172a;
+    stroke-width:2.5;
+  }
+
+  .zero-line {
+    stroke:#000;
+    stroke-width:2;
+  }
+
+  .title {
+    position:absolute;
+    left:16px;
+    top:8px;
+    font-weight:800;
+    letter-spacing:.08em;
+    font-size:14px;
+    text-transform:uppercase;
+  }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="title" id="title">Margin distribution</div>
+  <svg id="svg"></svg>
+</div>
+
+<script>
+(() => {
+
+  const svg = d3.select("#svg");
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+
+  svg.attr("viewBox", `0 0 ${W} ${H}`);
+
+  const margin = { top:30, right:40, bottom:40, left:60 };
+  const innerW = W - margin.left - margin.right;
+  const innerH = H - margin.top - margin.bottom;
+
+  const g = svg.append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  const xAxisG = g.append("g")
+    .attr("transform", `translate(0,${innerH})`)
+    .attr("class", "axis");
+
+  const yAxisG = g.append("g")
+    .attr("class", "axis");
+
+  const gridG = g.append("g")
+    .attr("class", "grid");
+
+  const plotG = g.append("g");
+
+  function render(data) {
+    if (!data || !data.length) return;
+
+    const xs = data.map(d => d.statewide_percent_in);
+    const minY = d3.min(data, d => d.whisker_low);
+    const maxY = d3.max(data, d => d.whisker_high);
+
+    const x = d3.scaleLinear()
+      .domain([0, 100])
+      .range([0, innerW]);
+
+    const pad = Math.max(3, (maxY - minY) * 0.1);
+    const y = d3.scaleLinear()
+      .domain([minY - pad, maxY + pad])
+      .range([innerH, 0]);
+
+    // Grid
+    gridG.call(
+      d3.axisLeft(y)
+        .ticks(6)
+        .tickSize(-innerW)
+        .tickFormat("")
+    );
+
+    xAxisG.call(
+      d3.axisBottom(x)
+        .ticks(10)
+        .tickFormat(d => d + "%")
+    );
+
+    yAxisG.call(
+      d3.axisLeft(y).ticks(6)
+    );
+
+    // zero line
+    plotG.selectAll(".zero-line")
+      .data([0])
+      .join("line")
+      .attr("class","zero-line")
+      .attr("x1",0)
+      .attr("x2",innerW)
+      .attr("y1",y(0))
+      .attr("y2",y(0));
+
+    const boxW = Math.max(8, innerW / data.length * 0.6);
+
+    // whiskers
+    plotG.selectAll(".whisker")
+      .data(data)
+      .join("line")
+      .attr("class","whisker")
+      .attr("x1", d => x(d.statewide_percent_in))
+      .attr("x2", d => x(d.statewide_percent_in))
+      .attr("y1", d => y(d.whisker_low))
+      .attr("y2", d => y(d.whisker_high));
+
+    // box
+    plotG.selectAll(".box")
+      .data(data)
+      .join("rect")
+      .attr("class","box")
+      .attr("x", d => x(d.statewide_percent_in) - boxW/2)
+      .attr("width", boxW)
+      .attr("y", d => y(d.q3))
+      .attr("height", d => Math.max(1, y(d.q1) - y(d.q3)));
+
+    // median
+    plotG.selectAll(".median")
+      .data(data)
+      .join("line")
+      .attr("class","median")
+      .attr("x1", d => x(d.statewide_percent_in) - boxW/2)
+      .attr("x2", d => x(d.statewide_percent_in) + boxW/2)
+      .attr("y1", d => y(d.median))
+      .attr("y2", d => y(d.median));
+  }
+
+  // ---- messaging (same pattern as chart-only) ----
+  window.addEventListener("message", (e) => {
+    const msg = e.data || {};
+    if (msg.type !== "setBoxDataSource") return;
+
+    document.getElementById("title").textContent =
+      `Margin distribution • ${msg.state || ""}`;
+
+    fetch(msg.path + "?t=" + Date.now())
+      .then(r => r.json())
+      .then(render)
+      .catch(err => console.error("[box]", err));
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+non-dictionary words
+bondi  —  B AA1 N D IY0
+rafah  —  RAH-fah
+amercia
+wto
+hamas  —  HH AA2 M AA1 S (pkg?)
+zelenskyy  —  zel-EN-skee (pkg?)
+warsh (pkg?)
+lasater  —  L AE1 S EY0 T ER0
+hegseth
+bezos
+livefeeds
+boasberg  —  BOHZ-berg
+sununu  —  S AH0 N UW1 N UW0
+grenell  —  G R EH1 N AH0 L
+ratner  —  R AE1 T N ER0
+grok
+trevi
+stef
+greaney  —  GRAY-nee / G R IY1 N IY0
+mandelson
+starmer  —  S T AA1 R M ER0
+outro
+
+long words
+administration  —  AE0 D M IH2 N IH0 S T R EY1 SH AH0 N
+cancellations  —  K AE2 N S AH0 L EY1 SH AH0 N Z
+entertainment  —  EH2 N T ER0 T EY1 N M AH0 N T | EH2 N ER0 T EY1 N M AH0 N T
+institutional  —  IH2 N S T IH0 T UW1 SH AH0 N AH0 L
+international  —  IH2 N T ER0 N AE1 SH AH0 N AH0 L | IH2 N ER0 N AE1 SH AH0 N AH0 L
+investigating  —  IH2 N V EH1 S T AH0 G EY2 T IH0 NG
+investigation  —  IH2 N V EH2 S T AH0 G EY1 SH AH0 N
+manufacturing  —  M AE2 N Y AH0 F AE1 K CH ER0 IH0 NG
+opportunities  —  AA2 P ER0 T UW1 N AH0 T IY0 Z
+refrigerators  —  R IH0 F R IH1 JH ER0 EY2 T ER0 Z
+announcement  —  AH0 N AW1 N S M AH0 N T | AH0 N AW1 N S M EH0 N T
+conservative  —  K AH0 N S ER1 V AH0 T IH0 V
+distribution  —  D IH2 S T R AH0 B Y UW1 SH AH0 N
+expectations  —  EH2 K S P EH0 K T EY1 SH AH0 N Z
+headquarters  —  HH EH1 D K W AO2 R T ER0 Z | HH EH1 D K AO2 R T ER0 Z
+institutions  —  IH2 N S T IH0 T UW1 SH AH0 N Z
+interrupting  —  IH2 N T ER0 AH1 P T IH0 NG
+organization  —  AO2 R G AH0 N AH0 Z EY1 SH AH0 N
+overcrowding  —  OW1 V ER0 K R AW2 D IH0 NG
+palestinians  —  P AE2 L IH0 S T IH1 N IY0 AH0 N Z
+particularly  —  P AA2 R T IH1 K Y AH0 L ER0 L IY0 | P ER0 T IH1 K Y AH0 L ER0 L IY0
+pennsylvania  —  P EH2 N S AH0 L V EY1 N Y AH0
+presidential  —  P R EH2 Z AH0 D EH1 N SH AH0 L
+punxsutawney  —  P AH2 NG K S AH0 T AW1 N IY2
+runningorder
+successfully  —  S AH0 K S EH1 S F AH0 L IY0
+temperatures  —  T EH1 M P R AH0 CH ER0 Z | T EH1 M P ER0 AH0 CH ER0 Z
+
+least frequent 150 known words (dictionary ∩ en_full.txt)
+pkg (rank 3)
+nh (rank 15)
+melania (rank 18)
+ntd (rank 20)
+pima  —  P IY1 M AH0 (rank 22)
+keir  —  K IY1 R (rank 30)
+punxsutawney  —  P AH2 NG K S AH0 T AW1 N IY2 (rank 30)
+forecasters  —  F AO1 R K AE2 S T ER0 Z (rank 35)
+sexualized (rank 47)
+resumption  —  R IH0 Z AH1 M P SH AH0 N | R IY0 Z AH1 M P SH AH0 N | R IH0 Z AH1 M SH AH0 N | R IY0 Z AH1 M SH AH0 N (rank 48)
+politico  —  P AH0 L IH1 T IH0 K OW2 (rank 61)
+overreach  —  OW1 V ER0 R IY2 CH (rank 62)
+reopens  —  R IY0 OW1 P AH0 N Z (rank 62)
+trilateral  —  T R AY0 L AE1 T ER0 AH0 L (rank 62)
+zzz (rank 64)
+endorses  —  EH0 N D AO1 R S IH0 Z (rank 71)
+nr (rank 78)
+monaghan  —  M AA1 N AH0 HH AE0 N (rank 92)
+wintry  —  W IH1 N T R IY0 (rank 96)
+shaheen  —  SH AH0 HH IY1 N (rank 98)
+elon (rank 101)
+td (rank 109)
+ws  —  D AH1 B AH0 L Y UW0 EH1 S | D AH1 B Y AH0 EH1 S (rank 111)
+gobbler  —  G AA1 B AH0 L ER0 | G AA1 B L ER0 (rank 113)
+cancellations  —  K AE2 N S AH0 L EY1 SH AH0 N Z (rank 116)
+adversarial  —  AE2 D V ER0 S EH1 R IY0 AH0 L (rank 121)
+cortina  —  K ER0 T IY1 N AH0 (rank 128)
+currencies  —  K ER1 AH0 N S IY0 Z (rank 131)
+lawmakers  —  L AO1 M EY2 K ER0 Z (rank 131)
+searchers  —  S ER1 CH ER0 Z (rank 140)
+overcrowding  —  OW1 V ER0 K R AW2 D IH0 NG (rank 146)
+canaveral  —  K AH0 N AE1 V ER0 AH0 L | K AH0 N AE1 V R AH0 L (rank 148)
+resigns  —  R IH0 Z AY1 N Z | R IY0 Z AY1 N Z | R IY0 S AY1 N Z (rank 149)
+sot  —  S AO1 T (rank 152)
+campaigned  —  K AE0 M P EY1 N D (rank 155)
+mn (rank 166)
+chock  —  CH AA1 K (rank 169)
+molesters  —  M AH0 L EH1 S T ER0 Z (rank 171)
+nc (rank 175)
+petro  —  P EH1 T R OW0 (rank 177)
+reliance  —  R IH0 L AY1 AH0 N S | R IY0 L AY1 AH0 N S (rank 180)
+prompting  —  P R AA1 M P T IH0 NG (rank 183)
+dilapidated  —  D AH0 L AE1 P AH0 D EY2 T IH0 D (rank 194)
+doj (rank 203)
+restores  —  R IH0 S T AO1 R Z (rank 204)
+epoch  —  EH1 P AH0 K | IY1 P AH0 K (rank 206)
+earths  —  ER1 TH S (rank 225)
+grossed  —  G R OW1 S T (rank 231)
+inception  —  IH2 N S EH1 P SH AH0 N (rank 232)
+snowfall  —  S N OW1 F AA0 L (rank 236)
+teaser  —  T IY1 Z ER0 (rank 236)
+vetting  —  V EH1 T IH0 NG (rank 238)
+safeguards  —  S EY1 F G AA2 R D Z (rank 251)
+refrigerators  —  R IH0 F R IH1 JH ER0 EY2 T ER0 Z (rank 253)
+pappas  —  P AE1 P AH0 S (rank 257)
+relayed  —  R IY1 L EY2 D (rank 267)
+pandemic  —  P AE0 N D EH1 M IH0 K (rank 269)
+conditional  —  K AH0 N D IH1 SH AH0 N AH0 L (rank 270)
+institutional  —  IH2 N S T IH0 T UW1 SH AH0 N AH0 L (rank 281)
+abound  —  AH0 B AW1 N D (rank 286)
+melina  —  M EH0 L IY1 N AH0 (rank 295)
+migrant  —  M AY1 G R AH0 N T (rank 296)
+uncovering  —  AH0 N K AH1 V ER0 IH0 NG (rank 296)
+eventual  —  AH0 V EH1 N CH UW0 AH0 L | IY0 V EH1 N CH UW0 AH0 L (rank 298)
+endorsed  —  EH0 N D AO1 R S T (rank 307)
+groundhog  —  G R AW1 N D HH AA2 G (rank 307)
+eased  —  IY1 Z D (rank 330)
+bastion  —  B AE1 S CH AH0 N (rank 336)
+routinely  —  R UW0 T IY1 N L IY0 (rank 338)
+handlers  —  HH AE1 N D L ER0 Z | HH AE1 N D AH0 L ER0 Z (rank 351)
+impacted  —  IH1 M P AE2 K T IH0 D | IH2 M P AE1 K T IH0 D (rank 358)
+sediment  —  S EH1 D AH0 M AH0 N T (rank 366)
+introduces  —  IH2 N T R AH0 D UW1 S IH0 Z | IH2 N T R OW0 D UW1 S IH0 Z (rank 368)
+milano  —  M IY0 L AA1 N OW0 (rank 394)
+economist  —  IH0 K AA1 N AH0 M IH0 S T | IY0 K AA1 N AH0 M IH0 S T (rank 400)
+restrict  —  R IY0 S T R IH1 K T (rank 400)
+reopening  —  R IY0 OW1 P AH0 N IH0 NG (rank 401)
+hazards  —  HH AE1 Z ER0 D Z (rank 424)
+implemented  —  IH1 M P L AH0 M EH2 N T AH0 D | IH1 M P L AH0 M EH2 N AH0 D (rank 431)
+renovations  —  R EH1 N AH0 V EY2 SH AH0 N Z (rank 432)
+overseeing  —  OW1 V ER0 S IY2 IH0 NG (rank 438)
+reportedly  —  R IH0 P AO1 R T AH0 D L IY0 | R IY0 P AO1 R T AH0 D L IY0 (rank 441)
+broader  —  B R AO1 D ER0 (rank 450)
+workforce  —  W ER1 K F AO2 R S (rank 451)
+exempt  —  IH0 G Z EH1 M P T (rank 453)
+liquids  —  L IH1 K W AH0 D Z | L IH1 K W IH0 D Z (rank 457)
+indonesian  —  IH2 N D OW0 N IY1 ZH AH0 N (rank 463)
+escalating  —  EH1 S K AH0 L EY2 T IH0 NG (rank 465)
+musk  —  M AH1 S K (rank 466)
+expands  —  IH0 K S P AE1 N D Z (rank 467)
+analysts  —  AE1 N AH0 L IH0 S T S (rank 484)
+vo  —  V OW1 (rank 488)
+consultants  —  K AH0 N S AH1 L T AH0 N T S (rank 493)
+coldest  —  K OW1 L D AH0 S T (rank 501)
+compliance  —  K AH0 M P L AY1 AH0 N S (rank 501)
+cu (rank 512)
+deportation  —  D IY2 P AO0 R T EY1 SH AH0 N (rank 513)
+ag  —  AE1 G | EY1 G IY1 (rank 526)
+governing  —  G AH1 V ER0 N IH0 NG (rank 528)
+lengthy  —  L EH1 NG TH IY0 (rank 531)
+cyclone  —  S IH0 K L OW1 N (rank 537)
+defends  —  D IH0 F EH1 N D Z (rank 539)
+specify  —  S P EH1 S AH0 F AY2 (rank 542)
+vials  —  V AY1 AH0 L Z (rank 561)
+gaza  —  G AA1 Z AH0 (rank 567)
+hesitant  —  HH EH1 Z IH0 T AH0 N T (rank 568)
+storming  —  S T AO1 R M IH0 NG (rank 585)
+reopened  —  R IY0 OW1 P AH0 N D (rank 590)
+guthrie  —  G AH1 TH R IY0 (rank 615)
+raiding  —  R EY1 D IH0 NG (rank 615)
+disruption  —  D IH0 S R AH1 P SH AH0 N (rank 616)
+fernandez  —  F ER0 N AE1 N D EH0 Z | F EH0 R N AE1 N D EH0 Z | F ER0 N AA1 N D EH0 Z | F EH0 R N AA1 N D EH0 Z (rank 620)
+bot  —  B AO1 T (rank 625)
+amid  —  AH0 M IH1 D (rank 627)
+announces  —  AH0 N AW1 N S IH0 Z (rank 632)
+md  —  EH2 M D IY1 (rank 649)
+criticized  —  K R IH1 T AH0 S AY2 Z D (rank 651)
+anti  —  AE1 N T IY2 | AE1 N T AY2 (rank 662)
+iconic  —  AY2 K AA1 N IH0 K (rank 662)
+shutdown  —  SH AH1 T D AW2 N (rank 670)
+epstein  —  EP-steen (Jeffrey Epstein) / EH1 P S T IY2 N | EH1 P S T AY2 N (rank 686)
+misconduct  —  M IH0 S K AA1 N D AH0 K T (rank 694)
+quantico  —  K W AA1 N T IH0 K OW0 (rank 697)
+realization  —  R IY1 L AH0 Z EY1 SH AH0 N (rank 704)
+persist  —  P ER0 S IH1 S T (rank 709)
+equity  —  EH1 K W AH0 T IY0 (rank 722)
+exceeded  —  IH0 K S IY1 D AH0 D | IH0 K S IY1 D IH0 D (rank 725)
+advisors  —  AE0 D V AY1 Z ER0 Z (rank 729)
+protesters  —  P R OW1 T EH2 S T ER0 Z (rank 729)
+renovation  —  R EH2 N AH0 V EY1 SH AH0 N (rank 732)
+drilled  —  D R IH1 L D (rank 749)
+palestinians  —  P AE2 L IH0 S T IH1 N IY0 AH0 N Z (rank 760)
+tensions  —  T EH1 N CH AH0 N Z (rank 762)
+supporter  —  S AH0 P AO1 R T ER0 (rank 763)
+gustavo  —  G AH0 S T AA1 V OW0 (rank 767)
+tampa  —  T AE1 M P AH0 (rank 767)
+hazardous  —  HH AE1 Z ER0 D AH0 S (rank 776)
+outlook  —  AW1 T L UH2 K (rank 778)
+projected  —  P R AH0 JH EH1 K T AH0 D (rank 781)
+streaming  —  S T R IY1 M IH0 NG (rank 787)
+nominee  —  N AA2 M AH0 N IY1 (rank 788)
+endorsement  —  EH0 N D AO1 R S M AH0 N T (rank 803)
+landmark  —  L AE1 N D M AA2 R K (rank 803)
+urged  —  ER1 JH D (rank 815)
+rooted  —  R UW1 T AH0 D | R UW1 T IH0 D (rank 820)
+theaters  —  TH IY1 AH0 T ER0 Z (rank 832)
+nationwide  —  N EY1 SH AH0 N W AY1 D (rank 836)
+predictions  —  P R IY0 D IH1 K SH AH0 N Z (rank 839)
+tucson  —  T UW1 S AA2 N (rank 854)
+commodity  —  K AH0 M AA1 D AH0 T IY0 (rank 865)
