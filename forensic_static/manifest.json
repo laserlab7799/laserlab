@@ -1,0 +1,131 @@
+{
+  "format": "laser-forensic-static-v1",
+  "source_file": "forensic.jsonl",
+  "configuration_file": "config.json",
+  "verification_file": "verification.json",
+  "angle_index_file": "angle_index.json",
+  "batch_directory": "batches",
+  "per_angle_directory": "angles",
+  "per_angle_files_enabled": true,
+  "angle_count": 1799,
+  "successful_count": 291,
+  "unsuccessful_count": 1508,
+  "first_angle": 0.1,
+  "last_angle": 179.9,
+  "batch_size": 100,
+  "batch_count": 18,
+  "batches": [
+    {
+      "file": "batches/angles_0001_0100.json",
+      "first_angle": 0.1,
+      "last_angle": 10.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_0101_0200.json",
+      "first_angle": 10.1,
+      "last_angle": 20.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_0201_0300.json",
+      "first_angle": 20.1,
+      "last_angle": 30.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_0301_0400.json",
+      "first_angle": 30.1,
+      "last_angle": 40.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_0401_0500.json",
+      "first_angle": 40.1,
+      "last_angle": 50.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_0501_0600.json",
+      "first_angle": 50.1,
+      "last_angle": 60.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_0601_0700.json",
+      "first_angle": 60.1,
+      "last_angle": 70.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_0701_0800.json",
+      "first_angle": 70.1,
+      "last_angle": 80.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_0801_0900.json",
+      "first_angle": 80.1,
+      "last_angle": 90.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_0901_1000.json",
+      "first_angle": 90.1,
+      "last_angle": 100.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_1001_1100.json",
+      "first_angle": 100.1,
+      "last_angle": 110.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_1101_1200.json",
+      "first_angle": 110.1,
+      "last_angle": 120.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_1201_1300.json",
+      "first_angle": 120.1,
+      "last_angle": 130.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_1301_1400.json",
+      "first_angle": 130.1,
+      "last_angle": 140.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_1401_1500.json",
+      "first_angle": 140.1,
+      "last_angle": 150.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_1501_1600.json",
+      "first_angle": 150.1,
+      "last_angle": 160.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_1601_1700.json",
+      "first_angle": 160.1,
+      "last_angle": 170.0,
+      "count": 100
+    },
+    {
+      "file": "batches/angles_1701_1799.json",
+      "first_angle": 170.1,
+      "last_angle": 179.9,
+      "count": 99
+    }
+  ],
+  "checks": {
+    "angle_count_matches_verification": true,
+    "success_count_matches_verification": true
+  }
+}

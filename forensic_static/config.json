@@ -1,0 +1,56 @@
+{
+  "record_type": "configuration",
+  "angle_range": {
+    "start": 0.1,
+    "end": 179.9,
+    "step": 0.1,
+    "count": 1799
+  },
+  "laser_speed": 80.0,
+  "shot_duration": 3.0,
+  "tick": 0.1,
+  "laser_distance_per_tick": 8.0,
+  "blocker_speed": 1.0,
+  "rotation_period": 3.0,
+  "rotation_deg_per_tick": 12.0,
+  "vertical_mirrors": [
+    -70.0,
+    -10.0,
+    10.0,
+    70.0
+  ],
+  "horizontal_mirrors": [
+    115.0
+  ],
+  "vertical_mirror_holes": "odd floor(y) bands",
+  "horizontal_mirror_holes": "even floor(x) bands",
+  "target": {
+    "center": [
+      0.0,
+      100.0
+    ],
+    "width": 10.0
+  },
+  "blockers": [
+    {
+      "id": "B0",
+      "x": 0.0,
+      "y": 40.0,
+      "width": 10.0
+    },
+    {
+      "id": "B1",
+      "x": -5.8,
+      "y": 13.0,
+      "width": 5.2
+    },
+    {
+      "id": "B2",
+      "x": 4.9,
+      "y": 22.0,
+      "width": 6.4
+    }
+  ],
+  "mirror_integer_tolerance": 1e-10,
+  "segment_endpoint_tolerance": 1e-09
+}

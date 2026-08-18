@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Laser Forensic Static Viewer</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#071019;--panel:#0d1824;--panel2:#111f2f;--border:#21364a;
+  --text:#edf7ff;--muted:#8ca3b8;--accent:#63e6ff;--laser:#ff365f;
+  --mirror:#71d9ff;--blocker:#ffb347;--target:#67f59a;--good:#73f5a4;--bad:#ff708b
+}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial;overflow:hidden}
+.app{height:100vh;display:grid;grid-template-columns:350px minmax(0,1fr) 380px}
+aside{background:linear-gradient(180deg,#0d1824,#09121c);overflow:auto;padding:16px}
+.left{border-right:1px solid var(--border)} .right{border-left:1px solid var(--border)}
+h1{font-size:21px;margin:0 0 5px} h2{font-size:14px;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.09em;color:#b9cae0}
+.sub{font-size:12px;color:var(--muted);line-height:1.45}
+.card{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:11px;margin-top:10px}
+.kv{display:grid;grid-template-columns:1fr auto;gap:6px;font-size:12px}.kv b{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.good{color:var(--good)} .bad{color:var(--bad)}
+label{display:block;font-size:11px;color:var(--muted);margin:10px 0 5px;text-transform:uppercase;letter-spacing:.07em}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=number],select{width:100%;border:1px solid #294259;background:#08131e;color:#fff;border-radius:9px;padding:8px;font-weight:700}
+button{border:0;border-radius:10px;padding:9px 11px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#63e6ff,#8effc2);color:#061017}
+button.secondary{background:#132638;color:#dcecff;border:1px solid #284359}
+button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.grow{flex:1}
+.stage{position:relative;min-width:0;background:radial-gradient(circle at 50% 85%,rgba(50,120,255,.08),transparent 35%),linear-gradient(#070a12,#080d18)}
+canvas{display:block;width:100%;height:100%}
+.overlay{position:absolute;left:14px;top:14px;background:rgba(7,12,22,.84);backdrop-filter:blur(8px);border:1px solid rgba(99,230,255,.18);border-radius:11px;padding:9px 11px;font:12px ui-monospace,SFMono-Regular,Menlo,monospace;pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px;font-size:11px;color:#a7bdd3}
+.pill{display:flex;align-items:center;gap:5px;background:#0b1722;border-radius:999px;padding:5px 7px}.dot{width:8px;height:8px;border-radius:50%}
+.right h1{margin:0 0 4px;font-size:21px}
+.right .sub{color:var(--muted);font-size:12px;margin-bottom:14px}
+.readoutSummary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.readoutCard{background:#111a2d;border:1px solid #1f304d;border-radius:12px;padding:10px}
+.readoutCard .k{color:#8fa4c7;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.readoutCard .v{margin-top:4px;font-size:18px;font-weight:800}
+.yes{color:#6bf3a0}.no{color:#ff6f8d}
+.eventsTitle{margin:14px 0 8px;font-size:13px;color:#b7c9e7;text-transform:uppercase;letter-spacing:.1em}
+.readoutEvent{background:#0c1424;border:1px solid #1e2c47;border-radius:12px;padding:10px;margin-bottom:8px}
+.readoutEvent strong{display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.readoutMeta{margin-top:6px;color:#9bb0d1;font-size:12px;line-height:1.5;font-variant-numeric:tabular-nums}
+.empty{color:#8194b4;font-size:13px;padding:12px;border:1px dashed #273754;border-radius:12px}
+.tiny{font-size:10px;color:var(--muted)}
+.loadbox{padding:11px;border:1px dashed #31506a;border-radius:10px;margin-top:10px}
+.status{font-size:11px;color:#9fb3d0;margin-top:8px;word-break:break-word;line-height:1.45}
+.badge{display:inline-block;padding:3px 6px;border-radius:7px;background:#102538;border:1px solid #25445f;font-size:10px;color:#a9c4dc;margin-top:6px}
+@media(max-width:1050px){.app{grid-template-columns:300px minmax(0,1fr)}.right{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="left">
+  <h1>Laser Forensic Viewer</h1>
+  <div class="sub">Static-site viewer for GitHub Pages or any ordinary HTTP server.</div>
+
+  <div class="loadbox">
+    <b>forensic_static auto-loader</b>
+    <div class="sub" style="margin-top:5px">Loads the static index automatically, then fetches only the selected angle JSON on demand.</div>
+    <button id="reloadBtn" style="width:100%;margin-top:8px">Reload forensic data</button>
+    <div class="status" id="loadStatus">Loading…</div>
+    <div class="badge" id="modeBadge">HTTP / Git mode</div>
+  </div>
+
+  <h2>Angle</h2>
+  <label>Shooting angle</label>
+  <input id="angleRange" type="range" min="0.1" max="179.9" step="0.1" value="90">
+  <div class="row">
+    <input class="grow" id="angleNumber" type="number" min="0.1" max="179.9" step="0.1" value="90">
+    <button class="secondary" id="prevAngle">−0.1°</button>
+    <button class="secondary" id="nextAngle">+0.1°</button>
+  </div>
+
+  <h2>Time</h2>
+  <label>Tick / simulation time</label>
+  <input id="tickRange" type="range" min="0" max="0" step="1" value="0">
+  <div class="row">
+    <button id="playBtn">▶ Play</button>
+    <button class="secondary" id="resetBtn">↺ Start</button>
+    <select id="playSpeed" class="grow">
+      <option value="0.25">0.25×</option>
+      <option value="0.5">0.5×</option>
+      <option value="1" selected>1×</option>
+      <option value="2">2×</option>
+      <option value="5">5×</option>
+      <option value="10">10×</option>
+      <option value="25">25×</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <div class="kv"><span>Angle</span><b id="sAngle">—</b></div>
+    <div class="kv"><span>Tick</span><b id="sTick">—</b></div>
+    <div class="kv"><span>Time</span><b id="sTime">—</b></div>
+    <div class="kv"><span>Success</span><b id="sSuccess">—</b></div>
+    <div class="kv"><span>Target-hit slices</span><b id="sTargetSlices">—</b></div>
+    <div class="kv"><span>Blocked slices</span><b id="sBlocked">—</b></div>
+    <div class="kv"><span>Mirror hits</span><b id="sMirrors">—</b></div>
+  </div>
+
+  <div class="legend">
+    <span class="pill"><span class="dot" style="background:#ff365f"></span>laser</span>
+    <span class="pill"><span class="dot" style="background:#71d9ff"></span>mirror</span>
+    <span class="pill"><span class="dot" style="background:#ffb347"></span>blocker</span>
+    <span class="pill"><span class="dot" style="background:#67f59a"></span>target</span>
+  </div>
+</aside>
+
+<main class="stage" id="stage">
+  <canvas id="canvas"></canvas>
+  <div class="overlay" id="overlay">Loading forensic_static…</div>
+</main>
+
+<aside class="right">
+  <h1>Trajectory readout</h1>
+  <div class="sub">Reads the saved forensic record for the selected angle.</div>
+
+  <div class="readoutSummary">
+    <div class="readoutCard">
+      <div class="k">angle</div>
+      <div class="v" id="rAngle">—</div>
+    </div>
+    <div class="readoutCard">
+      <div class="k">mirror hits</div>
+      <div class="v" id="rMirrors">—</div>
+    </div>
+    <div class="readoutCard">
+      <div class="k">hit blocker</div>
+      <div class="v" id="rBlocker">—</div>
+    </div>
+    <div class="readoutCard">
+      <div class="k">hit target</div>
+      <div class="v" id="rTarget">—</div>
+    </div>
+  </div>
+
+  <div class="eventsTitle">Mirror events</div>
+  <div id="mirrorEvents">
+    <div class="empty">No mirror reflections for this angle.</div>
+  </div>
+
+  <div class="eventsTitle">Termination</div>
+  <div class="readoutEvent">
+    <div class="readoutMeta" id="termination">No angle loaded.</div>
+  </div>
+
+  <div class="legend">
+    <span class="pill"><span class="dot" style="background:#ff365f"></span>laser</span>
+    <span class="pill"><span class="dot" style="background:#71d9ff"></span>mirrors</span>
+    <span class="pill"><span class="dot" style="background:#ffb347"></span>blocker</span>
+    <span class="pill"><span class="dot" style="background:#67f59a"></span>target</span>
+  </div>
+</aside>
+</div>
+
+<script>
+const BASE='./forensic_static';
+const PULSE_DURATION_SECONDS=3.0;
+const SIM_TICK_SECONDS=0.1;
+const PULSE_EMIT_TICKS=Math.round(PULSE_DURATION_SECONDS/SIM_TICK_SECONDS);
+
+const canvas=document.getElementById('canvas');
+const ctx=canvas.getContext('2d');
+const stage=document.getElementById('stage');
+
+const angleRange=document.getElementById('angleRange');
+const angleNumber=document.getElementById('angleNumber');
+const tickRange=document.getElementById('tickRange');
+const playBtn=document.getElementById('playBtn');
+const resetBtn=document.getElementById('resetBtn');
+const playSpeed=document.getElementById('playSpeed');
+const loadStatus=document.getElementById('loadStatus');
+
+let CONFIG=null;
+let MANIFEST=null;
+let ANGLE_INDEX=null;
+let VERIFICATION=null;
+let currentAngle=null;
+let currentTickIndex=0;
+let playing=false;
+let playTimer=null;
+let angleCache=new Map();
+
+async function fetchJSON(path){
+  const r=await fetch(path,{cache:'no-store'});
+  if(!r.ok)throw new Error(`${path} → HTTP ${r.status}`);
+  return r.json();
+}
+
+async function init(){
+  stopPlay();
+  currentAngle=null;
+  angleCache.clear();
+  loadStatus.textContent='Loading config/index…';
+  document.getElementById('overlay').textContent='Loading forensic_static…';
+
+  try{
+    [CONFIG,MANIFEST,ANGLE_INDEX,VERIFICATION]=await Promise.all([
+      fetchJSON(`${BASE}/config.json`),
+      fetchJSON(`${BASE}/manifest.json`),
+      fetchJSON(`${BASE}/angle_index.json`),
+      fetchJSON(`${BASE}/verification.json`)
+    ]);
+
+    const count=Number(
+      ANGLE_INDEX?.count ??
+      ANGLE_INDEX?.angle_count ??
+      MANIFEST?.angle_count ??
+      1799
+    );
+
+    loadStatus.textContent=
+      `Loaded static index · ${count.toLocaleString()} angles`+
+      (VERIFICATION?.successful_count!=null?` · ${VERIFICATION.successful_count} successful`:'');
+
+    await setAngle(90.0);
+  }catch(err){
+    console.error(err);
+    loadStatus.textContent='Load failed: '+err.message;
+    document.getElementById('overlay').innerHTML=
+      `Could not load forensic_static.<br>`+
+      `For local testing, serve this folder over HTTP.`;
+  }
+}
+
+document.getElementById('reloadBtn').addEventListener('click',init);
+
+function clampAngle(v){
+  v=Number(v);
+  if(!Number.isFinite(v))v=90;
+  return Math.max(.1,Math.min(179.9,Math.round(v*10)/10));
+}
+
+function angleURL(angle){
+  return `${BASE}/angles/${Number(angle).toFixed(1)}.json`;
+}
+
+async function loadAngle(angle){
+  const key=Number(angle).toFixed(1);
+  if(angleCache.has(key))return angleCache.get(key);
+
+  const obj=await fetchJSON(angleURL(angle));
+
+  let normalized=obj;
+  if(obj.record_type==='angle' && !obj.summary){
+    normalized={
+      angle_deg:obj.angle_deg,
+      summary:{
+        success:obj.success,
+        target_hit_slice_count:obj.target_hit_slice_count,
+        blocked_slice_count:obj.blocked_slice_count,
+        mirror_hit_count:obj.mirror_hit_count,
+        slice_count:obj.slice_count,
+        total_ticks:obj.total_ticks,
+        simulation_end_time:obj.simulation_end_time
+      },
+      slice_outcomes:obj.slice_outcomes||[],
+      ticks:obj.ticks||[]
+    };
+  }
+
+  angleCache.set(key,normalized);
+
+  // Keep browser memory bounded.
+  if(angleCache.size>12){
+    const oldest=angleCache.keys().next().value;
+    angleCache.delete(oldest);
+  }
+
+  return normalized;
+}
+
+async function setAngle(v){
+  stopPlay();
+  v=clampAngle(v);
+
+  try{
+    loadStatus.textContent=`Loading ${v.toFixed(1)}°…`;
+    const rec=await loadAngle(v);
+
+    currentAngle=rec;
+    currentTickIndex=0;
+
+    angleRange.value=v.toFixed(1);
+    angleNumber.value=v.toFixed(1);
+
+    tickRange.max=getReplayEndTick(rec);
+    tickRange.value=0;
+
+    loadStatus.textContent=
+      `Angle ${v.toFixed(1)}° loaded · ${(rec.ticks?.length||0).toLocaleString()} ticks`;
+
+    render();
+  }catch(err){
+    console.error(err);
+    loadStatus.textContent='Angle load failed: '+err.message;
+  }
+}
+
+// Live slider feedback: update the displayed angle continuously while dragging.
+// The forensic JSON is still loaded only when the slider change is committed,
+// so dragging remains smooth and does not trigger a flood of file requests.
+angleRange.addEventListener('input',e=>{
+  const v=clampAngle(e.target.value);
+
+  // Keep the numeric angle box synchronized in real time.
+  angleNumber.value=v.toFixed(1);
+
+  // Update both existing angle readouts from THIS uploaded file.
+  document.getElementById('sAngle').textContent=`${v.toFixed(1)}°`;
+  document.getElementById('rAngle').textContent=`${v.toFixed(1)}°`;
+});
+
+angleRange.addEventListener('change',e=>setAngle(e.target.value));
+angleNumber.addEventListener('change',e=>setAngle(e.target.value));
+document.getElementById('prevAngle').addEventListener('click',()=>setAngle(Number(angleNumber.value)-.1));
+document.getElementById('nextAngle').addEventListener('click',()=>setAngle(Number(angleNumber.value)+.1));
+
+tickRange.addEventListener('input',e=>{
+  stopPlay();
+  currentTickIndex=Number(e.target.value);
+  render();
+});
+
+resetBtn.addEventListener('click',()=>{
+  stopPlay();
+  currentTickIndex=0;
+  tickRange.value=0;
+  render();
+});
+
+playBtn.addEventListener('click',()=>{
+  if(!currentAngle)return;
+
+  // While running, the same button still pauses.
+  if(playing){
+    stopPlay();
+    return;
+  }
+
+  const max=Number(tickRange.max);
+
+  // If the previous replay finished, Play automatically fires again
+  // from the beginning. No separate Reset click is required.
+  if(currentTickIndex>=max){
+    currentTickIndex=0;
+    tickRange.value=0;
+  }
+
+  // Start this Play action with a clean right-side readout.
+  resetRightReadoutForPlay();
+
+  playing=true;
+  playBtn.textContent='❚❚ Pause';
+
+  // Draw the initial world state but keep the right readout cleared
+  // until the first replay tick advances.
+  renderSceneOnly();
+
+  scheduleNext();
+});
+
+function scheduleNext(){
+  if(!playing)return;
+
+  const max=Number(tickRange.max);
+  if(currentTickIndex>=max){
+    stopPlay();
+    // Ensure the final tick/result is visible when the animation ends.
+    render();
+    return;
+  }
+
+  const speed=Number(playSpeed.value)||1;
+
+  playTimer=setTimeout(()=>{
+    currentTickIndex++;
+    tickRange.value=currentTickIndex;
+    render();
+    scheduleNext();
+  },100/speed);
+}
+
+function stopPlay(){
+  playing=false;
+  playBtn.textContent='▶ Play';
+  if(playTimer){
+    clearTimeout(playTimer);
+    playTimer=null;
+  }
+}
+
+function resize(){
+  const r=stage.getBoundingClientRect();
+  const dpr=Math.max(1,window.devicePixelRatio||1);
+
+  canvas.width=Math.round(r.width*dpr);
+  canvas.height=Math.round(r.height*dpr);
+  canvas.style.width=r.width+'px';
+  canvas.style.height=r.height+'px';
+
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  render();
+}
+window.addEventListener('resize',resize);
+
+function config(){return CONFIG||{}}
+
+function pulseSliceAllowed(emitTick){
+  const e=Number(emitTick);
+  return Number.isFinite(e) && e>=0 && e<PULSE_EMIT_TICKS;
+}
+
+function getReplayEndTick(rec){
+  const ticks=rec?.ticks||[];
+  if(!ticks.length)return 0;
+
+  let last=0;
+
+  // Follow every slice emitted during the first 3.0 seconds until its
+  // final recorded movement/event, so the visualization does not stop
+  // while the tail of the pulse is still inside the world.
+  for(let i=0;i<ticks.length;i++){
+    const active=(ticks[i].slice_steps||[]).some(ss=>pulseSliceAllowed(ss.emit_tick));
+    if(active)last=i;
+  }
+
+  for(const o of rec?.slice_outcomes||[]){
+    if(!pulseSliceAllowed(o.emit_tick))continue;
+    const t=Number(o?.termination?.time);
+    if(Number.isFinite(t)){
+      last=Math.max(last,Math.round(t/SIM_TICK_SECONDS));
+    }
+  }
+
+  return Math.max(0,Math.min(ticks.length-1,last));
+}
+
+function worldTransform(){
+  const W=stage.clientWidth,H=stage.clientHeight;
+  const xMin=-76,xMax=76,yMin=-8,yMax=122,pad=28;
+
+  const s=Math.min(
+    (W-2*pad)/(xMax-xMin),
+    (H-2*pad)/(yMax-yMin)
+  );
+
+  const dw=(xMax-xMin)*s;
+  const dh=(yMax-yMin)*s;
+
+  return{
+    xMin,xMax,yMin,yMax,s,
+    left:(W-dw)/2,
+    top:(H-dh)/2
+  };
+}
+
+function ws(x,y){
+  const t=worldTransform();
+  return[
+    t.left+(x-t.xMin)*t.s,
+    t.top+(t.yMax-y)*t.s
+  ];
+}
+
+function drawGrid(){
+  const W=stage.clientWidth,H=stage.clientHeight;
+  ctx.clearRect(0,0,W,H);
+
+  ctx.save();
+  ctx.lineWidth=1;
+  ctx.font='10px ui-monospace,monospace';
+
+  for(let x=-70;x<=70;x+=10){
+    const[sx]=ws(x,0);
+    ctx.strokeStyle='rgba(120,160,220,.08)';
+    ctx.beginPath();
+    ctx.moveTo(sx,0);
+    ctx.lineTo(sx,H);
+    ctx.stroke();
+  }
+
+  for(let y=0;y<=120;y+=10){
+    const[,sy]=ws(0,y);
+
+    ctx.strokeStyle='rgba(120,160,220,.08)';
+    ctx.beginPath();
+    ctx.moveTo(0,sy);
+    ctx.lineTo(W,sy);
+    ctx.stroke();
+
+    const[sx0]=ws(0,y);
+    ctx.fillStyle='rgba(160,190,225,.38)';
+    ctx.fillText(String(y),sx0+5,sy-3);
+  }
+
+  ctx.restore();
+}
+
+function isEven(n){
+  return Math.abs(n%2)===0;
+}
+
+function snapNear(v){
+  const tol=Number(config().mirror_integer_tolerance??1e-10);
+  const r=Math.round(v);
+  return Math.abs(v-r)<=tol?r:v;
+}
+
+function verticalSolid(y){
+  return isEven(Math.floor(snapNear(y)));
+}
+
+function horizontalSolid(x){
+  const desc=String(config().horizontal_mirror_holes||'').toLowerCase();
+  const band=Math.floor(snapNear(x));
+
+  if(desc.includes('odd')){
+    return isEven(band); // odd holes => even solid
+  }
+
+  return !isEven(band); // even holes => odd solid
+}
+
+function drawMirrors(){
+  const vs=config().vertical_mirrors||[-70,-10,10,70];
+  const hs=config().horizontal_mirrors||[115];
+
+  ctx.save();
+  ctx.strokeStyle='#71d9ff';
+  ctx.lineWidth=3;
+  ctx.shadowColor='#5be7ff';
+  ctx.shadowBlur=6;
+  ctx.lineCap='butt';
+
+  for(const mx of vs){
+    for(let y=-8;y<122;y++){
+      if(verticalSolid(y+.5)){
+        const a=ws(mx,y);
+        const b=ws(mx,y+1);
+
+        ctx.beginPath();
+        ctx.moveTo(...a);
+        ctx.lineTo(...b);
+        ctx.stroke();
+      }
+    }
+  }
+
+  for(const my of hs){
+    for(let x=-76;x<76;x++){
+      if(horizontalSolid(x+.5)){
+        const a=ws(x,my);
+        const b=ws(x+1,my);
+
+        ctx.beginPath();
+        ctx.moveTo(...a);
+        ctx.lineTo(...b);
+        ctx.stroke();
+      }
+    }
+  }
+
+  ctx.restore();
+}
+
+function drawWorld(tick){
+  const w=tick?.world;
+  if(!w)return;
+
+  for(const b of w.blockers||[]){
+    const a=ws(...b.endpoint_a);
+    const z=ws(...b.endpoint_b);
+
+    ctx.save();
+    ctx.strokeStyle='#ffb347';
+    ctx.lineWidth=4;
+    ctx.lineCap='butt';
+    ctx.shadowColor='#ffb347';
+    ctx.shadowBlur=4;
+
+    ctx.beginPath();
+    ctx.moveTo(...a);
+    ctx.lineTo(...z);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  const tar=w.target;
+  if(tar){
+    const a=ws(...tar.endpoint_a);
+    const z=ws(...tar.endpoint_b);
+
+    ctx.save();
+    ctx.strokeStyle='#67f59a';
+    ctx.lineWidth=3;
+    ctx.lineCap='butt';
+    ctx.shadowColor='#67f59a';
+    ctx.shadowBlur=5;
+
+    ctx.beginPath();
+    ctx.moveTo(...a);
+    ctx.lineTo(...z);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+}
+
+function collectSegmentsThroughTick(rec,idx){
+  const out=[];
+  const ticks=rec.ticks||[];
+  const tick=ticks[idx];
+  if(!tick)return out;
+
+  // Draw only slices that are physically active on THIS tick. Restrict
+  // emission to the first 3.0 seconds; older moving path segments are not
+  // kept as a trail, so the tail of the finite pulse can clear the scene.
+  for(const ss of tick.slice_steps||[]){
+    if(!pulseSliceAllowed(ss.emit_tick))continue;
+
+    for(const st of ss.steps||[]){
+      if(st.start&&st.end){
+        out.push({
+          tick:idx,
+          emit:ss.emit_tick,
+          start:st.start,
+          end:st.end,
+          event:st.selected_event,
+          sticky:false
+        });
+      }
+    }
+  }
+
+  // Match the live lab behavior: once an emitted slice hits a blocker or
+  // the target, leave that slice's final collision segment stuck at the
+  // impact point for the remainder of the visualization. Mirror segments
+  // and boundary exits do NOT stick.
+  const stickyByEmit=new Map();
+  for(let i=0;i<=idx&&i<ticks.length;i++){
+    for(const ss of ticks[i].slice_steps||[]){
+      if(!pulseSliceAllowed(ss.emit_tick))continue;
+
+      for(const st of ss.steps||[]){
+        const ev=st.selected_event;
+        if(
+          st.start&&st.end&&ev&&
+          (ev.type==='blocker'||ev.type==='target')
+        ){
+          stickyByEmit.set(ss.emit_tick,{
+            tick:i,
+            emit:ss.emit_tick,
+            start:st.start,
+            end:st.end,
+            event:ev,
+            sticky:true
+          });
+        }
+      }
+    }
+  }
+
+  // If the terminal segment is already part of this tick's active data,
+  // do not draw it twice. Otherwise add the preserved impact segment.
+  for(const sticky of stickyByEmit.values()){
+    const alreadyPresent=out.some(s=>
+      s.emit===sticky.emit&&
+      s.event&&sticky.event&&
+      s.event.type===sticky.event.type&&
+      s.end?.[0]===sticky.end?.[0]&&
+      s.end?.[1]===sticky.end?.[1]
+    );
+    if(!alreadyPresent)out.push(sticky);
+  }
+
+  return out;
+}
+
+function drawMirrorHitLight(s){
+  const ev=s?.event;
+  if(!ev || (ev.type!=='mirrorV' && ev.type!=='mirrorH'))return;
+
+  ctx.save();
+  ctx.strokeStyle='#ffffff';
+  ctx.lineWidth=4.5;
+  ctx.lineCap='butt';
+  ctx.shadowColor='#71d9ff';
+  ctx.shadowBlur=18;
+
+  if(ev.type==='mirrorV'){
+    const x=Number(ev.mirrorX ?? ev.x ?? s.end?.[0]);
+    const y=Number(ev.y ?? s.end?.[1]);
+    const band=Math.floor(snapNear(y));
+    const a=ws(x,band);
+    const b=ws(x,band+1);
+    ctx.beginPath();
+    ctx.moveTo(...a);
+    ctx.lineTo(...b);
+    ctx.stroke();
+  }else{
+    const y=Number(ev.mirrorY ?? ev.y ?? s.end?.[1]);
+    const x=Number(ev.x ?? s.end?.[0]);
+    const band=Math.floor(snapNear(x));
+    const a=ws(band,y);
+    const b=ws(band+1,y);
+    ctx.beginPath();
+    ctx.moveTo(...a);
+    ctx.lineTo(...b);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function collectMirrorHitLights(rec,idx){
+  const ticks=rec.ticks||[];
+  const lit=new Map();
+
+  // Once a mirror band has been hit, latch that band on for the rest of
+  // this replay. This is visual state only; it does not alter trajectory
+  // physics, pulse length, or collision behavior.
+  for(let i=0;i<=idx&&i<ticks.length;i++){
+    for(const ss of ticks[i].slice_steps||[]){
+      if(!pulseSliceAllowed(ss.emit_tick))continue;
+
+      for(const st of ss.steps||[]){
+        const ev=st.selected_event;
+        if(!st.start||!st.end||!ev)continue;
+        if(ev.type!=='mirrorV'&&ev.type!=='mirrorH')continue;
+
+        if(ev.type==='mirrorV'){
+          const x=Number(ev.mirrorX ?? ev.x ?? st.end?.[0]);
+          const y=Number(ev.y ?? st.end?.[1]);
+          const band=Math.floor(snapNear(y));
+          lit.set(`V:${x}:${band}`,{
+            start:[x,band],
+            end:[x,band+1],
+            event:ev
+          });
+        }else{
+          const y=Number(ev.mirrorY ?? ev.y ?? st.end?.[1]);
+          const x=Number(ev.x ?? st.end?.[0]);
+          const band=Math.floor(snapNear(x));
+          lit.set(`H:${y}:${band}`,{
+            start:[band,y],
+            end:[band+1,y],
+            event:ev
+          });
+        }
+      }
+    }
+  }
+
+  return [...lit.values()];
+}
+
+function drawLaser(rec,idx){
+  const active=collectSegmentsThroughTick(rec,idx);
+
+  for(const s of active){
+    const a=ws(...s.start);
+    const b=ws(...s.end);
+
+    ctx.save();
+
+    // Uniform infinitesimally-thin-style visualization:
+    // keep the displayed beam the same narrow width everywhere.
+    ctx.strokeStyle='rgba(255,54,95,.95)';
+    ctx.lineWidth=1.25;
+    ctx.lineCap='butt';
+    ctx.lineJoin='miter';
+    ctx.shadowBlur=0;
+
+    ctx.beginPath();
+    ctx.moveTo(...a);
+    ctx.lineTo(...b);
+    ctx.stroke();
+
+    ctx.restore();
+
+    if(
+      s.event &&
+      ['mirrorV','mirrorH','blocker','target'].includes(s.event.type)
+    ){
+      ctx.save();
+      ctx.fillStyle=
+        s.event.type==='target' ? '#67f59a' :
+        s.event.type==='blocker' ? '#ffb347' :
+        '#fff';
+
+      ctx.beginPath();
+      ctx.arc(b[0],b[1],2.4,0,Math.PI*2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+  }
+
+  // Draw every mirror band hit at or before this tick, not just mirrors
+  // touched by a slice that is still active on the current tick. Therefore
+  // each hit mirror stays illuminated through the rest of the animation.
+  for(const s of collectMirrorHitLights(rec,idx)){
+    drawMirrorHitLight(s);
+  }
+}
+
+function resetRightReadoutForPlay(){
+  const angle=currentAngle ? Number(currentAngle.angle_deg).toFixed(1)+'°' : '—';
+
+  document.getElementById('rAngle').textContent=angle;
+  document.getElementById('rMirrors').textContent='0';
+
+  const rb=document.getElementById('rBlocker');
+  rb.textContent='no';
+  rb.className='v yes';
+
+  const rt=document.getElementById('rTarget');
+  rt.textContent='no';
+  rt.className='v no';
+
+  document.getElementById('mirrorEvents').innerHTML=
+    '<div class="empty">No mirror reflections yet.</div>';
+
+  document.getElementById('termination').innerHTML=
+    'Replay started.<br>Waiting for recorded events…';
+}
+
+function renderSceneOnly(){
+  drawGrid();
+
+  if(!currentAngle){
+    document.getElementById('overlay').textContent='Loading forensic_static…';
+    return;
+  }
+
+  drawMirrors();
+
+  const ticks=currentAngle.ticks||[];
+  const tick=ticks[Math.min(currentTickIndex,ticks.length-1)];
+
+  drawWorld(tick);
+  drawLaser(currentAngle,currentTickIndex);
+
+  const[ox,oy]=ws(0,0);
+
+  ctx.save();
+  ctx.fillStyle='#fff';
+  ctx.shadowColor='#ff365f';
+  ctx.shadowBlur=15;
+  ctx.beginPath();
+  ctx.arc(ox,oy,4,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // Keep the left-side/current-time display current without restoring
+  // the final right-side forensic result.
+  const a=currentAngle;
+  document.getElementById('sAngle').textContent=
+    `${Number(a.angle_deg).toFixed(1)}°`;
+  document.getElementById('sTick').textContent=
+    tick ? tick.tick_index : '—';
+  document.getElementById('sTime').textContent=
+    tick ? `${Number(tick.time).toFixed(1)} s` : '—';
+
+  document.getElementById('overlay').innerHTML=
+    `angle ${Number(a.angle_deg).toFixed(1)}°<br>`+
+    `tick ${tick?.tick_index??'—'} · `+
+    `t=${tick?Number(tick.time).toFixed(1):'—'} s`;
+}
+
+function render(){
+  drawGrid();
+
+  if(!currentAngle){
+    document.getElementById('overlay').textContent='Loading forensic_static…';
+    return;
+  }
+
+  drawMirrors();
+
+  const ticks=currentAngle.ticks||[];
+  const tick=ticks[Math.min(currentTickIndex,ticks.length-1)];
+
+  drawWorld(tick);
+  drawLaser(currentAngle,currentTickIndex);
+
+  const[ox,oy]=ws(0,0);
+
+  ctx.save();
+  ctx.fillStyle='#fff';
+  ctx.shadowColor='#ff365f';
+  ctx.shadowBlur=15;
+  ctx.beginPath();
+  ctx.arc(ox,oy,4,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  updateText(tick);
+}
+
+function updateText(tick){
+  const a=currentAngle;
+  const s=a.summary||{};
+
+  document.getElementById('sAngle').textContent=
+    `${Number(a.angle_deg).toFixed(1)}°`;
+
+  document.getElementById('sTick').textContent=
+    tick ? tick.tick_index : '—';
+
+  document.getElementById('sTime').textContent=
+    tick ? `${Number(tick.time).toFixed(1)} s` : '—';
+
+  const suc=document.getElementById('sSuccess');
+  suc.textContent=s.success?'YES':'NO';
+  suc.className=s.success?'good':'bad';
+
+  document.getElementById('sTargetSlices').textContent=
+    s.target_hit_slice_count??'—';
+
+  document.getElementById('sBlocked').textContent=
+    s.blocked_slice_count??'—';
+
+  document.getElementById('sMirrors').textContent=
+    s.mirror_hit_count??'—';
+
+  document.getElementById('overlay').innerHTML=
+    `angle ${Number(a.angle_deg).toFixed(1)}°<br>`+
+    `tick ${tick?.tick_index??'—'} · `+
+    `t=${tick?Number(tick.time).toFixed(1):'—'} s<br>`+
+    `${s.success?'TARGET HIT':'MISS'}`;
+
+  updateRightReadout(a);
+}
+
+function collectMirrorEvents(angleRec){
+  const events=[];
+
+  for(const tick of angleRec.ticks||[]){
+    for(const ss of tick.slice_steps||[]){
+      if(!pulseSliceAllowed(ss.emit_tick))continue;
+      for(const st of ss.steps||[]){
+        const ev=st.selected_event;
+        if(!ev || (ev.type!=='mirrorV' && ev.type!=='mirrorH')) continue;
+
+        const dx=Number(st.direction?.[0] ?? 0);
+        const dy=Number(st.direction?.[1] ?? 0);
+
+        let incidence;
+        let outgoingX=dx;
+        let outgoingY=dy;
+        let orientation;
+        let mirrorLabel;
+
+        if(ev.type==='mirrorV'){
+          orientation='vertical';
+          mirrorLabel=`x=${ev.mirrorX}`;
+          incidence=Math.atan2(Math.abs(dy),Math.abs(dx))*180/Math.PI;
+          outgoingX=-dx;
+        }else{
+          orientation='horizontal';
+          mirrorLabel=`y=${ev.mirrorY}`;
+          incidence=Math.atan2(Math.abs(dx),Math.abs(dy))*180/Math.PI;
+          outgoingY=-dy;
+        }
+
+        const incoming=Math.atan2(dy,dx)*180/Math.PI;
+        const outgoing=Math.atan2(outgoingY,outgoingX)*180/Math.PI;
+
+        events.push({
+          index:events.length+1,
+          orientation,
+          mirror:mirrorLabel,
+          x:Number(ev.x),
+          y:Number(ev.y),
+          incidence,
+          reflection:incidence,
+          incoming,
+          outgoing,
+          tick_index:tick.tick_index,
+          time:tick.time,
+          emit_tick:ss.emit_tick
+        });
+      }
+    }
+  }
+
+  return events;
+}
+
+function updateRightReadout(angleRec){
+  const ticks=angleRec.ticks||[];
+  const upto=Math.min(currentTickIndex,ticks.length-1);
+
+  // Only events that have happened through the currently displayed tick.
+  const mirrorEvents=collectMirrorEvents(angleRec)
+    .filter(h=>h.tick_index<=upto);
+
+  const seenTerminations=new Map();
+
+  // A slice outcome contains its actual termination time/type. Only count
+  // blocker/target results once they have occurred by the current tick.
+  for(const o of angleRec.slice_outcomes||[]){
+    if(!pulseSliceAllowed(o.emit_tick))continue;
+    const term=o.termination;
+    if(!term || term.time==null)continue;
+
+    const termTick=Math.round(Number(term.time)/0.1);
+    if(termTick<=upto){
+      seenTerminations.set(o.emit_tick,o);
+    }
+  }
+
+  const happened=[...seenTerminations.values()];
+  const blocked=happened.filter(o=>o.hit_blocker);
+  const targetHits=happened.filter(o=>o.hit_target);
+
+  document.getElementById('rAngle').textContent=
+    `${Number(angleRec.angle_deg).toFixed(1)}°`;
+
+  document.getElementById('rMirrors').textContent=
+    String(mirrorEvents.length);
+
+  const rb=document.getElementById('rBlocker');
+  rb.textContent=blocked.length ? `yes · ${blocked.length} slice(s)` : 'no';
+  rb.className='v '+(blocked.length?'no':'yes');
+
+  const rt=document.getElementById('rTarget');
+  rt.textContent=targetHits.length ? 'yes' : 'no';
+  rt.className='v '+(targetHits.length?'yes':'no');
+
+  const me=document.getElementById('mirrorEvents');
+
+  if(!mirrorEvents.length){
+    me.innerHTML='<div class="empty">No mirror reflections yet.</div>';
+  }else{
+    me.innerHTML=mirrorEvents.map(h=>
+      `<div class="readoutEvent">`+
+        `<strong>`+
+          `<span>Hit ${h.index} · ${h.orientation} mirror ${h.mirror}</span>`+
+          `<span>(${h.x.toFixed(3)}, ${h.y.toFixed(3)})</span>`+
+        `</strong>`+
+        `<div class="readoutMeta">`+
+          `incidence angle: ${h.incidence.toFixed(3)}°<br>`+
+          `reflection angle: ${h.reflection.toFixed(3)}°<br>`+
+          `incoming heading: ${normDeg(h.incoming).toFixed(3)}°<br>`+
+          `outgoing heading: ${normDeg(h.outgoing).toFixed(3)}°<br>`+
+          `tick: ${h.tick_index} · t=${Number(h.time).toFixed(1)} s · pulse slice ${h.emit_tick}`+
+        `</div>`+
+      `</div>`
+    ).join('');
+  }
+
+  const tick=ticks[upto];
+  const currentTime=tick ? Number(tick.time) : 0;
+  const atEnd=upto>=Number(tickRange.max);
+
+  let terminationText;
+  if(atEnd){
+    if(targetHits.length){
+      terminationText=`pulse complete · ${targetHits.length} slice(s) hit target`;
+    }else if(blocked.length){
+      terminationText=`pulse complete · no target hit · ${blocked.length} slice(s) blocked`;
+    }else{
+      terminationText='pulse complete · target missed';
+    }
+  }else{
+    terminationText='pulse replay in progress';
+  }
+
+  document.getElementById('termination').innerHTML=
+    `${terminationText}`+
+    `<br>simulation time: ${currentTime.toFixed(1)} s`+
+    `<br>blocked slices so far: ${blocked.length}`+
+    `<br>target-hit slices so far: ${targetHits.length}`;
+}
+
+function normDeg(a){
+  return (a%360+360)%360;
+}
+
+function eventName(e){
+  if(e.type==='mirrorV')return`reflect vertical x=${e.mirrorX}`;
+  if(e.type==='mirrorH')return`reflect horizontal y=${e.mirrorY}`;
+  if(e.type==='blocker')return`BLOCKER ${e.id}`;
+  if(e.type==='target')return'TARGET HIT';
+  if(e.type==='boundary')return`boundary ${e.axis}=${e.value}`;
+  return e.type||'event';
+}
+
+function fmt(n){
+  return Number(n).toFixed(6);
+}
+
+function fmtPoint(p){
+  return p
+    ? `(${fmt(p[0])}, ${fmt(p[1])})`
+    : '—';
+}
+
+resize();
+init();
+</script>
+</body>
+</html>
